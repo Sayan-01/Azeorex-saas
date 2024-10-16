@@ -11,13 +11,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const session = await auth();
+
   return (
+    // <SessionProvider session={session}>
     <html lang="en">
-      <body
-        className={`antialiased`}
-      >
-        {children}
-      </body>
+      <body className={`bg-black dark w-full min-h-screen antialiased box1 `}>{children}</body>
     </html>
+    // </SessionProvider>
   );
 }
