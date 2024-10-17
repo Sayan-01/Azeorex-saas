@@ -1,26 +1,54 @@
-import { Button } from "@/components/ui/button"
-import { Logout } from "@/icons"
-import Link from "next/link"
-import Menu from "./menu"
-import { MenuIcon } from "lucide-react"
-import GlassSheet from "@/components/global/glass-sheet"
+import { Button } from "@/components/ui/button";
+import { Compass, Logout } from "@/icons";
+import Link from "next/link";
+import Menu from "./menu";
+import { MenuIcon } from "lucide-react";
+import GlassSheet from "@/components/global/glass-sheet";
+import { auth } from "../../../../../auth";
+import Image from "next/image";
 
+const LandingPageNavbar = async () => {
+  const session = await auth();
+  // console.log(session);
 
-const LandingPageNavbar = () => {
   return (
     <div className="w-full md:px-10 flex justify-between sticky top-0 items-center py-5 z-50">
-      <p className="font-bold text-2xl">Grouple.</p>
+      <p className="font-bold w-[100px] text-2xl">Grouple.</p>
       <Menu orientation="desktop" />
-      <div className="flex gap-2">
-        <Link href="/sign-in">
-          <Button
-            variant="outline"
-            className="bg-themeBlack rounded-2xl flex gap-2 border-themeGray elemrnt hover:bg-themeGray"
-          >
-            <Logout />
-            Login
-          </Button>
-        </Link>
+      <div className="flex gap-2 w-[100px] justify-end">
+        {session?.user?.email ? (
+          <div className="flex gap-4">
+            <Link href="/agency">
+              <Button
+                variant="outline"
+                className="bg-themeBlack element rounded-2xl flex gap-2 border-themeGray elemrnt hover:bg-themeGray"
+              >
+                <Compass />
+                Create
+              </Button>
+            </Link>
+            <div className="w-9 h-9 rounded-full overflow-hidden">
+              <Image
+                alt="profile-image"
+                src={session?.user?.image || "/user.png"}
+                className="w-full h-full"
+                width={100}
+                height={100}
+              />
+            </div>
+          </div>
+        ) : (
+          <Link href="/agency/sign-in">
+            <Button
+              variant="outline"
+              className="bg-themeBlack rounded-2xl flex gap-2 border-themeGray elemrnt hover:bg-themeGray"
+            >
+              <Logout />
+              Login
+            </Button>
+          </Link>
+        )}
+
         <GlassSheet
           triggerClass="lg:hidden"
           trigger={
@@ -37,6 +65,6 @@ const LandingPageNavbar = () => {
       </div>
     </div>
   );
-}
+};
 
-export default LandingPageNavbar
+export default LandingPageNavbar;
