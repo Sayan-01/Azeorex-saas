@@ -68,39 +68,59 @@ const Agency_details = () => {
             >
               <FormField
                 control={form.control}
-                name="name"
+                name="agencyLogo"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Agency Name</FormLabel>
+                    <FormLabel>Agency Logo</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="Enter agency name"
-                        {...field}
-                      />
+                      <FileUpload
+                        apiEndpoint="agencyLogo"
+                        onChange={field.onChange}
+                        value={field.value}
+                      ></FileUpload>
                     </FormControl>
-                    <FormDescription>Agency name must be at least 2 characters.</FormDescription>
+                    <FormDescription>Please provide a valid logo image file.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+              <div className=" flex gap-4 w-full">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Agency Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter agency name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>Agency name must be at least 2 characters.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="companyEmail"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter company email"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>This should be a valid email address.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="companyEmail"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Company Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter company email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>This should be a valid email address.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormField
                 control={form.control}
@@ -124,12 +144,21 @@ const Agency_details = () => {
                 control={form.control}
                 name="whiteLabel"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>White Label</FormLabel>
+                  <FormItem className="flex gap-10 items-center">
+                    <div>
+                      <FormLabel>White Label</FormLabel>
+                      <FormDescription>
+                        Check if this is a white-label service Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos quasi consequatur aut id obcaecati, voluptate voluptas? Laborum, ad ipsam!
+                        Exercitationem doloribus nam asperiores suscipit aliquid possimus, consequuntur unde delectus nihil..
+                      </FormDescription>
+                    </div>
                     <FormControl>
-                      <Switch checked={field.value} onCheckedChange={field.onChange}/>
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     </FormControl>
-                    <FormDescription>Check if this is a white-label service.</FormDescription>
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -152,60 +181,61 @@ const Agency_details = () => {
                   </FormItem>
                 )}
               />
+              <div className="flex gap-4">
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>City</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter city"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>Your city name.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>City</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter city"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>Your city name.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="zipCode"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Zip Code</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter zip code"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>Your postal code.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <FormField
-                control={form.control}
-                name="zipCode"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Zip Code</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter zip code"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>Your postal code.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="state"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>State</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter state"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>Your state or region.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                <FormField
+                  control={form.control}
+                  name="state"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>State</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter state"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>Your state or region.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormField
                 control={form.control}
@@ -220,21 +250,6 @@ const Agency_details = () => {
                       />
                     </FormControl>
                     <FormDescription>Your country.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="agencyLogo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Agency Logo</FormLabel>
-                    <FormControl>
-                      <FileUpload apiEndpoint="agencyLogo" onChange={field.onChange} value={field.value}></FileUpload>
-                    </FormControl>
-                    <FormDescription>Please provide a valid logo URL.</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
