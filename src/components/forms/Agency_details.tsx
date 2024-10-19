@@ -8,11 +8,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import FileUpload from "../global/FileUpload";
 import { Switch } from "../ui/switch";
+import { Loader } from "../global/Loader";
+import GlassCard from "../global/glass-card";
+import { IAgency } from "@/types/types";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -29,7 +31,11 @@ const FormSchema = z.object({
   agencyLogo: z.string().min(1),
 });
 
-const Agency_details = () => {
+type Props = {
+  data?: Partial<IAgency>;
+};
+
+const Agency_details = ({data}: Props) => {
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -47,14 +53,23 @@ const Agency_details = () => {
       agencyLogo: "",
     },
   });
-
-  const handleSubmit = () => {};
+  const isLoading = form.formState.isSubmitting;
+  const handleSubmit = async (value: z.infer<typeof FormSchema>) => {
+    try {
+      if (true) {
+      }
+      newUserData = await initUser({
+        role: "AGENCY_OWNER",
+      });
+    } catch (error) {}
+  };
+  const handleDeleteAgency = () => {};
 
   return (
     <AlertDialog>
-      <Card className="w-full">
+      <GlassCard className="w-full">
         <CardHeader>
-          <CardTitle>Agency Information</CardTitle>
+          <CardTitle className="">Agency Information</CardTitle>
           <CardDescription>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta consequatur veniam, error id maiores iusto incidunt rem maxime? Expedita deserunt libero voluptas quasi repellendus quaerat
             accusantium officia tenetur, repudiandae quia?
@@ -66,79 +81,79 @@ const Agency_details = () => {
               onSubmit={form.handleSubmit(handleSubmit)}
               className="space-y-8"
             >
-              <FormField
-                control={form.control}
-                name="agencyLogo"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Agency Logo</FormLabel>
-                    <FormControl>
-                      <FileUpload
-                        apiEndpoint="agencyLogo"
-                        onChange={field.onChange}
-                        value={field.value}
-                      ></FileUpload>
-                    </FormControl>
-                    <FormDescription>Please provide a valid logo image file.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div className=" flex gap-4 w-full">
+              <div className=" flex md:flex-row gap-4 ">
                 <FormField
                   control={form.control}
-                  name="name"
+                  name="agencyLogo"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Agency Name</FormLabel>
+                      <FormLabel>Agency Logo</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Enter agency name"
-                          {...field}
-                        />
+                        <FileUpload
+                          apiEndpoint="agencyLogo"
+                          onChange={field.onChange}
+                          value={field.value}
+                        ></FileUpload>
                       </FormControl>
-                      <FormDescription>Agency name must be at least 2 characters.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+                <div className="w-full">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Agency Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter agency name"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>Agency name must be at least 2 characters.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="companyEmail"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Company Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter company email"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>This should be a valid email address.</FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                  <FormField
+                    control={form.control}
+                    name="companyEmail"
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Company Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter company email"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>This should be a valid email address.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="companyPhone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Company Phone</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter company phone"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>Provide your company&apos;s contact number.</FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-
-              <FormField
-                control={form.control}
-                name="companyPhone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Company Phone</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Enter company phone"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>Provide your company&apos;s contact number.</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
               <FormField
                 control={form.control}
@@ -181,12 +196,12 @@ const Agency_details = () => {
                   </FormItem>
                 )}
               />
-              <div className="flex gap-4">
+              <div className="flex md:flex-row gap-4">
                 <FormField
                   control={form.control}
                   name="city"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex-1">
                       <FormLabel>City</FormLabel>
                       <FormControl>
                         <Input
@@ -204,7 +219,7 @@ const Agency_details = () => {
                   control={form.control}
                   name="zipCode"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex-1">
                       <FormLabel>Zip Code</FormLabel>
                       <FormControl>
                         <Input
@@ -222,7 +237,7 @@ const Agency_details = () => {
                   control={form.control}
                   name="state"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className="flex-1">
                       <FormLabel>State</FormLabel>
                       <FormControl>
                         <Input
@@ -255,11 +270,22 @@ const Agency_details = () => {
                 )}
               />
 
-              <Button type="submit">Submit</Button>
+              <Button
+                disabled={isLoading}
+                type="submit"
+              >
+                {isLoading ? (
+                  <>
+                    <Loader loading={isLoading} />
+                  </>
+                ) : (
+                  <p>Save agency information</p>
+                )}
+              </Button>
             </form>
           </Form>
         </CardContent>
-      </Card>
+      </GlassCard>
     </AlertDialog>
   );
 };

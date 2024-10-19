@@ -1,208 +1,5 @@
-import { Schema, model, Document, Types, models } from "mongoose";
-
-// Enums
-enum Role {
-  AGENCY_OWNER = "AGENCY_OWNER",
-  AGENCY_ADMIN = "AGENCY_ADMIN",
-  SUBACCOUNT_USER = "SUBACCOUNT_USER",
-  SUBACCOUNT_GUEST = "SUBACCOUNT_GUEST",
-}
-
-enum Icon {
-  settings = "settings",
-  chart = "chart",
-  calendar = "calendar",
-  check = "check",
-  chip = "chip",
-  compass = "compass",
-  database = "database",
-  flag = "flag",
-  home = "home",
-  info = "info",
-  link = "link",
-  lock = "lock",
-  messages = "messages",
-  notification = "notification",
-  payment = "payment",
-  power = "power",
-  receipt = "receipt",
-  shield = "shield",
-  star = "star",
-  tune = "tune",
-  videorecorder = "videorecorder",
-  wallet = "wallet",
-  warning = "warning",
-  headphone = "headphone",
-  send = "send",
-  pipelines = "pipelines",
-  person = "person",
-  category = "category",
-  contact = "contact",
-  clipboardIcon = "clipboardIcon",
-}
-
-enum TriggerTypes {
-  CONTACT_FORM = "CONTACT_FORM",
-}
-
-enum ActionType {
-  CREATE_CONTACT = "CREATE_CONTACT",
-}
-
-enum InvitationStatus {
-  ACCEPTED = "ACCEPTED",
-  REVOKED = "REVOKED",
-  PENDING = "PENDING",
-}
-
-// enum Plan {
-//   price_1OYxkqFj9oKEERu1NbKUxXxN = "price_1OYxkqFj9oKEERu1NbKUxXxN",
-//   price_1OYxkqFj9oKEERu1KfJGWxgN = "price_1OYxkqFj9oKEERu1KfJGWxgN",
-// }
-
-// Interfaces
-interface IUser extends Document {
-  username: string;
-  image: string;
-  email: string;
-  googleId: string;
-  role: Role;
-  agencyId?: Types.ObjectId;
-  createdAt: Date;
-}
-
-interface IAgency extends Document {
-  name: string;
-  agencyLogo: string;
-  companyEmail: string;
-  companyPhone: string;
-  address: string;
-  city: string;
-  zipCode: string;
-  state: string;
-  country: string;
-  goal: number;
-  whiteLabel: boolean;
-  users: Types.ObjectId[];
-}
-
-interface IPermissions extends Document {
-  email: string;
-  subAccountId: Types.ObjectId;
-  access: boolean;
-}
-
-interface ISubAccount extends Document {
-  name: string;
-  subAccountLogo: string;
-  companyEmail: string;
-  companyPhone: string;
-  address: string;
-  city: string;
-  zipCode: string;
-  state: string;
-  country: string;
-  agencyId: Types.ObjectId;
-}
-
-interface ITag extends Document {
-  name: string;
-  color: string;
-  subAccountId: Types.ObjectId;
-}
-
-interface IPipeline extends Document {
-  name: string;
-  subAccountId: Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-interface ILane extends Document {
-  name: string;
-  pipelineId: Types.ObjectId;
-  order: number;
-}
-
-interface ITicket extends Document {
-  name: string;
-  laneId: Types.ObjectId;
-  order: number;
-  value?: number;
-  description?: string;
-}
-
-interface ITrigger extends Document {
-  name: string;
-  type: TriggerTypes;
-  subAccountId: Types.ObjectId;
-}
-
-interface IAutomation extends Document {
-  name: string;
-  triggerId?: Types.ObjectId;
-  published: boolean;
-  subAccountId: Types.ObjectId;
-}
-
-interface IAction extends Document {
-  name: string;
-  type: ActionType;
-  automationId: Types.ObjectId;
-  laneId: string;
-}
-
-interface IContact extends Document {
-  name: string;
-  email: string;
-  subAccountId: Types.ObjectId;
-}
-
-interface IMedia extends Document {
-  name: string;
-  email: string;
-  link: string;
-  createdAt: Date;
-  subAccountId: Types.ObjectId;
-}
-
-interface IFunnel extends Document {
-  name: string;
-  subAccountId: Types.ObjectId;
-}
-
-interface IFunnelPage extends Document {
-  name: string;
-  funnelId: Types.ObjectId;
-}
-
-interface IAgencySidebarOption extends Document {
-  name: string;
-  link: string;
-  icon: Icon;
-  agencyId: Types.ObjectId;
-}
-
-interface ISubAccountSidebarOption extends Document {
-  name: string;
-  link: string;
-  icon: Icon;
-  subAccountId: Types.ObjectId;
-}
-
-interface IInvitation extends Document {
-  email: string;
-  agencyId: Types.ObjectId;
-  status: InvitationStatus;
-  role: Role;
-}
-
-interface INotification extends Document {
-  notification: string;
-  agencyId: Types.ObjectId;
-  subAccountId?: Types.ObjectId;
-  userId: Types.ObjectId;
-}
+import { ActionType, IAction, IAgency, IAgencySidebarOption, IAutomation, Icon, IContact, IFunnel, IFunnelPage, IInvitation, ILane, IMedia, INotification, InvitationStatus, IPermissions, IPipeline, ISubAccount, ISubAccountSidebarOption, ITag, ITicket, ITrigger, IUser, Role, TriggerTypes } from "@/types/types";
+import { Schema, model, Types, models } from "mongoose";
 
 // Schemas
 const userSchema = new Schema<IUser>({
@@ -212,22 +9,31 @@ const userSchema = new Schema<IUser>({
   googleId: { type: String },
   role: { type: String, enum: Role, default: Role.SUBACCOUNT_USER },
   agencyId: { type: Types.ObjectId, ref: "Agency" },
+  permissions: [{ type: Types.ObjectId, ref: "Permission" }],
+  ticket: [{ type: Types.ObjectId, ref: "Ticket" }],
+  notification: [{ type: Types.ObjectId, ref: "Notification" }],
   createdAt: { type: Date, default: Date.now },
 });
 
 const agencySchema = new Schema<IAgency>({
   name: { type: String, required: true },
-  agencyLogo: { type: String, required: true },
-  companyEmail: { type: String, required: true },
-  companyPhone: { type: String, required: true },
+  agencyLogo: { type: String }, // Assuming `Text` is string in MongoDB
+  companyEmail: { type: String },
+  companyPhone: { type: String },
+  whiteLabel: { type: Boolean, default: true },
   address: { type: String, required: true },
   city: { type: String, required: true },
   zipCode: { type: String, required: true },
   state: { type: String, required: true },
   country: { type: String, required: true },
   goal: { type: Number, default: 5 },
-  whiteLabel: { type: Boolean, default: true },
-  users: [{ type: Types.ObjectId, ref: "User" }],
+  users: [{ type: Schema.Types.ObjectId, ref: "User" }], // Refers to `User` model
+  createdAt: { type: Date, default: Date.now },
+  subAccountsId: [{ type: Schema.Types.ObjectId, ref: "SubAccount" }],
+  sidebarOptions: [{ type: Schema.Types.ObjectId, ref: "AgencySidebarOption" }],
+  invitations: [{ type: Schema.Types.ObjectId, ref: "Invitation" }],
+  notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
+  addOns: [{ type: Schema.Types.ObjectId, ref: "AddOns" }],
 });
 
 const permissionsSchema = new Schema<IPermissions>({

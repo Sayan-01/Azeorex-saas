@@ -6,10 +6,10 @@ import { MenuIcon } from "lucide-react";
 import GlassSheet from "@/components/global/glass-sheet";
 import { auth } from "../../../../../auth";
 import Image from "next/image";
+import UserBtn from "./user-btn";
 
 const LandingPageNavbar = async () => {
   const session = await auth();
-  // console.log(session);
 
   return (
     <div className="w-full md:px-10 flex justify-between sticky top-0 items-center py-5 z-50">
@@ -21,21 +21,23 @@ const LandingPageNavbar = async () => {
             <Link href="/agency">
               <Button
                 variant="outline"
-                className="bg-themeBlack element rounded-2xl flex gap-2 border-themeGray elemrnt hover:bg-themeGray"
+                className="bg-themeBlack element rounded-2xl h-9 flex gap-2 border-themeGray elemrnt hover:bg-themeGray"
               >
                 <Compass />
                 Create
               </Button>
             </Link>
-            <div className="w-9 h-9 rounded-full overflow-hidden">
-              <Image
-                alt="profile-image"
-                src={session?.user?.image || "/user.png"}
-                className="w-full h-full"
-                width={100}
-                height={100}
-              />
-            </div>
+            <UserBtn imageUrl={session?.user?.image || "/user.png"}>
+              <div className="w-9 h-9 rounded-full overflow-hidden">
+                <Image
+                  alt="profile-image"
+                  src={session?.user?.image || "/user.png"}
+                  className="w-full h-full"
+                  width={100}
+                  height={100}
+                />
+              </div>
+            </UserBtn>
           </div>
         ) : (
           <Link href="/agency/sign-in">

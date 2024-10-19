@@ -245,9 +245,17 @@ html {
 .box::-webkit-scrollbar {
   display: none !important;
 }
+
+
+
+/* Scrollbar styling */
+
+
 .box1::-webkit-scrollbar {
   width: 6px;
+  position: fixed; /* Ensures the scrollbar behaves like an absolute element */
 }
+
 .box1::-webkit-scrollbar-track {
   background: #cecefe00;
   border-radius: 50px;
