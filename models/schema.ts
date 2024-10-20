@@ -1,10 +1,35 @@
-import { ActionType, IAction, IAgency, IAgencySidebarOption, IAutomation, Icon, IContact, IFunnel, IFunnelPage, IInvitation, ILane, IMedia, INotification, InvitationStatus, IPermissions, IPipeline, ISubAccount, ISubAccountSidebarOption, ITag, ITicket, ITrigger, IUser, Role, TriggerTypes } from "@/types/types";
+import {
+  ActionType,
+  IAction,
+  IAgency,
+  IAgencySidebarOption,
+  IAutomation,
+  Icon,
+  IContact,
+  IFunnel,
+  IFunnelPage,
+  IInvitation,
+  ILane,
+  IMedia,
+  INotification,
+  InvitationStatus,
+  IPermissions,
+  IPipeline,
+  ISubAccount,
+  ISubAccountSidebarOption,
+  ITag,
+  ITicket,
+  ITrigger,
+  IUser,
+  Role,
+  TriggerTypes,
+} from "@/types/types";
 import { Schema, model, Types, models } from "mongoose";
 
 // Schemas
 const userSchema = new Schema<IUser>({
   username: { type: String, required: true },
-  image: { type: String },
+  image: { type: String, default: '/user.png' },
   email: { type: String, required: true, unique: true },
   googleId: { type: String },
   role: { type: String, enum: Role, default: Role.SUBACCOUNT_USER },

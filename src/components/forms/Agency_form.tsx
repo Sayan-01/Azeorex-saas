@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { AlertDialog } from "../ui/alert-dialog";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -35,7 +35,7 @@ type Props = {
   data?: Partial<IAgency>;
 };
 
-const Agency_details = ({data}: Props) => {
+const Agency_form = ({ data }: Props) => {
   const { toast } = useToast();
   const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -56,11 +56,16 @@ const Agency_details = ({data}: Props) => {
   const isLoading = form.formState.isSubmitting;
   const handleSubmit = async (value: z.infer<typeof FormSchema>) => {
     try {
-      if (true) {
+      let newUserData;
+      let customerId;
+      if (!data?.id) {
+        console.log("stripe things");
+        
       }
-      newUserData = await initUser({
-        role: "AGENCY_OWNER",
-      });
+
+      // newUserData = await initUser({
+      //   role: "AGENCY_OWNER",
+      // });
     } catch (error) {}
   };
   const handleDeleteAgency = () => {};
@@ -290,4 +295,4 @@ const Agency_details = ({data}: Props) => {
   );
 };
 
-export default Agency_details;
+export default Agency_form;

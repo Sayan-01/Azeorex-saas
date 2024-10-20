@@ -8,33 +8,7 @@ import { User } from "./models/schema";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
-    CredentialsProvider({
-      // name: "Cradentials",
-      // credentials: {
-      //   email: {},
-      //   password: {},
-      // },
-      // async authorize(credentials) {
-      //   const { email, password } = credentials;
-
-      //   if (!email || !password) {
-      //     throw new Error("Please fill all fields");
-      //   }
-
-      //   await connectDb();
-
-      //   const user = await User.findOne({ email }).select("+password");
-      //   if (!user) {
-      //     throw new Error("User not found");
-      //   }
-
-      //   const isAuth = await bcrypt.compare(password, user.password);
-      //   if (!isAuth) {
-      //     throw new Error("Password does not match");
-      //   }
-      //   return user;
-      // },
-    }),
+    CredentialsProvider({}),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
@@ -55,19 +29,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         const alreadyUserr = await User.findOne({ email });
         if (!alreadyUserr) return token;
         token._id = alreadyUserr._id;
-        token.isVarified = alreadyUserr.isVarified;
-        token.isAdmin = alreadyUserr.isAdmin;
         token.username = alreadyUserr.username;
+        token.role = alreadyUserr.role;
         return token;
       }
       return token;
     },
     session: async ({ session, token }) => {
       if (token._id && session.user) {
+        // @ts-ignore: Ignore type error for role
         session.user._id = token._id;
-        session.user.isVarified = token.isVarified;
-        session.user.isAdmin = token.isAdmin;
+        // @ts-ignore: Ignore type error for role
         session.user.username = token.username;
+        // @ts-ignore: Ignore type error for role
+        session.user.role = token.role;
       }
       return session;
     },

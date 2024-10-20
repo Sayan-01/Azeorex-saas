@@ -59,7 +59,7 @@ export interface IUser extends Document {
   username: string;
   image: string;
   email: string;
-  googleId: string;
+  googleId?: string;
   role: Role;
   agencyId?: Types.ObjectId;
   permissions?: Types.ObjectId[];

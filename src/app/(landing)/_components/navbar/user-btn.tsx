@@ -25,7 +25,7 @@ const UserBtn = ({ children, className, imageUrl }: Props) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuLabel className="flex gap-4  items-center">
-          <div className=" element flex items-center justify-center rounded-full">
+          <div className="flex items-center justify-center rounded-full">
             <Image
               alt="user-image"
               className="w-11 h-11  rounded-full"
@@ -44,7 +44,7 @@ const UserBtn = ({ children, className, imageUrl }: Props) => {
             href="/settings"
             className=""
           >
-            <DropdownMenuItem className="mt-3 opacity-60">
+            <DropdownMenuItem className="mt-3 opacity-50">
               <div className=" h-10 w-10 flex items-center justify-center mr-4">
                 <Settings size={16} />
               </div>
@@ -52,7 +52,7 @@ const UserBtn = ({ children, className, imageUrl }: Props) => {
             </DropdownMenuItem>
           </Link>
 
-          <DropdownMenuItem className="mb-3 opacity-60">
+          <DropdownMenuItem className="mb-3 opacity-50">
             <form
               action={Sign_Out}
               className="w-full"
