@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { AlertDialog } from "../ui/alert-dialog";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -14,7 +14,8 @@ import FileUpload from "../global/FileUpload";
 import { Switch } from "../ui/switch";
 import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
-import { IAgency } from "@/types/types";
+import { IAgency, Role } from "@/types/types";
+import { initUser, upsertAgency } from "@/lib/queries";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -38,6 +39,8 @@ type Props = {
 const Agency_form = ({ data }: Props) => {
   const { toast } = useToast();
   const router = useRouter();
+  const [deletingAgency, setDeletingAgency] = useState(false);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -54,21 +57,66 @@ const Agency_form = ({ data }: Props) => {
     },
   });
   const isLoading = form.formState.isSubmitting;
-  const handleSubmit = async (value: z.infer<typeof FormSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
       let newUserData;
-      let customerId;
       if (!data?.id) {
         console.log("stripe things");
-        
       }
+      newUserData = await initUser({ role: Role.AGENCY_OWNER });
 
-      // newUserData = await initUser({
-      //   role: "AGENCY_OWNER",
-      // });
-    } catch (error) {}
+      const response = await upsertAgency({
+        address: values.address,
+        agencyLogo: values.agencyLogo,
+        city: values.city,
+        companyPhone: values.companyPhone,
+        country: values.country,
+        name: values.name,
+        state: values.state,
+        whiteLabel: values.whiteLabel,
+        zipCode: values.zipCode,
+        createdAt: new Date(),
+        companyEmail: values.companyEmail,
+        goal: 5,
+      });
+      toast({
+        title: "Created Agency",
+      });
+      if (data?.id) return router.refresh();
+      if (response) {
+        return router.refresh();
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Oppse!",
+        description: "could not create your agency",
+      });
+    }
   };
-  const handleDeleteAgency = () => {};
+
+  const handleDeleteAgency = async () => {
+    if (!data?.id) return;
+    setDeletingAgency(true);
+    //WIP: discontinue the subscription
+    try {
+      //  const response = await deleteAgency(data.id);
+      toast({
+        title: "Deleted Agency",
+        description: "Deleted your agency and all subaccounts",
+      });
+      router.refresh();
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Oppse!",
+        description: "could not delete your agency ",
+      });
+    }
+    setDeletingAgency(false);
+  };
 
   return (
     <AlertDialog>

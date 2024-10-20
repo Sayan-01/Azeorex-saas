@@ -2,9 +2,9 @@
 
 import { redirect } from "next/navigation";
 import { auth } from "../../auth";
-import { Invitation, Notification, SubAccount, User } from "../../models/schema";
+import { Agency, Invitation, Notification, SubAccount, User } from "../../models/schema";
 import connectDb from "./dbConnect";
-import { IUser } from "@/types/types";
+import { IAgency, IUser } from "@/types/types";
 import { getSession } from "next-auth/react";
 
 //============================================================
@@ -78,7 +78,7 @@ export const saveActivityLogsNotification = async ({ agencyId, description, subA
 export const createTeameUser = async (agencyId: string, user: Partial<IUser>) => {
   if (user.role === "AGENCY_OWNER") return null;
   const response = await User.create({ ...user });
-  return response
+  return response;
 };
 
 export const verifyAndAcceptInvitation = async () => {
@@ -121,3 +121,97 @@ export const verifyAndAcceptInvitation = async () => {
 };
 
 //=============================================================
+
+export const initUser = async (newUser: Partial<IUser>) => {
+  const session = await auth();
+  if (!session) return;
+  connectDb();
+
+  const userData = await User.findOneAndUpdate(
+    { email: newUser.email }, // Search for user by email
+    {
+      $set: newUser, // Update with new user data
+      $setOnInsert: {
+        image: newUser.image,
+        email: newUser.email,
+        name: `${newUser.username}`,
+        role: newUser.role || "SUBACCOUNT_USER",
+      },
+    },
+    {
+      upsert: true, // Insert if the user doesn't exist
+      new: true, // Return the updated document
+      setDefaultsOnInsert: true, // Apply schema defaults when inserting
+    }
+  );
+
+  const userSession = await getSession();
+  if (userSession && userSession.user) {
+    // @ts-ignore: Ignore type error for role
+    userSession.user.role = newUser.role || "SUBACCOUNT_USER";
+  }
+
+  return userData;
+};
+
+export const upsertAgency = async (agency: Partial<IAgency>) => {
+  if (!agency.companyEmail) return null;
+
+  try {
+    await connectDb();
+    const user = await User.findOne({ email: agency.companyEmail });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const agencyDetails = await Agency.findByIdAndUpdate(
+      agency.id,
+      {
+        $set: { ...agency }, // Update the agency details
+        $setOnInsert: {
+          users: [user._id], // Add user reference
+          sidebarOptions: [
+            {
+              name: "Dashboard",
+              icon: "category",
+              link: `/agency/${agency.id}`,
+            },
+            {
+              name: "Launchpad",
+              icon: "clipboardIcon",
+              link: `/agency/${agency.id}/launchpad`,
+            },
+            {
+              name: "Billing",
+              icon: "payment",
+              link: `/agency/${agency.id}/billing`,
+            },
+            {
+              name: "Settings",
+              icon: "settings",
+              link: `/agency/${agency.id}/settings`,
+            },
+            {
+              name: "Sub Accounts",
+              icon: "person",
+              link: `/agency/${agency.id}/all-subaccounts`,
+            },
+            {
+              name: "Team",
+              icon: "shield",
+              link: `/agency/${agency.id}/team`,
+            },
+          ],
+        },
+      },
+      {
+        new: true, // Return the updated document
+        upsert: true, // Insert if the agency doesn't exist
+        setDefaultsOnInsert: true, // Apply defaults when inserting
+      }
+    );
+    return agencyDetails;
+  } catch (error) {
+    console.log(error);
+  }
+};

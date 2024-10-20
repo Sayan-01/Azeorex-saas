@@ -34,7 +34,7 @@ const userSchema = new Schema<IUser>({
   googleId: { type: String },
   role: { type: String, enum: Role, default: Role.SUBACCOUNT_USER },
   agencyId: { type: Types.ObjectId, ref: "Agency" },
-  permissions: [{ type: Types.ObjectId, ref: "Permission" }],
+  permissions: [{ type: Types.ObjectId, ref: "Permissions" }],
   ticket: [{ type: Types.ObjectId, ref: "Ticket" }],
   notification: [{ type: Types.ObjectId, ref: "Notification" }],
   createdAt: { type: Date, default: Date.now },

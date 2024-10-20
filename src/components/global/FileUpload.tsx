@@ -4,7 +4,6 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { UploadDropzone } from "@/lib/uploadthings";
-import { error } from "console";
 
 type Prop = {
   apiEndpoint: "agencyLogo" | "avatar" | "subaccountLogo" | "media";
