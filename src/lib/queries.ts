@@ -7,7 +7,6 @@ import connectDb from "./dbConnect";
 import { IAgency, IUser, Role } from "@/types/types";
 import { getSession } from "next-auth/react";
 
-
 //============================================================
 
 export const getUserDetails = async () => {
@@ -19,10 +18,10 @@ export const getUserDetails = async () => {
     .populate({
       path: "agencyId",
       populate: [
-        { path: "sidebarOption" }, // Populate SidebarOption inside Agency
+        { path: "sidebarOptions" }, // Populate SidebarOption inside Agency
         {
-          path: "subAccount",
-          populate: { path: "sidebarOption" }, // Populate SidebarOption inside SubAccount
+          path: "subAccountsId",
+          populate: { path: "sidebarOptions" }, // Populate SidebarOption inside SubAccount
         },
       ],
     })
@@ -116,7 +115,7 @@ export const verifyAndAcceptInvitation = async () => {
   } else {
     const agency = await Agency.findOne({
       companyEmail: session?.user?.email,
-    });    
+    });
     return agency ? agency._id : null;
   }
 };
@@ -155,24 +154,21 @@ export const initUser = async (newUser: Partial<IUser>) => {
   return userData;
 };
 
-  //============================================================================
+//============================================================================
 
 export const updateUserRole = async (newUser: Partial<IUser>) => {
   const session = await auth();
   if (!session) return;
   connectDb();
-  console.log("sssss",newUser.role);
-  
+  console.log("sssss", newUser.role);
 
   await User.findOneAndUpdate(
     { email: session?.user?.email }, // Search for user by email
     {
       role: newUser.role || Role.SUBACCOUNT_USER,
+      agencyId: newUser.agencyId
     }
   );
-
-
-
 };
 
 export const upsertAgency = async (agency: Partial<IAgency>) => {
@@ -226,7 +222,7 @@ export const upsertAgency = async (agency: Partial<IAgency>) => {
       ];
 
       await agencyDetails.save();
-
+      return JSON.stringify(agencyDetails.toObject());
     }
 
     return null;

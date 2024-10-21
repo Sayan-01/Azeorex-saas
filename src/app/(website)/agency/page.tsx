@@ -3,14 +3,13 @@ import React from "react";
 import { auth } from "../../../../auth";
 import { getUserDetails, verifyAndAcceptInvitation } from "@/lib/queries";
 import Agency_form from "@/components/forms/Agency_form";
+import Unauthorized from "@/components/unauthorized";
 
 const page = async () => {
   const session = await auth();
   if (!session?.user) redirect("/agency/sign-in");
 
-  const agencyId = await verifyAndAcceptInvitation();  
-  console.log(agencyId);
-  
+  const agencyId = await verifyAndAcceptInvitation();    
 
   const user = await getUserDetails();  
 
@@ -20,7 +19,7 @@ const page = async () => {
     } else if (user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") {
       return redirect(`/agency/${agencyId}`);
     } else {
-      return <div>Not authorized</div>;
+      return <div><Unauthorized/></div>;
     }
   }
   

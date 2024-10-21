@@ -64,19 +64,7 @@ const Agency_form = ({ data }: Props) => {
   
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-
-      await updateUserRole({ role: Role.AGENCY_OWNER });
-      
-      if (session) {
-        await update({
-          ...session,
-          user: { ...session.user, role: Role.AGENCY_OWNER },
-        });
-      } else {
-        console.error("Session is null. User is not authenticated.");
-      }
-
-      await upsertAgency({
+       let agencyDetails = await upsertAgency({
         address: values.address,
         agencyLogo: values.agencyLogo,
         city: values.city,
@@ -90,6 +78,20 @@ const Agency_form = ({ data }: Props) => {
         companyEmail: values.companyEmail,
         goal: 5,
       });
+
+      const data = JSON.parse(agencyDetails ?? "");
+      console.log(data);
+      
+      await updateUserRole({ role: Role.AGENCY_OWNER, agencyId: data._id });
+
+      if (session) {
+        await update({
+          ...session,
+          user: { ...session.user, role: Role.AGENCY_OWNER },
+        });
+      } else {
+        console.error("Session is null. User is not authenticated.");
+      }
 
       toast({
         title: "✨ Agency Created",
