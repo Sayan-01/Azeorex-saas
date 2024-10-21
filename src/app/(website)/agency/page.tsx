@@ -9,6 +9,8 @@ const page = async () => {
   if (!session?.user) redirect("/agency/sign-in");
 
   const agencyId = await verifyAndAcceptInvitation();  
+  console.log(agencyId);
+  
 
   const user = await getUserDetails();  
 

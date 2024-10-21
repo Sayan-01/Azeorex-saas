@@ -15,8 +15,10 @@ import { Switch } from "../ui/switch";
 import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
 import { IAgency, Role } from "@/types/types";
-import { initUser, upsertAgency } from "@/lib/queries";
+import { initUser, updateUserRole, upsertAgency } from "@/lib/queries";
 import { v4 as uuidv4 } from "uuid";
+import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -41,6 +43,7 @@ const Agency_form = ({ data }: Props) => {
   const { toast } = useToast();
   const router = useRouter();
   const [deletingAgency, setDeletingAgency] = useState(false);
+  const { data: session, update } = useSession();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -58,51 +61,22 @@ const Agency_form = ({ data }: Props) => {
     },
   });
   const isLoading = form.formState.isSubmitting;
-  // const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
-  //   try {
-  //     if (!data?.id) {
-  //       console.log("stripe things");
-  //     }
-
-  //     //let newUserData = await initUser({ role: Role.AGENCY_OWNER });
-
-  //     const response = await upsertAgency({
-  //       address: values.address,
-  //       agencyLogo: values.agencyLogo,
-  //       city: values.city,
-  //       companyPhone: values.companyPhone,
-  //       country: values.country,
-  //       name: values.name,
-  //       state: values.state,
-  //       whiteLabel: values.whiteLabel,
-  //       zipCode: values.zipCode,
-  //       createdAt: new Date(),
-  //       companyEmail: values.companyEmail,
-  //       goal: 5,
-  //     });
-  //     toast({
-  //       title: "Created Agency",
-  //     });
-  //     // if (data?.id) return router.refresh();
-  //     if (response) {
-  //       console.log(response);
-
-  //       return router.refresh();
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Oppse!",
-  //       description: "could not create your agency",
-  //     });
-  //   }
-  // };
+  
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      //let newUserData = await initUser({ role: Role.AGENCY_OWNER });
 
-      const response = await upsertAgency({
+      await updateUserRole({ role: Role.AGENCY_OWNER });
+      
+      if (session) {
+        await update({
+          ...session,
+          user: { ...session.user, role: Role.AGENCY_OWNER },
+        });
+      } else {
+        console.error("Session is null. User is not authenticated.");
+      }
+
+      await upsertAgency({
         address: values.address,
         agencyLogo: values.agencyLogo,
         city: values.city,
@@ -117,23 +91,18 @@ const Agency_form = ({ data }: Props) => {
         goal: 5,
       });
 
-      console.log("sssssssssssssssssss",response);
-      
-
-      if (response) {
-        console.log(response);
-        toast({
-          title: "Created Agency",
-        });
-        return router.refresh();
-      }
+      toast({
+        title: "✨ Agency Created",
+        description: "Congratulations your agency is created"
+      });
+      return router.refresh();
     } catch (error) {
-      console.log("errrrror",error);
-      // toast({
-      //   variant: "destructive",
-      //   title: "Oppse!",
-      //   description: "could not create your agency",
-      // });
+      console.log("errrrror", error);
+      toast({
+        variant: "destructive",
+        title: "😫 Oppse!",
+        description: "Could not create your agency",
+      });
     }
   };
 

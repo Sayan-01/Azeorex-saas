@@ -9,10 +9,12 @@ type Props = {
 
 const Sidebar = async ({ id, type }: Props) => {
   const user = await getUserDetails();
-  if (!user) return;
+  if (!user) return null;
+
   if(!user?.agencyId) return
   let sidebarLogo = '/azeorex.png'
 
+  const details = type ==="agency"?user.age
   return <div>
     <MenuOptions defaultOption={true}  />
   </div>;

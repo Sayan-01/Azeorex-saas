@@ -1,12 +1,12 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { auth } from "../../auth";
+import { auth, signOut } from "../../auth";
 import { Agency, Invitation, Notification, SubAccount, User } from "../../models/schema";
 import connectDb from "./dbConnect";
 import { IAgency, IUser, Role } from "@/types/types";
 import { getSession } from "next-auth/react";
-import { NextResponse } from "next/server";
+
 
 //============================================================
 
@@ -114,10 +114,10 @@ export const verifyAndAcceptInvitation = async () => {
       return userDetails.agencyId;
     } else return null;
   } else {
-    const agency = await User.findOne({
-      email: session?.user?.email,
-    });
-    return agency ? agency.agencyId : null;
+    const agency = await Agency.findOne({
+      companyEmail: session?.user?.email,
+    });    
+    return agency ? agency._id : null;
   }
 };
 
@@ -153,6 +153,26 @@ export const initUser = async (newUser: Partial<IUser>) => {
   }
 
   return userData;
+};
+
+  //============================================================================
+
+export const updateUserRole = async (newUser: Partial<IUser>) => {
+  const session = await auth();
+  if (!session) return;
+  connectDb();
+  console.log("sssss",newUser.role);
+  
+
+  await User.findOneAndUpdate(
+    { email: session?.user?.email }, // Search for user by email
+    {
+      role: newUser.role || Role.SUBACCOUNT_USER,
+    }
+  );
+
+
+
 };
 
 export const upsertAgency = async (agency: Partial<IAgency>) => {
@@ -207,8 +227,6 @@ export const upsertAgency = async (agency: Partial<IAgency>) => {
 
       await agencyDetails.save();
 
-      // Convert agencyDetails to a plain JavaScript object before returning
-      return agencyDetails.toObject();
     }
 
     return null;

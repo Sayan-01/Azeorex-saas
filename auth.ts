@@ -23,17 +23,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     error: "/auth/error",
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
-      if (token.sub && user) {
-        const email = token.email;
-        const alreadyUserr = await User.findOne({ email });
-        if (!alreadyUserr) return token;
-        token._id = alreadyUserr._id;
-        token.username = alreadyUserr.username;
-        token.role = alreadyUserr.role;
-        return token;
+    jwt: async ({ token, user, trigger, session }) => {
+      // If the user is signing in for the first time, or there's an existing user
+      if(trigger === 'update') {
+        return{
+          ...token,
+          ...session.user
+        }
       }
-      return token;
+      if (user) {
+        const email = user.email;
+        const alreadyUser = await User.findOne({ email });
+
+        // If user exists, populate the token with user info
+        if (alreadyUser) {
+          token._id = alreadyUser._id;
+          token.username = alreadyUser.username;
+          token.role = alreadyUser.role; // Assign user's role
+        }
+      }
+      return token; // Return the updated token
     },
     session: async ({ session, token }) => {
       if (token._id && session.user) {

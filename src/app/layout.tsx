@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { auth } from "../../auth";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,12 +20,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  
+
   return (
     <SessionProvider session={session}>
-    <html lang="en">
-      <body className={`bg-black dark w-full overflo min-h-screen antialiased box `}>{children}</body>
-    </html>
-     </SessionProvider>
+      <html lang="en">
+        <body className={`bg-black dark w-full overflo min-h-screen antialiased box `}>{children}<Toaster/></body>
+      </html>
+    </SessionProvider>
   );
 }
