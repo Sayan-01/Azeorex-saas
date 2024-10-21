@@ -25,11 +25,12 @@ import {
   TriggerTypes,
 } from "@/types/types";
 import { Schema, model, Types, models } from "mongoose";
+import { v4 as uuidv4 } from "uuid";
 
 // Schemas
 const userSchema = new Schema<IUser>({
   username: { type: String, required: true },
-  image: { type: String, default: '/user.png' },
+  image: { type: String, default: "/user.png" },
   email: { type: String, required: true, unique: true },
   googleId: { type: String },
   role: { type: String, enum: Role, default: Role.SUBACCOUNT_USER },
@@ -55,7 +56,14 @@ const agencySchema = new Schema<IAgency>({
   users: [{ type: Schema.Types.ObjectId, ref: "User" }], // Refers to `User` model
   createdAt: { type: Date, default: Date.now },
   subAccountsId: [{ type: Schema.Types.ObjectId, ref: "SubAccount" }],
-  sidebarOptions: [{ type: Schema.Types.ObjectId, ref: "AgencySidebarOption" }],
+  sidebarOptions: [
+    {
+      name: { type: String, required: true },
+      link: { type: String, required: true },
+      icon: { type: String, enum: Icon, required: true },
+      _id: false,
+    },
+  ],
   invitations: [{ type: Schema.Types.ObjectId, ref: "Invitation" }],
   notifications: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
   addOns: [{ type: Schema.Types.ObjectId, ref: "AddOns" }],
@@ -151,20 +159,6 @@ const funnelPageSchema = new Schema<IFunnelPage>({
   funnelId: { type: Schema.Types.ObjectId, ref: "Funnel", required: true },
 });
 
-const agencySidebarOptionSchema = new Schema<IAgencySidebarOption>({
-  name: { type: String, required: true },
-  link: { type: String, required: true },
-  icon: { type: String, enum: Icon, required: true },
-  agencyId: { type: Schema.Types.ObjectId, ref: "Agency", required: true },
-});
-
-const subAccountSidebarOptionSchema = new Schema<ISubAccountSidebarOption>({
-  name: { type: String, required: true },
-  link: { type: String, required: true },
-  icon: { type: String, enum: Icon, required: true },
-  subAccountId: { type: Schema.Types.ObjectId, ref: "SubAccount", required: true },
-});
-
 const invitationSchema = new Schema<IInvitation>({
   email: { type: String, required: true },
   agencyId: { type: Schema.Types.ObjectId, ref: "Agency", required: true },
@@ -195,7 +189,5 @@ export const Contact = models.Contact || model<IContact>("Contact", contactSchem
 export const Media = models.Media || model<IMedia>("Media", mediaSchema);
 export const Funnel = models.Funnel || model<IFunnel>("Funnel", funnelSchema);
 export const FunnelPage = models.FunnelPage || model<IFunnelPage>("FunnelPage", funnelPageSchema);
-export const AgencySidebarOption = models.AgencySidebarOption || model<IAgencySidebarOption>("AgencySidebarOption", agencySidebarOptionSchema);
-export const SubAccountSidebarOption = models.SubAccountSidebarOption || model<ISubAccountSidebarOption>("SubAccountSidebarOption", subAccountSidebarOptionSchema);
 export const Invitation = models.Invitation || model<IInvitation>("Invitation", invitationSchema);
 export const Notification = models.Notification || model<INotification>("Notification", notificationSchema);

@@ -4,8 +4,9 @@ import { redirect } from "next/navigation";
 import { auth } from "../../auth";
 import { Agency, Invitation, Notification, SubAccount, User } from "../../models/schema";
 import connectDb from "./dbConnect";
-import { IAgency, IUser } from "@/types/types";
+import { IAgency, IUser, Role } from "@/types/types";
 import { getSession } from "next-auth/react";
+import { NextResponse } from "next/server";
 
 //============================================================
 
@@ -135,7 +136,7 @@ export const initUser = async (newUser: Partial<IUser>) => {
         image: newUser.image,
         email: newUser.email,
         name: `${newUser.username}`,
-        role: newUser.role || "SUBACCOUNT_USER",
+        role: newUser.role || Role.SUBACCOUNT_USER,
       },
     },
     {
@@ -164,54 +165,55 @@ export const upsertAgency = async (agency: Partial<IAgency>) => {
       throw new Error("User not found");
     }
 
-    const agencyDetails = await Agency.findByIdAndUpdate(
-      agency.id,
-      {
-        $set: { ...agency }, // Update the agency details
-        $setOnInsert: {
-          users: [user._id], // Add user reference
-          sidebarOptions: [
-            {
-              name: "Dashboard",
-              icon: "category",
-              link: `/agency/${agency.id}`,
-            },
-            {
-              name: "Launchpad",
-              icon: "clipboardIcon",
-              link: `/agency/${agency.id}/launchpad`,
-            },
-            {
-              name: "Billing",
-              icon: "payment",
-              link: `/agency/${agency.id}/billing`,
-            },
-            {
-              name: "Settings",
-              icon: "settings",
-              link: `/agency/${agency.id}/settings`,
-            },
-            {
-              name: "Sub Accounts",
-              icon: "person",
-              link: `/agency/${agency.id}/all-subaccounts`,
-            },
-            {
-              name: "Team",
-              icon: "shield",
-              link: `/agency/${agency.id}/team`,
-            },
-          ],
+    let agencyDetails = await Agency.create({
+      ...agency,
+      users: [user._id],
+    });
+
+    if (agencyDetails) {
+      // Update the agency's sidebar options
+      agencyDetails.sidebarOptions = [
+        {
+          name: "Dashboard",
+          icon: "category",
+          link: `/agency/${agencyDetails._id.toString()}`,
         },
-      },
-      {
-        new: true, // Return the updated document
-        upsert: true, // Insert if the agency doesn't exist
-        setDefaultsOnInsert: true, // Apply defaults when inserting
-      }
-    );
-    return agencyDetails;
+        {
+          name: "Launchpad",
+          icon: "clipboardIcon",
+          link: `/agency/${agencyDetails._id.toString()}/launchpad`,
+        },
+        {
+          name: "Billing",
+          icon: "payment",
+          link: `/agency/${agencyDetails._id.toString()}/billing`,
+        },
+        {
+          name: "Settings",
+          icon: "settings",
+          link: `/agency/${agencyDetails._id.toString()}/settings`,
+        },
+        {
+          name: "Sub Accounts",
+          icon: "person",
+          link: `/agency/${agencyDetails._id.toString()}/all-subaccounts`,
+        },
+        {
+          name: "Team",
+          icon: "shield",
+          link: `/agency/${agencyDetails._id.toString()}/team`,
+        },
+      ];
+
+      await agencyDetails.save();
+
+      // Convert agencyDetails to a plain JavaScript object before returning
+      return agencyDetails.toObject();
+    }
+
+    return null;
   } catch (error) {
-    console.log(error);
+    console.log("err", error);
+    return null;
   }
 };

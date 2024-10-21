@@ -16,6 +16,7 @@ import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
 import { IAgency, Role } from "@/types/types";
 import { initUser, upsertAgency } from "@/lib/queries";
+import { v4 as uuidv4 } from "uuid";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -57,13 +58,49 @@ const Agency_form = ({ data }: Props) => {
     },
   });
   const isLoading = form.formState.isSubmitting;
+  // const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
+  //   try {
+  //     if (!data?.id) {
+  //       console.log("stripe things");
+  //     }
+
+  //     //let newUserData = await initUser({ role: Role.AGENCY_OWNER });
+
+  //     const response = await upsertAgency({
+  //       address: values.address,
+  //       agencyLogo: values.agencyLogo,
+  //       city: values.city,
+  //       companyPhone: values.companyPhone,
+  //       country: values.country,
+  //       name: values.name,
+  //       state: values.state,
+  //       whiteLabel: values.whiteLabel,
+  //       zipCode: values.zipCode,
+  //       createdAt: new Date(),
+  //       companyEmail: values.companyEmail,
+  //       goal: 5,
+  //     });
+  //     toast({
+  //       title: "Created Agency",
+  //     });
+  //     // if (data?.id) return router.refresh();
+  //     if (response) {
+  //       console.log(response);
+
+  //       return router.refresh();
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Oppse!",
+  //       description: "could not create your agency",
+  //     });
+  //   }
+  // };
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      let newUserData;
-      if (!data?.id) {
-        console.log("stripe things");
-      }
-      newUserData = await initUser({ role: Role.AGENCY_OWNER });
+      //let newUserData = await initUser({ role: Role.AGENCY_OWNER });
 
       const response = await upsertAgency({
         address: values.address,
@@ -79,20 +116,24 @@ const Agency_form = ({ data }: Props) => {
         companyEmail: values.companyEmail,
         goal: 5,
       });
-      toast({
-        title: "Created Agency",
-      });
-      if (data?.id) return router.refresh();
+
+      console.log("sssssssssssssssssss",response);
+      
+
       if (response) {
+        console.log(response);
+        toast({
+          title: "Created Agency",
+        });
         return router.refresh();
       }
     } catch (error) {
-      console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Oppse!",
-        description: "could not create your agency",
-      });
+      console.log("errrrror",error);
+      // toast({
+      //   variant: "destructive",
+      //   title: "Oppse!",
+      //   description: "could not create your agency",
+      // });
     }
   };
 
@@ -134,7 +175,7 @@ const Agency_form = ({ data }: Props) => {
               onSubmit={form.handleSubmit(handleSubmit)}
               className="space-y-8"
             >
-              <div className=" flex md:flex-row gap-4 ">
+              <div className=" flex md:flex-row gap-6 ">
                 <FormField
                   control={form.control}
                   name="agencyLogo"
@@ -152,7 +193,7 @@ const Agency_form = ({ data }: Props) => {
                     </FormItem>
                   )}
                 />
-                <div className="w-full">
+                <div className="w-full flex flex-col gap-y-5">
                   <FormField
                     control={form.control}
                     name="name"
