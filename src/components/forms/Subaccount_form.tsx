@@ -14,36 +14,38 @@ import FileUpload from "../global/FileUpload";
 import { Switch } from "../ui/switch";
 import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
-import { IAgency, Role } from "@/types/types";
-import { updateUserRole, upsertAgency } from "@/lib/queries";
+import { IAgency, ISubAccount, Role } from "@/types/types";
+import { upsertsubAccount } from "@/lib/queries";
 import { v4 as uuidv4 } from "uuid";
 import { useSession } from "next-auth/react";
 import { Session } from "next-auth";
+import { Types } from "mongoose";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
     message: "Agency name must be at least 2 characters.",
   }),
-  companyEmail: z.string().min(1).email(),
+  companyEmail: z.string(),
   companyPhone: z.string().min(1),
-  whiteLabel: z.boolean(),
-  address: z.string().min(1),
-  city: z.string().min(1),
-  zipCode: z.string().min(1),
-  state: z.string().min(1),
-  country: z.string().min(1),
-  agencyLogo: z.string().min(1),
+  address: z.string(),
+  city: z.string(),
+  subAccountLogo: z.string(),
+  zipCode: z.string(),
+  state: z.string(),
+  country: z.string(),
 });
 
-type Props = {
-  data?: Partial<IAgency>;
-};
+interface SubAccountDetailsProps {
+  //To add the sub account to the agency
+  agencyDetails: IAgency;
+  details?: Partial<ISubAccount>;
+  userId: string;
+  userName: string;
+}
 
-const Agency_form = ({ data }: Props) => {
+const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDetails, userId, userName }) => {
   const { toast } = useToast();
   const router = useRouter();
-  const [deletingAgency, setDeletingAgency] = useState(false);
-  const { data: session, update } = useSession();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -51,51 +53,37 @@ const Agency_form = ({ data }: Props) => {
       name: "",
       companyEmail: "",
       companyPhone: "",
-      whiteLabel: false,
       address: "",
       city: "",
+      subAccountLogo: "",
       zipCode: "",
       state: "",
       country: "",
-      agencyLogo: "",
     },
   });
   const isLoading = form.formState.isSubmitting;
-  
+
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-       let agencyDetails = await upsertAgency({
-        address: values.address,
-        agencyLogo: values.agencyLogo,
-        city: values.city,
-        companyPhone: values.companyPhone,
-        country: values.country,
+      await upsertsubAccount({
         name: values.name,
-        state: values.state,
-        whiteLabel: values.whiteLabel,
-        zipCode: values.zipCode,
-        createdAt: new Date(),
         companyEmail: values.companyEmail,
-        goal: 5,
+        companyPhone: values.companyPhone,
+        address: values.address,
+        city: values.city,
+        subAccountLogo: values.subAccountLogo,
+        zipCode: values.zipCode,
+        state: values.state,
+        country: values.country,
+        createdAt: new Date(),
+        agencyId: new Types.ObjectId(agencyDetails._id as string),
+        goal: 500,
       });
 
-      const agencyDetailsData = JSON.parse(agencyDetails ?? "");
-      console.log(agencyDetailsData);
-      
-      await updateUserRole({ role: Role.AGENCY_OWNER, agencyId: agencyDetailsData._id });
-
-      if (session) {
-        await update({
-          ...session,
-          user: { ...session.user, role: Role.AGENCY_OWNER },
-        });
-      } else {
-        console.error("Session is null. User is not authenticated.");
-      }
 
       toast({
-        title: "✨ Agency Created",
-        description: "Congratulations your agency is created"
+        title: "✨ Subaccount Created",
+        description: "Congratulations your subaccount is created",
       });
       return router.refresh();
     } catch (error) {
@@ -103,38 +91,38 @@ const Agency_form = ({ data }: Props) => {
       toast({
         variant: "destructive",
         title: "😫 Oppse!",
-        description: "Could not create your agency",
+        description: "Could not create your subaccount",
       });
     }
   };
 
-  const handleDeleteAgency = async () => {
-    if (!data?.id) return;
-    setDeletingAgency(true);
-    //WIP: discontinue the subscription
-    try {
-      //  const response = await deleteAgency(data.id);
-      toast({
-        title: "Deleted Agency",
-        description: "Deleted your agency and all subaccounts",
-      });
-      router.refresh();
-    } catch (error) {
-      console.log(error);
-      toast({
-        variant: "destructive",
-        title: "Oppse!",
-        description: "could not delete your agency ",
-      });
-    }
-    setDeletingAgency(false);
-  };
+  // const handleDeleteAgency = async () => {
+  //   if (!data?.id) return;
+  //   setDeletingAgency(true);
+  //   //WIP: discontinue the subscription
+  //   try {
+  //     //  const response = await deleteAgency(data.id);
+  //     toast({
+  //       title: "Deleted Agency",
+  //       description: "Deleted your agency and all subaccounts",
+  //     });
+  //     router.refresh();
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Oppse!",
+  //       description: "could not delete your agency ",
+  //     });
+  //   }
+  //   setDeletingAgency(false);
+  // };
 
   return (
     <AlertDialog>
       <GlassCard className="w-full">
         <CardHeader>
-          <CardTitle className="">Agency Information</CardTitle>
+          <CardTitle className="">Subaccount Information</CardTitle>
           <CardDescription>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta consequatur veniam, error id maiores iusto incidunt rem maxime? Expedita deserunt libero voluptas quasi repellendus quaerat
             accusantium officia tenetur, repudiandae quia?
@@ -146,16 +134,15 @@ const Agency_form = ({ data }: Props) => {
               onSubmit={form.handleSubmit(handleSubmit)}
               className="space-y-8"
             >
-              <div className=" flex md:flex-row gap-6 ">
                 <FormField
                   control={form.control}
-                  name="agencyLogo"
+                  name="subAccountLogo"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Agency Logo</FormLabel>
+                      <FormLabel>Subaccount Logo</FormLabel>
                       <FormControl>
-                        <FileUpload
-                          apiEndpoint="agencyLogo"
+                        <FileUpload className="w-full"
+                          apiEndpoint="subaccountLogo"
                           onChange={field.onChange}
                           value={field.value}
                         ></FileUpload>
@@ -170,14 +157,14 @@ const Agency_form = ({ data }: Props) => {
                     name="name"
                     render={({ field }) => (
                       <FormItem className="flex-1">
-                        <FormLabel>Agency Name</FormLabel>
+                        <FormLabel>Subaccount Name</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="Enter agency name"
+                            placeholder="Enter subaccount name"
                             {...field}
                           />
                         </FormControl>
-                        <FormDescription>Agency name must be at least 2 characters.</FormDescription>
+                        <FormDescription>Subaccount name must be at least 2 characters.</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -218,31 +205,6 @@ const Agency_form = ({ data }: Props) => {
                     )}
                   />
                 </div>
-              </div>
-
-              <FormField
-                control={form.control}
-                name="whiteLabel"
-                render={({ field }) => (
-                  <FormItem className="flex gap-10 items-center">
-                    <div>
-                      <FormLabel>White Label</FormLabel>
-                      <FormDescription>
-                        Check if this is a white-label service Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos quasi consequatur aut id obcaecati, voluptate voluptas? Laborum, ad ipsam!
-                        Exercitationem doloribus nam asperiores suscipit aliquid possimus, consequuntur unde delectus nihil..
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
               <FormField
                 control={form.control}
@@ -344,7 +306,7 @@ const Agency_form = ({ data }: Props) => {
                     <Loader loading={isLoading} />
                   </>
                 ) : (
-                  <p>Save agency information</p>
+                  <p>Save subaccount information</p>
                 )}
               </Button>
             </form>
@@ -355,4 +317,4 @@ const Agency_form = ({ data }: Props) => {
   );
 };
 
-export default Agency_form;
+export default SubAccountDetails;

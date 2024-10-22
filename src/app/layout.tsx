@@ -3,6 +3,7 @@ import "./globals.css";
 import { auth } from "../../auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "@/components/ui/toaster";
+import ModalProvider from "../../providers/model-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,7 +25,12 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={`bg-black dark w-full overflo min-h-screen antialiased box `}>{children}<Toaster/></body>
+        <body className={`bg-black dark w-full overflo min-h-screen antialiased box `}>
+          <ModalProvider>
+            {children}
+            <Toaster />
+          </ModalProvider>
+        </body>
       </html>
     </SessionProvider>
   );

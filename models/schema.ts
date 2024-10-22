@@ -78,14 +78,33 @@ const permissionsSchema = new Schema<IPermissions>({
 const subAccountSchema = new Schema<ISubAccount>({
   name: { type: String, required: true },
   subAccountLogo: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now },
   companyEmail: { type: String, required: true },
   companyPhone: { type: String, required: true },
+  goal: { type: Number, default: 5 },
   address: { type: String, required: true },
   city: { type: String, required: true },
   zipCode: { type: String, required: true },
   state: { type: String, required: true },
   country: { type: String, required: true },
   agencyId: { type: Schema.Types.ObjectId, ref: "Agency", required: true },
+  sidebarOption: [
+    {
+      name: { type: String, required: true },
+      link: { type: String, required: true },
+      icon: { type: String, enum: Icon, required: true },
+      _id: false,
+    },
+  ],
+  permissions: [{ type: Schema.Types.ObjectId, ref: "Permissions" }],
+  funnels: [{ type: Schema.Types.ObjectId, ref: "Funnel" }],
+  media: [{ type: Schema.Types.ObjectId, ref: "Media" }],
+  contact: [{ type: Schema.Types.ObjectId, ref: "Contact" }],
+  trigger: [{ type: Schema.Types.ObjectId, ref: "Trigger" }],
+  automation: [{ type: Schema.Types.ObjectId, ref: "Automation" }],
+  pipeline: [{ type: Schema.Types.ObjectId, ref: "Pipeline" }],
+  tags: [{ type: Schema.Types.ObjectId, ref: "Tag" }],
+  notification: [{ type: Schema.Types.ObjectId, ref: "Notification" }],
 });
 
 const tagSchema = new Schema<ITag>({

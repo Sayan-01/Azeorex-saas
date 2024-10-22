@@ -10,9 +10,10 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   imageUrl?: string;
+  margin?: string;
 };
 
-const UserBtn = ({ children, className, imageUrl }: Props) => {
+const UserBtn = ({ children, className, imageUrl, margin }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -23,7 +24,7 @@ const UserBtn = ({ children, className, imageUrl }: Props) => {
           {children}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className={margin}>
         <DropdownMenuLabel className="flex gap-4  items-center">
           <div className="flex items-center justify-center rounded-full">
             <Image

@@ -1,3 +1,4 @@
+
 import { getUserDetails } from "@/lib/queries";
 import React from "react";
 import MenuOptions from "./MenuOptions";
@@ -25,26 +26,27 @@ const Sidebar = async ({ id, type }: Props) => {
   }
   const sideBarOpt = type === "agency" ? user.agencyId.sidebarOptions || [] : user.agency.subAccountsId.find((subacc: any) => subacc._id === id) || [];
   const subaccounts = user.agencyId.subAccountsId.filter((subacc: any) => user.permissions.find((permission: any) => permission.subAccountsId === subacc._id && permission.access));
+  
   return (
-    <div>
+    <>
       <MenuOptions
         defaultOption={true}
-        details={details}
-        id={id}
-        sidebarLogo={sidebarLogo}
-        sideBarOpt={sideBarOpt}
         subAccounts={subaccounts}
-        user={user}
-      />
-      <MenuOptions
-        details={details}
-        id={id}
+        sideBarOptJson={JSON.stringify(sideBarOpt)}
         sidebarLogo={sidebarLogo}
-        sideBarOpt={sideBarOpt}
-        subAccounts={subaccounts}
-        user={user}
+        detailsJson={JSON.stringify(details)}
+        userJson={JSON.stringify(user)}
+        id={id}
       />
-    </div>
+      {/* <MenuOptions
+        subAccounts={subaccounts}
+        sideBarOptJson={JSON.stringify(sideBarOpt)}
+        sidebarLogo={sidebarLogo}
+        detailsJson={JSON.stringify(details)}
+        userJson={JSON.stringify(user)}
+        id={id}
+      /> */}
+    </>
   );
 };
 

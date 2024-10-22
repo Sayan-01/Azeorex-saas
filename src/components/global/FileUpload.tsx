@@ -4,21 +4,23 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { UploadDropzone } from "@/lib/uploadthings";
+import clsx from "clsx";
 
 type Prop = {
   apiEndpoint: "agencyLogo" | "avatar" | "subaccountLogo" | "media";
   onChange: (url?: string) => void;
   value?: string;
+  className?: string 
 };
 
-const FileUpload = ({ apiEndpoint, onChange, value }: Prop) => {
+const FileUpload = ({ apiEndpoint, onChange, value, className }: Prop) => {
   const type = value?.split(".").pop();
 
   if (value) {
     return (
       <div className="flex flex-col items-center justify-center">
         {type != "pdf" ? (
-          <div className="relative w-60 h-60 rounded-md overflow-hidden">
+          <div className={`relative w-60 h-60 rounded-md overflow-hidden`}>
             <Image
               src={value}
               alt="upload image"
@@ -50,7 +52,7 @@ const FileUpload = ({ apiEndpoint, onChange, value }: Prop) => {
       </div>
     );
   }
-  return <div className=" w-60 h-72 bg-muted/30 rounded-xl">
+  return <div className={clsx(" w-60 h-72 bg-muted/30 rounded-xl", className)}>
     <UploadDropzone endpoint={apiEndpoint} onClientUploadComplete={(res)=>{
       onChange(res?.[0].url)
     }}

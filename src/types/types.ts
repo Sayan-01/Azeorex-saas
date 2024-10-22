@@ -68,6 +68,12 @@ export interface IUser extends Document {
   createdAt: Date;
 }
 
+export interface SidebarOption {
+  name: string;
+  link: string;
+  icon: Icon; 
+}
+
 export interface IAgency extends Document {
   name: string;
   agencyLogo: string;
@@ -82,7 +88,7 @@ export interface IAgency extends Document {
   goal: number;
   users: Types.ObjectId[];
   subAccountsId: Types.ObjectId[];
-  sidebarOptions: Types.ObjectId[];
+  sidebarOptions: SidebarOption[];
   invitations: Types.ObjectId[];
   notifications: Types.ObjectId[];
   subscription: Types.ObjectId[];
@@ -106,7 +112,19 @@ export interface ISubAccount extends Document {
   zipCode: string;
   state: string;
   country: string;
+  createdAt: Date;
   agencyId: Types.ObjectId;
+  goal: number;
+  sidebarOption: SidebarOption[]; // Array of SidebarOption objects
+  permissions: Types.ObjectId[]; // References to Permissions
+  funnels: Types.ObjectId[]; // References to Funnel
+  media: Types.ObjectId[]; // References to Media
+  contact: Types.ObjectId[]; // References to Contact
+  trigger: Types.ObjectId[]; // References to Trigger
+  automation: Types.ObjectId[]; // References to Automation
+  pipeline: Types.ObjectId[]; // References to Pipeline
+  tags: Types.ObjectId[]; // References to Tag
+  notification: Types.ObjectId[]; // References to Notification
 }
 
 export interface ITag extends Document {

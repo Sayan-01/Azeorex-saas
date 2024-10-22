@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { auth, signOut } from "../../auth";
 import { Agency, Invitation, Notification, SubAccount, User } from "../../models/schema";
 import connectDb from "./dbConnect";
-import { IAgency, IUser, Role } from "@/types/types";
+import { IAgency, ISubAccount, IUser, Role } from "@/types/types";
 import { getSession } from "next-auth/react";
 
 //============================================================
@@ -122,51 +122,18 @@ export const verifyAndAcceptInvitation = async () => {
 
 //=============================================================
 
-export const initUser = async (newUser: Partial<IUser>) => {
-  const session = await auth();
-  if (!session) return;
-  connectDb();
-
-  const userData = await User.findOneAndUpdate(
-    { email: newUser.email }, // Search for user by email
-    {
-      $set: newUser, // Update with new user data
-      $setOnInsert: {
-        image: newUser.image,
-        email: newUser.email,
-        name: `${newUser.username}`,
-        role: newUser.role || Role.SUBACCOUNT_USER,
-      },
-    },
-    {
-      upsert: true, // Insert if the user doesn't exist
-      new: true, // Return the updated document
-      setDefaultsOnInsert: true, // Apply schema defaults when inserting
-    }
-  );
-
-  const userSession = await getSession();
-  if (userSession && userSession.user) {
-    // @ts-ignore: Ignore type error for role
-    userSession.user.role = newUser.role || "SUBACCOUNT_USER";
-  }
-
-  return userData;
-};
-
 //============================================================================
 
 export const updateUserRole = async (newUser: Partial<IUser>) => {
   const session = await auth();
   if (!session) return;
   connectDb();
-  console.log("sssss", newUser.role);
 
   await User.findOneAndUpdate(
     { email: session?.user?.email }, // Search for user by email
     {
       role: newUser.role || Role.SUBACCOUNT_USER,
-      agencyId: newUser.agencyId
+      agencyId: newUser.agencyId,
     }
   );
 };
@@ -223,6 +190,77 @@ export const upsertAgency = async (agency: Partial<IAgency>) => {
 
       await agencyDetails.save();
       return JSON.stringify(agencyDetails.toObject());
+    }
+
+    return null;
+  } catch (error) {
+    console.log("err", error);
+    return null;
+  }
+};
+
+//===============================================================================
+
+export const upsertsubAccount = async (subaccount: Partial<ISubAccount>) => {
+  if (!subaccount.companyEmail) return null;
+
+  try {
+    await connectDb();
+    const user = await User.findOne({ email: subaccount.companyEmail });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const agencyDetails = await Agency.findById(subaccount.agencyId)
+
+    let subaccountDetails = await SubAccount.create({
+      ...subaccount,
+      agencyId: [user._id],
+    });
+
+    if (subaccountDetails) {
+      // Update the agency's sidebar options
+      subaccountDetails.sidebarOptions = [
+        {
+          name: "Dashboard",
+          icon: "category",
+          link: `/agency/${subaccountDetails._id.toString()}`,
+        },
+        {
+          name: "Launchpad",
+          icon: "clipboardIcon",
+          link: `/agency/${subaccountDetails._id.toString()}/launchpad`,
+        },
+        {
+          name: "Billing",
+          icon: "payment",
+          link: `/agency/${subaccountDetails._id.toString()}/billing`,
+        },
+        {
+          name: "Settings",
+          icon: "settings",
+          link: `/agency/${subaccountDetails._id.toString()}/settings`,
+        },
+        {
+          name: "Sub Accounts",
+          icon: "person",
+          link: `/agency/${subaccountDetails._id.toString()}/all-subaccounts`,
+        },
+        {
+          name: "Team",
+          icon: "shield",
+          link: `/agency/${subaccountDetails._id.toString()}/team`,
+        },
+      ];
+      (subaccountDetails.permissions = [
+        {
+          access: true,
+          email: agencyDetails.email,
+          _id: subaccountDetails._id, // Use _id in Mongoose for ObjectId
+        },
+      ]),
+        await subaccountDetails.save();
+      return JSON.stringify(subaccountDetails.toObject());
     }
 
     return null;
