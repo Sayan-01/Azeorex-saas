@@ -214,7 +214,7 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
                             <SubAccountDetails
                               agencyDetails={user?.agencyId as IAgency}
                               userId={user?._id as string}
-                              userName={user?.name}
+                              userName={user?.username}
                             />
                           </CustomModal>
                         );
@@ -240,7 +240,7 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
                     const IconComponent = iconMapping[sidebarOptions.icon] ||<Fa500Px/> // Fallback to a default icon if not found
                     return (
                       <CommandItem
-                        key={sidebarOptions.id}
+                        key={sidebarOptions._id}
                         className="md:w-[320px] w-full mb-1 -ml-1 group"
                       >
                         <Link

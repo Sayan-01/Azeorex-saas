@@ -65,7 +65,7 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      await upsertsubAccount({
+      const res = await upsertsubAccount({
         name: values.name,
         companyEmail: values.companyEmail,
         companyPhone: values.companyPhone,
@@ -80,12 +80,13 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
         goal: 500,
       });
 
-
-      toast({
-        title: "✨ Subaccount Created",
-        description: "Congratulations your subaccount is created",
-      });
-      return router.refresh();
+      if (res) {
+        toast({
+          title: "✨ Subaccount Created",
+          description: "Congratulations your subaccount is created",
+        });
+        return router.refresh();
+      }
     } catch (error) {
       console.log("errrrror", error);
       toast({
@@ -134,77 +135,78 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
               onSubmit={form.handleSubmit(handleSubmit)}
               className="space-y-8"
             >
+              <FormField
+                control={form.control}
+                name="subAccountLogo"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Subaccount Logo</FormLabel>
+                    <FormControl>
+                      <FileUpload
+                        className="w-full"
+                        apiEndpoint="subaccountLogo"
+                        onChange={field.onChange}
+                        value={field.value}
+                      ></FileUpload>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="w-full flex flex-col gap-y-5">
                 <FormField
                   control={form.control}
-                  name="subAccountLogo"
+                  name="name"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Subaccount Logo</FormLabel>
+                    <FormItem className="flex-1">
+                      <FormLabel>Subaccount Name</FormLabel>
                       <FormControl>
-                        <FileUpload className="w-full"
-                          apiEndpoint="subaccountLogo"
-                          onChange={field.onChange}
-                          value={field.value}
-                        ></FileUpload>
+                        <Input
+                          placeholder="Enter subaccount name"
+                          {...field}
+                        />
                       </FormControl>
+                      <FormDescription>Subaccount name must be at least 2 characters.</FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <div className="w-full flex flex-col gap-y-5">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem className="flex-1">
-                        <FormLabel>Subaccount Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter subaccount name"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>Subaccount name must be at least 2 characters.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
 
-                  <FormField
-                    control={form.control}
-                    name="companyEmail"
-                    render={({ field }) => (
-                      <FormItem className="flex-1">
-                        <FormLabel>Company Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter company email"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>This should be a valid email address.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="companyPhone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Company Phone</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter company phone"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>Provide your company&apos;s contact number.</FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
+                <FormField
+                  control={form.control}
+                  name="companyEmail"
+                  render={({ field }) => (
+                    <FormItem className="flex-1">
+                      <FormLabel>Company Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter company email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>This should be a valid email address.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="companyPhone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Company Phone</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter company phone"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>Provide your company&apos;s contact number.</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormField
                 control={form.control}

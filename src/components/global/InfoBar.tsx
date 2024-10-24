@@ -13,7 +13,7 @@ const InfoBar = () => {
       <Link href="/" className="md:ml-0 ml-12">
         <p className="font-bold w-[100px] text-2xl">Grouple.</p>
       </Link>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-5">
         <div className=" md:flex gap-4 hidden">
           <Bell />
           <Settings />

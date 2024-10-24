@@ -6,6 +6,7 @@ import { Agency, Invitation, Notification, SubAccount, User } from "../../models
 import connectDb from "./dbConnect";
 import { IAgency, ISubAccount, IUser, Role } from "@/types/types";
 import { getSession } from "next-auth/react";
+import { NextResponse } from "next/server";
 
 //============================================================
 
@@ -21,13 +22,12 @@ export const getUserDetails = async () => {
         { path: "sidebarOptions" }, // Populate SidebarOption inside Agency
         {
           path: "subAccountsId",
-          populate: { path: "sidebarOptions" }, // Populate SidebarOption inside SubAccount
         },
       ],
     })
     .populate("permissions")
     .exec();
-  return userData;
+  return NextResponse.json(userData);
 };
 //=============================================================
 
@@ -138,6 +138,12 @@ export const updateUserRole = async (newUser: Partial<IUser>) => {
   );
 };
 
+export const updateAgency = async (agencyDetails: Partial<IAgency>, subaccountId:any) => {
+  await Agency.findByIdAndUpdate(agencyDetails._id, {
+    subAccountsId: [...agencyDetails.subAccountsId || [], subaccountId],
+  });
+};
+
 export const upsertAgency = async (agency: Partial<IAgency>) => {
   if (!agency.companyEmail) return null;
 
@@ -189,6 +195,7 @@ export const upsertAgency = async (agency: Partial<IAgency>) => {
       ];
 
       await agencyDetails.save();
+
       return JSON.stringify(agencyDetails.toObject());
     }
 
@@ -211,11 +218,10 @@ export const upsertsubAccount = async (subaccount: Partial<ISubAccount>) => {
       throw new Error("User not found");
     }
 
-    const agencyDetails = await Agency.findById(subaccount.agencyId)
+    const agencyDetails = await Agency.findById(subaccount.agencyId);
 
     let subaccountDetails = await SubAccount.create({
       ...subaccount,
-      agencyId: [user._id],
     });
 
     if (subaccountDetails) {
@@ -260,7 +266,9 @@ export const upsertsubAccount = async (subaccount: Partial<ISubAccount>) => {
         },
       ]),
         await subaccountDetails.save();
-      return JSON.stringify(subaccountDetails.toObject());
+      await updateAgency(agencyDetails, subaccountDetails._id);
+
+      return NextResponse.json(subaccountDetails.toObject());
     }
 
     return null;

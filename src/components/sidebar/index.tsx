@@ -9,7 +9,8 @@ type Props = {
 };
 
 const Sidebar = async ({ id, type }: Props) => {
-  const user = await getUserDetails();
+  const res = await getUserDetails();
+  const user = await res.json(); 
   if (!user) return null;
 
   if (!user?.agencyId) return;

@@ -11,7 +11,8 @@ const page = async () => {
 
   const agencyId = await verifyAndAcceptInvitation();    
 
-  const user = await getUserDetails();  
+  const res = await getUserDetails(); 
+  const user = await res.json() 
 
   if (agencyId) {
     if (user?.role === "SUBACCOUNT_GUEST" || user?.role === "SUBACCOUNT_USER") {
