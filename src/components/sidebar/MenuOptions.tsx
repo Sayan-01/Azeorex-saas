@@ -16,10 +16,14 @@ import { useModal } from "../../../providers/model-provider";
 import CustomModal from "../global/CustomModal";
 import { Separator } from "../ui/separator";
 import { Fa500Px } from "react-icons/fa";
+import { Pipeline } from "@/icons/pipeline";
+import { Media } from "@/icons/media";
+import { Chip } from "@/icons/chip";
+import { Funnel } from "@/icons/funnel";
 
 type Props = {
   defaultOption?: boolean;
-  subAccounts: ISubAccount[]
+  subAccounts: ISubAccount[];
   sideBarOptJson: any;
   sidebarLogo: string;
   detailsJson: any;
@@ -28,12 +32,12 @@ type Props = {
 };
 
 function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, detailsJson, userJson, id }: Props) {
-  const {setOpen} = useModal()
-  
+  const { setOpen } = useModal();
+
   const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
 
-  const sideBarOpt= JSON.parse(sideBarOptJson)
-  const details= JSON.parse(detailsJson)
+  const sideBarOpt = JSON.parse(sideBarOptJson);
+  const details = JSON.parse(detailsJson);
   const user = JSON.parse(userJson);
 
   const iconMapping: { [key: string]: JSX.Element } = {
@@ -42,11 +46,12 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
     payment: <CreditCard />,
     settings: <Settings />, // Settings icon
     person: <AffiliateDuoToneBlack />, // Sub Accounts icon
-    shield: <ZapDouToneBlack/>, // Team icon
+    shield: <ZapDouToneBlack />, // Team icon
+    pipelines: <Funnel />,
+    database: <Media />,
+    chip: <Chip />,
+    flag: <Pipeline />,
   };
-
-  
-  
 
   return (
     <Sheet
@@ -83,15 +88,12 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
           </AspectRatio>
           <Popover>
             <PopoverTrigger asChild>
-              <Button
-                className="w-full my-4 flex items-center justify-between py-8"
-                variant="ghost"
-              >
-                <div className="flex items-center text-left gap-2">
+              <div className="inline-flex px-2 items-center justify-between whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-full my-4 py-4">
+                <div className="flex items-center text-left gap-4 ">
                   <Compass />
                   <div className="flex flex-col">
                     {details.name}
-                    <span className="text-muted-foreground">{details.address}</span>
+                    <span className="text-muted-foreground">{details.address.substring(0, 15)}...</span>
                   </div>
                 </div>
                 <div>
@@ -100,7 +102,7 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
                     className="text-muted-foreground"
                   />
                 </div>
-              </Button>
+              </div>
             </PopoverTrigger>
             <PopoverContent className=" h-60 w-60 mt-4 p-3 z-[200] box">
               <Command className="rounded-lg">
@@ -236,8 +238,8 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
               <CommandList className="py-4 overflow-visible">
                 <CommandEmpty>No Results Found</CommandEmpty>
                 <CommandGroup className="overflow-visible">
-                  {sideBarOpt.map((sidebarOptions:any) => {
-                    const IconComponent = iconMapping[sidebarOptions.icon] ||<Fa500Px/> // Fallback to a default icon if not found
+                  {sideBarOpt.map((sidebarOptions: any) => {
+                    const IconComponent = iconMapping[sidebarOptions.icon] || <Fa500Px />; // Fallback to a default icon if not found
                     return (
                       <CommandItem
                         key={sidebarOptions._id}

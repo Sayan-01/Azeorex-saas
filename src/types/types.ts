@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { Types } from "mongoose";
+import { z } from "zod";
 
 export enum Role {
   AGENCY_OWNER = "AGENCY_OWNER",
@@ -71,7 +72,7 @@ export interface IUser extends Document {
 export interface SidebarOption {
   name: string;
   link: string;
-  icon: Icon; 
+  icon: Icon;
 }
 
 export interface IAgency extends Document {
@@ -115,7 +116,7 @@ export interface ISubAccount extends Document {
   createdAt: Date;
   agencyId: Types.ObjectId;
   goal: number;
-  sidebarOption: SidebarOption[]; // Array of SidebarOption objects
+  sidebarOptions: SidebarOption[]; // Array of SidebarOption objects
   permissions: Types.ObjectId[]; // References to Permissions
   funnels: Types.ObjectId[]; // References to Funnel
   media: Types.ObjectId[]; // References to Media
@@ -190,11 +191,38 @@ export interface IMedia extends Document {
 
 export interface IFunnel extends Document {
   name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  description?: String;
+  published: Boolean;
+  subDomainName?: String;
+  favicon?: String;
   subAccountId: Types.ObjectId;
+  funnelPages: Types.ObjectId[];
+  liveProducts?: String;
+  className: Types.ObjectId[];
 }
 
 export interface IFunnelPage extends Document {
   name: string;
+  createdAt: Date;
+  updatedAt: Date;
+  description?: String;
+  published: Boolean;
+  subDomainName?: String;
+  favicon?: String;
+  subAccountId: Types.ObjectId;
+  funnelPages: Types.ObjectId[];
+  liveProducts?: String;
+  className: Types.ObjectId[];
+}
+
+export interface IClassName extends Document {
+  name: string;
+  color: String;
+  createdAt: Date;
+  updatedAt: Date;
+  customData?: String;
   funnelId: Types.ObjectId;
 }
 
@@ -225,3 +253,10 @@ export interface INotification extends Document {
   subAccountId?: Types.ObjectId;
   userId: Types.ObjectId;
 }
+
+export const CreateFunnelFormSchema = z.object({
+  name: z.string().min(1),
+  description: z.string(),
+  subDomainName: z.string().optional(),
+  favicon: z.string().optional(),
+});

@@ -4,6 +4,7 @@ import {
   IAgency,
   IAgencySidebarOption,
   IAutomation,
+  IClassName,
   Icon,
   IContact,
   IFunnel,
@@ -88,7 +89,7 @@ const subAccountSchema = new Schema<ISubAccount>({
   state: { type: String, required: true },
   country: { type: String, required: true },
   agencyId: { type: Schema.Types.ObjectId, ref: "Agency", required: true },
-  sidebarOption: [
+  sidebarOptions: [
     {
       name: { type: String, required: true },
       link: { type: String, required: true },
@@ -168,15 +169,56 @@ const mediaSchema = new Schema<IMedia>({
   subAccountId: { type: Schema.Types.ObjectId, ref: "SubAccount", required: true },
 });
 
-const funnelSchema = new Schema<IFunnel>({
-  name: { type: String, required: true },
-  subAccountId: { type: Schema.Types.ObjectId, ref: "SubAccount", required: true },
-});
+const funnelSchema = new Schema<IFunnel>(
+  {
+    name: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date },
+    description: { type: String, default: null },
+    published: { type: Boolean, default: false },
+    subDomainName: { type: String, unique: true, default: null },
+    favicon: { type: String, default: null },
+    subAccountId: { type: Schema.Types.ObjectId, ref: "SubAccount", required: true },
+    funnelPages: [{ type: Schema.Types.ObjectId, ref: "FunnelPage" }],
+    liveProducts: { type: String, default: "[]" },
+    className: [{ type: Schema.Types.ObjectId, ref: "ClassName" }],
+  },
+  {
+    timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
+  }
+);
 
-const funnelPageSchema = new Schema<IFunnelPage>({
-  name: { type: String, required: true },
-  funnelId: { type: Schema.Types.ObjectId, ref: "Funnel", required: true },
-});
+const funnelPageSchema = new Schema<IFunnelPage>(
+  {
+    name: { type: String, required: true },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date },
+    description: { type: String, default: null },
+    published: { type: Boolean, default: false },
+    subDomainName: { type: String, unique: true, default: null },
+    favicon: { type: String, default: null },
+    subAccountId: { type: Schema.Types.ObjectId, ref: "SubAccount", required: true },
+    funnelPages: [{ type: Schema.Types.ObjectId, ref: "FunnelPage" }],
+    liveProducts: { type: String, default: "[]" },
+    className: [{ type: Schema.Types.ObjectId, ref: "ClassName" }],
+  },
+  {
+    timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
+  }
+);
+
+const classNameSchema = new Schema<IClassName>({
+    name: { type: String, required: true },
+    color: { type: String, default: null },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date },
+    customData: { type: String, default: null },
+    funnelId: { type: Schema.Types.ObjectId, ref: "FunnelPage" },
+    
+  },
+  {
+    timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" },
+  })
 
 const invitationSchema = new Schema<IInvitation>({
   email: { type: String, required: true },
@@ -207,6 +249,7 @@ export const Action = models.Action || model<IAction>("Action", actionSchema);
 export const Contact = models.Contact || model<IContact>("Contact", contactSchema);
 export const Media = models.Media || model<IMedia>("Media", mediaSchema);
 export const Funnel = models.Funnel || model<IFunnel>("Funnel", funnelSchema);
+export const ClassName = models.ClassName || model<IClassName>("ClassName", classNameSchema);
 export const FunnelPage = models.FunnelPage || model<IFunnelPage>("FunnelPage", funnelPageSchema);
 export const Invitation = models.Invitation || model<IInvitation>("Invitation", invitationSchema);
 export const Notification = models.Notification || model<INotification>("Notification", notificationSchema);

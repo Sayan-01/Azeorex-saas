@@ -11,14 +11,9 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import FileUpload from "../global/FileUpload";
-import { Switch } from "../ui/switch";
 import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
 import { IAgency, ISubAccount, Role } from "@/types/types";
-import { upsertsubAccount } from "@/lib/queries";
-import { v4 as uuidv4 } from "uuid";
-import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
 import { Types } from "mongoose";
 
 const FormSchema = z.object({
@@ -65,22 +60,26 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      const res = await upsertsubAccount({
-        name: values.name,
-        companyEmail: values.companyEmail,
-        companyPhone: values.companyPhone,
-        address: values.address,
-        city: values.city,
-        subAccountLogo: values.subAccountLogo,
-        zipCode: values.zipCode,
-        state: values.state,
-        country: values.country,
-        createdAt: new Date(),
-        agencyId: new Types.ObjectId(agencyDetails._id as string),
-        goal: 500,
+
+      let res = await fetch("/api/subaccount", {
+        method: "POST",
+        body: JSON.stringify({
+          name: values.name,
+          companyEmail: values.companyEmail,
+          companyPhone: values.companyPhone,
+          address: values.address,
+          city: values.city,
+          subAccountLogo: values.subAccountLogo,
+          zipCode: values.zipCode,
+          state: values.state,
+          country: values.country,
+          createdAt: new Date(),
+          agencyId: new Types.ObjectId(agencyDetails._id as string),
+          goal: 500,
+        }),
       });
 
-      if (res) {
+      if (res.ok) {
         toast({
           title: "✨ Subaccount Created",
           description: "Congratulations your subaccount is created",

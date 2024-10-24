@@ -2,11 +2,12 @@
 
 import { redirect } from "next/navigation";
 import { auth, signOut } from "../../auth";
-import { Agency, Invitation, Notification, SubAccount, User } from "../../models/schema";
+import { Agency, Funnel, Invitation, Notification, SubAccount, User } from "../../models/schema";
 import connectDb from "./dbConnect";
-import { IAgency, ISubAccount, IUser, Role } from "@/types/types";
+import { CreateFunnelFormSchema, IAgency, ISubAccount, IUser, Role } from "@/types/types";
 import { getSession } from "next-auth/react";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
 //============================================================
 
@@ -138,9 +139,9 @@ export const updateUserRole = async (newUser: Partial<IUser>) => {
   );
 };
 
-export const updateAgency = async (agencyDetails: Partial<IAgency>, subaccountId:any) => {
+export const updateAgency = async (agencyDetails: Partial<IAgency>, subaccountId: any) => {
   await Agency.findByIdAndUpdate(agencyDetails._id, {
-    subAccountsId: [...agencyDetails.subAccountsId || [], subaccountId],
+    subAccountsId: [...(agencyDetails.subAccountsId || []), subaccountId],
   });
 };
 
@@ -208,67 +209,35 @@ export const upsertAgency = async (agency: Partial<IAgency>) => {
 
 //===============================================================================
 
-export const upsertsubAccount = async (subaccount: Partial<ISubAccount>) => {
-  if (!subaccount.companyEmail) return null;
+export const getFunnels = async (subAccountId: string) => {
+  const funnels = await Funnel.find({ subAccountId: subAccountId }).populate("funnelPages");
+  return funnels;
+};
 
+//================================================================================
+
+export const updateSubAccount = async (subAccountDetails: Partial<ISubAccount>, funnelId: any) => {
+  await SubAccount.findByIdAndUpdate(subAccountDetails._id, {
+    subAccountsId: [...(subAccountDetails.funnels || []) , funnelId],
+  });
+};
+
+//==============================================================================
+
+export const addFunnel = async (subAccountId: string, funnelDetails: z.infer<typeof CreateFunnelFormSchema> & { liveProducts: string }) => {
+  
   try {
     await connectDb();
-    const user = await User.findOne({ email: subaccount.companyEmail });
-    if (!user) {
-      throw new Error("User not found");
-    }
 
-    const agencyDetails = await Agency.findById(subaccount.agencyId);
+    const subAccountDetails = await SubAccount.findById(subAccountId);
 
-    let subaccountDetails = await SubAccount.create({
-      ...subaccount,
+    let funnel = await Funnel.create({
+      ...funnelDetails,subAccountId: subAccountId
     });
 
-    if (subaccountDetails) {
-      // Update the agency's sidebar options
-      subaccountDetails.sidebarOptions = [
-        {
-          name: "Dashboard",
-          icon: "category",
-          link: `/agency/${subaccountDetails._id.toString()}`,
-        },
-        {
-          name: "Launchpad",
-          icon: "clipboardIcon",
-          link: `/agency/${subaccountDetails._id.toString()}/launchpad`,
-        },
-        {
-          name: "Billing",
-          icon: "payment",
-          link: `/agency/${subaccountDetails._id.toString()}/billing`,
-        },
-        {
-          name: "Settings",
-          icon: "settings",
-          link: `/agency/${subaccountDetails._id.toString()}/settings`,
-        },
-        {
-          name: "Sub Accounts",
-          icon: "person",
-          link: `/agency/${subaccountDetails._id.toString()}/all-subaccounts`,
-        },
-        {
-          name: "Team",
-          icon: "shield",
-          link: `/agency/${subaccountDetails._id.toString()}/team`,
-        },
-      ];
-      (subaccountDetails.permissions = [
-        {
-          access: true,
-          email: agencyDetails.email,
-          _id: subaccountDetails._id, // Use _id in Mongoose for ObjectId
-        },
-      ]),
-        await subaccountDetails.save();
-      await updateAgency(agencyDetails, subaccountDetails._id);
-
-      return NextResponse.json(subaccountDetails.toObject());
+    if (funnel) {
+      await updateSubAccount(subAccountDetails, funnel._id);
+      return JSON.stringify(funnel.toObject());
     }
 
     return null;
