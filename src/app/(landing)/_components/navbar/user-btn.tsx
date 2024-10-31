@@ -12,11 +12,12 @@ type Props = {
   className?: string;
   imageUrl?: string;
   margin?: string;
+  username: string
+  email: string
 };
 
 
-const UserBtn = async ({ children, className, imageUrl, margin }: Props) => {
-  const session = await auth()
+const UserBtn = async ({ children, className, imageUrl, margin, username, email }: Props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -39,8 +40,8 @@ const UserBtn = async ({ children, className, imageUrl, margin }: Props) => {
             />
           </div>
           <div>
-            <h1 className=" font-light">{session ? session?.user?.name:""}</h1>
-            <p className=" font-thin opacity-50 text-xs">{session ? session?.user?.email:""}</p>
+            <h1 className=" font-light">{username}</h1>
+            <p className=" font-thin opacity-50 text-xs">{email}</p>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuGroup>

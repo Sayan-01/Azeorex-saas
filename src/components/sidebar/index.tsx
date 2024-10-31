@@ -9,24 +9,24 @@ type Props = {
 };
 
 const Sidebar = async ({ id, type }: Props) => {
-  const res = await getUserDetails();
-  const user = await res.json(); 
+  
+  const user = await getUserDetails();
   if (!user) return null;
 
-  if (!user?.agencyId) return;
+  if (!user?.Agency) return;
 
-  const details = type === "agency" ? user.agencyId : user.agencyId.subAccountsId.find((subacc: any) => subacc._id === id);
+  const details = type === "agency" ? user?.Agency : user.Agency.SubAccount.find((subacc: any) => subacc._id === id);
 
-  let whiteLable = user.agencyId.whiteLabel;
-  let sidebarLogo = user.agencyId.agencyLogo || "/azeorex.png";
+  let whiteLable = user?.Agency?.whiteLabel;
+  let sidebarLogo = user?.Agency?.agencyLogo || "/azeorex.png";
 
   if (!whiteLable) {
     if (type === "subaccount") {
-      sidebarLogo = user?.agencyId.subAccountsId.find((subacc: any) => subacc._id === id)?.subAccountLogo || user.agencyId.agencyLogo;
+      sidebarLogo = user?.Agency.SubAccount.find((subacc: any) => subacc._id === id)?.subAccountLogo || user.Agency.agencyLogo;
     }
   }
-  const sideBarOpt = type === "agency" ? user.agencyId.sidebarOptions || [] : user.agencyId.subAccountsId.find((subacc: any) => subacc._id === id)?.sidebarOptions || [];
-  const subaccounts = user.agencyId.subAccountsId.filter((subacc: any) => user.permissions.find((permission: any) => permission.subAccountsId === subacc._id && permission.access));
+  const sideBarOpt = type === "agency" ? user.Agency.SidebarOption || [] : user.Agency.SubAccount.find((subacc: any) => subacc._id === id)?.SidebarOption || [];
+  const subaccounts = user.Agency.SubAccount.filter((subacc: any) => user.Permissions.find((permission: any) => permission.SubAccount === subacc._id && permission.access));
     
   return (
     <>

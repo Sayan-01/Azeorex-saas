@@ -1,6 +1,6 @@
 "use client";
-import React, { useState } from "react";
-import { AlertDialog } from "../ui/alert-dialog";
+import React, { useEffect, useState } from "react";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -14,11 +14,11 @@ import FileUpload from "../global/FileUpload";
 import { Switch } from "../ui/switch";
 import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
-import { IAgency, Role } from "@/types/types";
-import { updateUserRole, upsertAgency } from "@/lib/queries";
-import { v4 as uuidv4 } from "uuid";
+import { Role } from "@/types/types";
+import { deleteAgency, updateUserRole, upsertAgency } from "@/lib/queries";
+import { v4 as uuidv4, v4 } from "uuid";
 import { useSession } from "next-auth/react";
-import { Session } from "next-auth";
+import { Agency } from "@prisma/client";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -36,10 +36,10 @@ const FormSchema = z.object({
 });
 
 type Props = {
-  data?: Partial<IAgency>;
+  data?: Partial<Agency>;
 };
 
-const Agency_form = ({ data }: Props) => {
+const AgencyForm = ({ data }: Props) => {
   const { toast } = useToast();
   const router = useRouter();
   const [deletingAgency, setDeletingAgency] = useState(false);
@@ -48,23 +48,31 @@ const Agency_form = ({ data }: Props) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
-      companyEmail: "",
-      companyPhone: "",
-      whiteLabel: false,
-      address: "",
-      city: "",
-      zipCode: "",
-      state: "",
-      country: "",
-      agencyLogo: "",
+      name: data?.name,
+      companyEmail: data?.companyEmail,
+      companyPhone: data?.companyPhone,
+      whiteLabel: data?.whiteLabel || false,
+      address: data?.address,
+      city: data?.city,
+      zipCode: data?.zipCode,
+      state: data?.state,
+      country: data?.country,
+      agencyLogo: data?.agencyLogo,
     },
   });
   const isLoading = form.formState.isSubmitting;
+
+  useEffect(() => {
+    if (data) {
+      form.reset(data)
+    }
+  }, [data])
   
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-       let agencyDetails = await upsertAgency({
+       const response = await upsertAgency({
+        id: data?.id ? data.id : v4(),
+        customerId: data?.customerId || '',
         address: values.address,
         agencyLogo: values.agencyLogo,
         city: values.city,
@@ -75,14 +83,15 @@ const Agency_form = ({ data }: Props) => {
         whiteLabel: values.whiteLabel,
         zipCode: values.zipCode,
         createdAt: new Date(),
+        updatedAt: new Date(),
         companyEmail: values.companyEmail,
+        connectAccountId: '',
         goal: 5,
-      });
+      })
 
-      const agencyDetailsData = JSON.parse(agencyDetails ?? "");
-      console.log(agencyDetailsData);
+      console.log(response);
       
-      await updateUserRole({ role: Role.AGENCY_OWNER, agencyId: agencyDetailsData._id });
+      await updateUserRole({ role: Role.AGENCY_OWNER });
 
       if (session) {
         await update({
@@ -92,7 +101,6 @@ const Agency_form = ({ data }: Props) => {
       } else {
         console.error("Session is null. User is not authenticated.");
       }
-
       toast({
         title: "✨ Agency Created",
         description: "Congratulations your agency is created"
@@ -113,7 +121,7 @@ const Agency_form = ({ data }: Props) => {
     setDeletingAgency(true);
     //WIP: discontinue the subscription
     try {
-      //  const response = await deleteAgency(data.id);
+      const response = await deleteAgency(data.id);
       toast({
         title: "Deleted Agency",
         description: "Deleted your agency and all subaccounts",
@@ -350,10 +358,43 @@ const Agency_form = ({ data }: Props) => {
               </Button>
             </form>
           </Form>
+          {data?.id && (
+            <div className="flex flex-row items-center justify-between rounded-lg border border-destructive gap-4 p-4 mt-4">
+              <div>
+                <div>Danger Zone</div>
+              </div>
+              <div className="text-muted-foreground">
+                Deleting your agency cannpt be undone. This will also delete all sub accounts and all data related to your sub accounts. Sub accounts will no longer have access to funnels, contacts
+                etc.
+              </div>
+              <AlertDialogTrigger
+                disabled={isLoading || deletingAgency}
+                className="text-red-600 p-2 text-center mt-2 rounded-md hove:bg-red-600 hover:text-white whitespace-nowrap"
+              >
+                {deletingAgency ? "Deleting..." : "Delete Agency"}
+              </AlertDialogTrigger>
+            </div>
+          )}
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-left">Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription className="text-left">This action cannot be undone. This will permanently delete the Agency account and all related sub accounts.</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex items-center">
+              <AlertDialogCancel className="mb-2">Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                disabled={deletingAgency}
+                className="bg-destructive hover:bg-destructive"
+                onClick={handleDeleteAgency}
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
         </CardContent>
       </GlassCard>
     </AlertDialog>
   );
 };
 
-export default Agency_form;
+export default AgencyForm;

@@ -20,10 +20,11 @@ import { Pipeline } from "@/icons/pipeline";
 import { Media } from "@/icons/media";
 import { Chip } from "@/icons/chip";
 import { Funnel } from "@/icons/funnel";
+import { SubAccount } from "@prisma/client";
 
 type Props = {
   defaultOption?: boolean;
-  subAccounts: ISubAccount[];
+  subAccounts: SubAccount[];
   sideBarOptJson: any;
   sidebarLogo: string;
   detailsJson: any;
@@ -88,8 +89,8 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
           </AspectRatio>
           <Popover>
             <PopoverTrigger asChild>
-              <div className="inline-flex px-2 items-center justify-between whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-full my-4 py-4">
-                <div className="flex items-center text-left gap-4 ">
+              <div className="inline-flex cursor-pointer px-2 items-center justify-between whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-full my-4 py-4">
+                <div className="flex  items-center text-left gap-4 ">
                   <Compass />
                   <div className="flex flex-col">
                     {details.name}

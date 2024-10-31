@@ -6,15 +6,15 @@ import React from "react";
 import { twMerge } from "tailwind-merge";
 import { useModal } from "../../../../../../../providers/model-provider";
 import CustomModal from "@/components/global/CustomModal";
-import { IAgency, ISubAccount, IUser } from "@/types/types";
+import { Agency, SubAccount, User } from "@prisma/client";
 
 type Props = {
-  user: IUser & {
+  user: User & {
     Agency:
       | (
-          | IAgency
+          | Agency
           | (null & {
-              SubAccount: ISubAccount[];
+              SubAccount: SubAccount[];
             })
         )
       | null;
@@ -25,7 +25,7 @@ type Props = {
 
 const CreateSubaccountButton = ({ className, id, user }: Props) => {
   const { setOpen } = useModal();
-  const agencyDetails = user.agencyId;  
+  const agencyDetails = user.Agency;  
 
   if (!agencyDetails) return;
 
@@ -33,15 +33,17 @@ const CreateSubaccountButton = ({ className, id, user }: Props) => {
     <Button
       className={twMerge("w-full flex gap-4", className)}
       onClick={() => {
+        console.log(agencyDetails);
+        
         setOpen(
           <CustomModal
             title="Create a Subaccount"
             subheading="You can switch bettween"
           >
             <SubAccountDetails
-              agencyDetails={agencyDetails as unknown as IAgency}
-              userId={user?._id as string}
-              userName={user?.username}
+              agencyDetails={agencyDetails}
+              userId={user.id}
+              userName={user.name}
             />
           </CustomModal>
         );

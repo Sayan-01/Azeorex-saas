@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AlertDialog } from "../ui/alert-dialog";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -13,8 +13,10 @@ import { Button } from "../ui/button";
 import FileUpload from "../global/FileUpload";
 import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
-import { IAgency, ISubAccount, Role } from "@/types/types";
-import { Types } from "mongoose";
+import { Agency, SubAccount } from "@prisma/client";
+import { saveActivityLogsNotification, upsertSubAccount } from "@/lib/queries";
+import { v4 } from "uuid";
+import { useModal } from "../../../providers/model-provider";
 
 const FormSchema = z.object({
   name: z.string().min(2, {
@@ -32,8 +34,8 @@ const FormSchema = z.object({
 
 interface SubAccountDetailsProps {
   //To add the sub account to the agency
-  agencyDetails: IAgency;
-  details?: Partial<ISubAccount>;
+  agencyDetails: Agency;
+  details?: Partial<SubAccount>;
   userId: string;
   userName: string;
 }
@@ -41,51 +43,60 @@ interface SubAccountDetailsProps {
 const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDetails, userId, userName }) => {
   const { toast } = useToast();
   const router = useRouter();
+  const { setClose } = useModal();
+
+  console.log(agencyDetails);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
-      companyEmail: "",
-      companyPhone: "",
-      address: "",
-      city: "",
-      subAccountLogo: "",
-      zipCode: "",
-      state: "",
-      country: "",
+      name: details?.name,
+      companyEmail: details?.companyEmail,
+      companyPhone: details?.companyPhone,
+      address: details?.address,
+      city: details?.city,
+      zipCode: details?.zipCode,
+      state: details?.state,
+      country: details?.country,
+      subAccountLogo: details?.subAccountLogo,
     },
   });
   const isLoading = form.formState.isSubmitting;
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
+      console.log("pika", agencyDetails.id);
 
-      let res = await fetch("/api/subaccount", {
-        method: "POST",
-        body: JSON.stringify({
-          name: values.name,
-          companyEmail: values.companyEmail,
-          companyPhone: values.companyPhone,
-          address: values.address,
-          city: values.city,
-          subAccountLogo: values.subAccountLogo,
-          zipCode: values.zipCode,
-          state: values.state,
-          country: values.country,
-          createdAt: new Date(),
-          agencyId: new Types.ObjectId(agencyDetails._id as string),
-          goal: 500,
-        }),
+      const response = await upsertSubAccount({
+        id: details?.id ? details.id : v4(),
+        address: values.address,
+        subAccountLogo: values.subAccountLogo,
+        city: values.city,
+        companyPhone: values.companyPhone,
+        country: values.country,
+        name: values.name,
+        state: values.state,
+        zipCode: values.zipCode,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        companyEmail: values.companyEmail,
+        agencyId: agencyDetails.id,
+        connectAccountId: "",
+        goal: 5000,
+      });
+      if (!response) throw new Error("No response from server");
+      await saveActivityLogsNotification({
+        agencyId: response.agencyId,
+        description: `${userName} | updated sub account | ${response.name}`,
+        subAccountId: response.id,
       });
 
-      if (res.ok) {
-        toast({
-          title: "✨ Subaccount Created",
-          description: "Congratulations your subaccount is created",
-        });
-        return router.refresh();
-      }
+      toast({
+        title: "Subaccount details saved",
+        description: "Successfully saved your subaccount details.",
+      });
+      setClose();
+      router.refresh();
     } catch (error) {
       console.log("errrrror", error);
       toast({
@@ -96,27 +107,11 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
     }
   };
 
-  // const handleDeleteAgency = async () => {
-  //   if (!data?.id) return;
-  //   setDeletingAgency(true);
-  //   //WIP: discontinue the subscription
-  //   try {
-  //     //  const response = await deleteAgency(data.id);
-  //     toast({
-  //       title: "Deleted Agency",
-  //       description: "Deleted your agency and all subaccounts",
-  //     });
-  //     router.refresh();
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Oppse!",
-  //       description: "could not delete your agency ",
-  //     });
-  //   }
-  //   setDeletingAgency(false);
-  // };
+  useEffect(() => {
+    if (details) {
+      form.reset(details);
+    }
+  }, [details]);
 
   return (
     <AlertDialog>

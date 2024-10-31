@@ -43,7 +43,7 @@ export const getUserDetails = async () => {
 
 //=============================================================
 
-export const saveActivityLogsNotification = async ({ agencyId, description, subAccountId }: { agencyId: string; description: string; subAccountId?: string }) => {
+export const saveActivityLogsNotification = async ({ agencyId, description, subAccountId }: { agencyId: string | undefined; description: string; subAccountId?: string }) => {
   const session = await auth();
   if (!session) redirect("/agency/sign-in");
 
@@ -247,6 +247,24 @@ export const upsertAgency = async (agency: Agency, price?: Plan) => {
   }
 };
 
+//=============================================================================
+
+export const updateUserRole = async (newUser: Partial<User>) => {
+  const session = await auth();
+  if (!session) return;
+
+  await db.user.update({
+    where:
+    { email: session?.user?.email as string }, // Search for user by email
+    data:{
+      role: newUser.role || 'SUBACCOUNT_USER',
+      agencyId: newUser.agencyId,
+    }}
+  );
+
+  
+};
+
 //==============================================================================
 
 export const getNotificationAndUser = async (agencyId: string) => {
@@ -302,32 +320,32 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
           {
             name: "Dashboard",
             icon: "category",
-            link: `/agency/${subAccount.id.toString()}`,
+            link: `/agency/${subAccount.id}`,
           },
           {
             name: "Launchpad",
             icon: "clipboardIcon",
-            link: `/agency/${subAccount.id.toString()}/launchpad`,
+            link: `/agency/${subAccount.id}/launchpad`,
           },
           {
             name: "Billing",
             icon: "payment",
-            link: `/agency/${subAccount.id.toString()}/billing`,
+            link: `/agency/${subAccount.id}/billing`,
           },
           {
             name: "Settings",
             icon: "settings",
-            link: `/agency/${subAccount.id.toString()}/settings`,
+            link: `/agency/${subAccount.id}/settings`,
           },
           {
             name: "Sub Accounts",
             icon: "person",
-            link: `/agency/${subAccount.id.toString()}/all-subaccounts`,
+            link: `/agency/${subAccount.id}/all-subaccounts`,
           },
           {
             name: "Team",
             icon: "shield",
-            link: `/agency/${subAccount.id.toString()}/team`,
+            link: `/agency/${subAccount.id}/team`,
           },
         ],
       },

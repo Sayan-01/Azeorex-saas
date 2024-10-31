@@ -4,23 +4,23 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 type Props = {
-  subaccountId: string;
+  subAccountId: string;
 };
 
-const DeleteButton = ({ subaccountId }: Props) => {
-  const router = useRouter();
+const DeleteButton = ({ subAccountId }: Props) => {
+  const router = useRouter();  
 
   return (
     <div
       className="text-white"
       onClick={async () => {
-        const response = await getSubaccountDetails(subaccountId);
+        const response = await getSubaccountDetails(subAccountId);
         await saveActivityLogsNotification({
           agencyId: undefined,
           description: `Deleted a subaccount | ${response?.name}`,
-          subaccountId,
+          subAccountId,
         });
-        await deleteSubAccount(subaccountId);
+        await deleteSubAccount(subAccountId);
         router.refresh();
       }}
     >
@@ -28,3 +28,5 @@ const DeleteButton = ({ subaccountId }: Props) => {
     </div>
   );
 };
+
+export default DeleteButton

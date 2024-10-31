@@ -13,7 +13,7 @@ import CustomModal from "@/components/global/CustomModal";
 import { useModal } from "../../../../../../../../providers/model-provider";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
-import CreateFunnelPage from "@/components/forms/funnel-page";
+import CreateFunnelPage from "@/components/forms/funnel-page-form";
 import FunnelPagePlaceholder from "@/icons/funnel-page-placeholder";
 
 type Props = { funnel: any; subaccountId: string; pages: IFunnelPage[]; funnelId: string };

@@ -27,7 +27,11 @@ const LandingPageNavbar = async () => {
                 Create
               </Button>
             </Link>
-            <UserBtn imageUrl={session?.user?.image || "/user.png"}>
+            <UserBtn
+              imageUrl={session?.user?.image || "/user.png"}
+              username={session?.user?.name || ""}
+              email={session?.user?.email || ""}
+            >
               <div className="w-9 h-9 rounded-full overflow-hidden">
                 <Image
                   alt="profile-image"
