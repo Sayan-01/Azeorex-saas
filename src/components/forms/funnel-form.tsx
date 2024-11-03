@@ -1,24 +1,26 @@
 "use client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import React, { useEffect } from "react";
-import { z } from "zod";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
-import { Button } from "../ui/button";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CreateFunnelFormSchema, IFunnel } from "@/types/types";
-import { Loader } from "../global/Loader";
-import FileUpload from "../global/FileUpload";
-import { useModal } from "../../../providers/model-provider";
 import { useToast } from "@/hooks/use-toast";
-import { addFunnel } from "@/lib/queries";
+import { saveActivityLogsNotification, upsertFunnel } from "@/lib/queries";
+import { CreateFunnelFormSchema } from "@/types/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Funnel } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { v4 } from "uuid";
+import { useModal } from "../../../providers/model-provider";
+import FileUpload from "../global/FileUpload";
+import { Loader } from "../global/Loader";
+import { Button } from "../ui/button";
 
 interface CreateFunnelProps {
-  defaultData?: IFunnel;
+  defaultData?: Funnel;
   subAccountId: string;
 }
 
@@ -33,10 +35,10 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
     mode: "onChange",
     resolver: zodResolver(CreateFunnelFormSchema),
     defaultValues: {
-      name:  "",
-      description:  "",
-      favicon:  "",
-      subDomainName:  "",
+      name: defaultData?.name || "",
+      description: defaultData?.description || "",
+      favicon: defaultData?.favicon || "",
+      subDomainName: defaultData?.subDomainName || "",
     },
   });
 
@@ -56,12 +58,12 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
   const onSubmit = async (values: z.infer<typeof CreateFunnelFormSchema>) => {
     if (!subAccountId) return;
     
-    const response = await addFunnel(subAccountId, { ...values, liveProducts: defaultData?.liveProducts as string || "[]" }  );
-    // await saveActivityLogsNotification({
-    //   agencyId: undefined,
-    //   description: `Update funnel | ${response.name}`,
-    //   subaccountId: subAccountId,
-    // })
+    const response = await upsertFunnel(subAccountId, { ...values, liveProducts: defaultData?.liveProducts || "[]" }, defaultData?.id || v4());
+    await saveActivityLogsNotification({
+      agencyId: undefined,
+      description: `Update funnel | ${response.name}`,
+      subAccountId: subAccountId,
+    })
     if (response)
       toast({
         title: "Success",
@@ -73,8 +75,8 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
         title: "Oppse!",
         description: "Could not save funnel details",
       });
-    // setClose();
-    // router.refresh();
+    setClose();
+    router.refresh();
   };
   return (
     <Card className="flex-1">
@@ -158,7 +160,7 @@ const FunnelForm: React.FC<CreateFunnelProps> = ({ defaultData, subAccountId }) 
               disabled={isLoading}
               type="submit"
             >
-              {form.formState.isSubmitting ? <Loader loading={isLoading} /> : "Save"}
+              {isLoading ? <Loader loading={isLoading} /> : "Save"}
             </Button>
           </form>
         </Form>

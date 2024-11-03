@@ -65,7 +65,6 @@ const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDe
 
   const handleSubmit = async (values: z.infer<typeof FormSchema>) => {
     try {
-      console.log("pika", agencyDetails.id);
 
       const response = await upsertSubAccount({
         id: details?.id ? details.id : v4(),

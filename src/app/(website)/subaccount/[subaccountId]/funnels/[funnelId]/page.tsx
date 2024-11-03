@@ -1,31 +1,29 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getFunnel } from "@/lib/queries";
+import { ArrowBigLeftDash } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React from "react";
 import FunnelSettings from "./_components/funnel-settings";
 import FunnelSteps from "./_components/funnel-steps";
+import BlurPage from "@/components/global/blur-page";
 
 type Props = { params: { funnelId: string; subaccountId: string } };
 
 const FunnelPage = async ({ params }: Props) => {
-  
-  const res = await getFunnel(params.funnelId);
-  const funnelPages = await JSON.parse(res || "");
-  
-
-  if (!funnelPages) redirect(`/subaccount/${params.subaccountId}/funnels`);
-  // console.log("fp",funnelPages);
+  const funnelPages = await getFunnel(params.funnelId);
+  if (!funnelPages) return redirect(`/subaccount/${params.subaccountId}/funnels`);
   
   return (
-    <>
-      <Link
-        href={`/subaccount/${params.subaccountId}/funnels`}
-        className="flex justify-between gap-4 mb-4 text-muted-foreground"
-      >
-        Back
-      </Link>
-      <h1 className="text-3xl  mb-8">{funnelPages.name}</h1>
+    <BlurPage>
+      <div className="flex gap-2 my-4  items-center">
+        <Link
+          href={`/subaccount/${params.subaccountId}/funnels`}
+          className="flex justify-between gap-4 text-muted-foreground"
+        >
+          <ArrowBigLeftDash size={28}/>
+        </Link>
+        <h1 className="text-3xl">{funnelPages.name}</h1>
+      </div>
       <Tabs
         defaultValue="steps"
         className="w-full"
@@ -38,7 +36,7 @@ const FunnelPage = async ({ params }: Props) => {
           <FunnelSteps
             funnel={funnelPages}
             subaccountId={params.subaccountId}
-            pages={funnelPages.funnelPages}
+            pages={funnelPages.FunnelPages}
             funnelId={params.funnelId}
           />
         </TabsContent>
@@ -49,7 +47,7 @@ const FunnelPage = async ({ params }: Props) => {
           />
         </TabsContent>
       </Tabs>
-    </>
+    </BlurPage>
   );
 };
 

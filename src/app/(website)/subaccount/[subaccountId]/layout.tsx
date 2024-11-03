@@ -2,11 +2,10 @@ import InfoBar from "@/components/global/InfoBar";
 import Sidebar from "@/components/sidebar";
 import Unauthorized from "@/components/unauthorized";
 // import { getAuthUserDetails, getNotificationAndUser, verifyAndAcceptInvitation } from "@/lib/queries";
+import { getNotificationAndUser, getUserDetails, verifyAndAcceptInvitation } from "@/lib/queries";
 import { redirect } from "next/navigation";
 import React from "react";
 import { auth } from "../../../../../auth";
-import BlurPage from "@/components/global/blur-page";
-import { verifyAndAcceptInvitation } from "@/lib/queries";
 
 type Props = {
   children: React.ReactNode;
@@ -16,10 +15,8 @@ type Props = {
 const SubaccountLayout = async ({ children, params }: Props) => {
   const agencyId = await verifyAndAcceptInvitation();
   if (!agencyId) return <Unauthorized />;
-
-  const session = await auth()
-  const user = session?.user
-
+  const session = await auth();
+  const user = session?.user;
   if (!user) {
     return redirect("/");
   }
@@ -28,28 +25,26 @@ const SubaccountLayout = async ({ children, params }: Props) => {
 
   if (!user.name) {
     return <Unauthorized />;
-  } 
-  // else {
-  //   const allPermissions = await getAuthUserDetails();
-  //   const hasPermission = allPermissions?.Permissions.find((permissions) => permissions.access && permissions.subAccountId === params.subaccountId);
-  //   if (!hasPermission) {
-  //     return <Unauthorized />;
-  //   }
+  } else {
+    const allPermissions = await getUserDetails();
+    const hasPermission = allPermissions?.Permissions.find((permissions) => permissions.access && permissions.subAccountId === params.subaccountId);
+    if (!hasPermission) {
+      return <Unauthorized />;
+    }
 
-  //   const allNotifications = await getNotificationAndUser(agencyId);
+    const allNotifications = await getNotificationAndUser(agencyId);
 
-
-  //   @ts-ignore
-  //   if (user.role === "AGENCY_ADMIN" || user.role === "AGENCY_OWNER") {
-  //     notifications = allNotifications;
-  //   } else {
-  //     const filteredNoti = allNotifications?.filter((item) => item.subAccountId === params.subaccountId);
-  //     if (filteredNoti) notifications = filteredNoti;
-  //   }
-  // }
+    //@ts-ignore
+    if (user.role === "AGENCY_ADMIN" || user.role === "AGENCY_OWNER") {
+      notifications = allNotifications;
+    } else {
+      const filteredNoti = allNotifications?.filter((item) => item.subAccountId === params.subaccountId);
+      if (filteredNoti) notifications = filteredNoti;
+    }
+  }
 
   return (
-    <div className="box">
+    <div className="box h-screen overflow-hidden">
       <Sidebar
         id={params.subaccountId}
         type="subaccount"
@@ -61,9 +56,7 @@ const SubaccountLayout = async ({ children, params }: Props) => {
         // role={user.privateMetadata.role as Role}
         // subAccountId={params.subaccountId as string}
         />
-        <div className="relative">
-          <BlurPage>{children}</BlurPage>
-        </div>
+        <div className="relative">{children}</div>
       </div>
     </div>
   );

@@ -251,16 +251,16 @@ html {
 /* Scrollbar styling */
 
 
-.box1::-webkit-scrollbar {
+.box-1::-webkit-scrollbar {
   width: 6px;
   position: fixed; /* Ensures the scrollbar behaves like an absolute element */
 }
 
-.box1::-webkit-scrollbar-track {
+.box-1::-webkit-scrollbar-track {
   background: #cecefe00;
   border-radius: 50px;
 }
-.box1::-webkit-scrollbar-thumb {
+.box-1::-webkit-scrollbar-thumb {
   background: #404040;
   border-radius: 50px;
 }

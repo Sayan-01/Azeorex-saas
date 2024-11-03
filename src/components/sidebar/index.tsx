@@ -15,17 +15,17 @@ const Sidebar = async ({ id, type }: Props) => {
 
   if (!user?.Agency) return;
 
-  const details = type === "agency" ? user?.Agency : user.Agency.SubAccount.find((subacc: any) => subacc._id === id);
+  const details = type === "agency" ? user?.Agency : user.Agency.SubAccount.find((subacc: any) => subacc.id === id);
 
   let whiteLable = user?.Agency?.whiteLabel;
   let sidebarLogo = user?.Agency?.agencyLogo || "/azeorex.png";
 
   if (!whiteLable) {
     if (type === "subaccount") {
-      sidebarLogo = user?.Agency.SubAccount.find((subacc: any) => subacc._id === id)?.subAccountLogo || user.Agency.agencyLogo;
+      sidebarLogo = user?.Agency.SubAccount.find((subacc: any) => subacc.id === id)?.subAccountLogo || user.Agency.agencyLogo;
     }
   }
-  const sideBarOpt = type === "agency" ? user.Agency.SidebarOption || [] : user.Agency.SubAccount.find((subacc: any) => subacc._id === id)?.SidebarOption || [];
+  const sideBarOpt = type === "agency" ? user.Agency.SidebarOption || [] : user.Agency.SubAccount.find((subacc: any) => subacc.id === id)?.SidebarOption || [];
   const subaccounts = user.Agency.SubAccount.filter((subacc: any) => user.Permissions.find((permission: any) => permission.SubAccount === subacc._id && permission.access));
     
   return (
@@ -33,10 +33,10 @@ const Sidebar = async ({ id, type }: Props) => {
       <MenuOptions
         defaultOption={true}
         subAccounts={subaccounts}
-        sideBarOptJson={JSON.stringify(sideBarOpt)}
+        sideBarOpt={sideBarOpt}
         sidebarLogo={sidebarLogo}
-        detailsJson={JSON.stringify(details)}
-        userJson={JSON.stringify(user)}
+        details={details}
+        user={user}
         id={id}
       />
       {/* <MenuOptions

@@ -4,16 +4,15 @@ import { columns } from "./columns";
 import { getFunnels } from "@/lib/queries";
 import FunnelsDataTable from "./data-table";
 import FunnelForm from "@/components/forms/funnel-form";
+import BlurPage from "@/components/global/blur-page";
 
 const Funnels = async ({ params }: { params: { subaccountId: string } }) => {
 
-  const res = await getFunnels(params.subaccountId);
-  const funnels = JSON.parse(res || '')
-
+  const funnels = await getFunnels(params.subaccountId);
   if (!funnels) return null;
 
   return (
-    <>
+    <BlurPage>
       <FunnelsDataTable
         actionButtonText={
           <>
@@ -26,7 +25,7 @@ const Funnels = async ({ params }: { params: { subaccountId: string } }) => {
         columns={columns}
         data={funnels}
       />
-    </>
+    </BlurPage>
   );
 };
 

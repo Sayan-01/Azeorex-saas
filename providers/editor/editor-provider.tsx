@@ -1,7 +1,8 @@
 "use client";
-import { EditorAction } from "./editor-actions";
+import { EditorBtns } from "@/types/types";
+import { FunnelPage } from "@prisma/client";
 import { Dispatch, createContext, useContext, useReducer } from "react";
-import { EditorBtns, IFunnelPage } from "@/types/types";
+import { EditorAction } from "./editor-actions";
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
@@ -330,7 +331,7 @@ export const EditorContext = createContext<{
   dispatch: Dispatch<EditorAction>;
   subaccountId: string;
   funnelId: string;
-  pageDetails: IFunnelPage | null;
+  pageDetails: FunnelPage | null;
 }>({
   state: initialState,
   dispatch: () => undefined,
@@ -343,7 +344,7 @@ type EditorProps = {
   children: React.ReactNode;
   subaccountId: string;
   funnelId: string;
-  pageDetails: IFunnelPage;
+  pageDetails: FunnelPage;
 };
 
 const EditorProvider = (props: EditorProps) => {

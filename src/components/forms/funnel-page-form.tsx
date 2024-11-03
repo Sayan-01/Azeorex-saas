@@ -1,34 +1,36 @@
 "use client";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 
-import { Button } from "../ui/button";
-import { getFunnels, saveActivityLogsNotification, addFunnelPage } from "@/lib/queries";
+import { useToast } from "@/hooks/use-toast";
+import { getFunnels, saveActivityLogsNotification, upsertFunnelPage } from "@/lib/queries";
+import { FunnelPageSchema } from "@/types/types";
+import { FunnelPage } from "@prisma/client";
+import { CopyPlusIcon, Trash } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { v4 } from "uuid";
-import { CopyPlusIcon, Trash } from "lucide-react";
-import { FunnelPageSchema, IFunnelPage } from "@/types/types";
-import { useToast } from "@/hooks/use-toast";
 import { Loader } from "../global/Loader";
+import { Button } from "../ui/button";
+import { useModal } from "../../../providers/model-provider";
 
 interface CreateFunnelPageProps {
-  defaultData?: IFunnelPage;
+  defaultData?: FunnelPage;
   funnelId: string;
   order: number;
   subaccountId: string;
 }
 
-const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, subaccountId , funnelId,order }) => {
+const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, subaccountId, funnelId, order }) => {
 
-  console.log("dd",defaultData);
-  
   const { toast } = useToast();
   const router = useRouter();
+  const { setClose } = useModal();
+
   //ch
   const form = useForm<z.infer<typeof FunnelPageSchema>>({
     resolver: zodResolver(FunnelPageSchema),
@@ -39,34 +41,40 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, subacc
     },
   });
 
+  useEffect(() => {
+    if (defaultData) {
+      form.reset({ name: defaultData.name, pathName: defaultData.pathName });
+    }
+  }, [defaultData]);
+
   const onSubmit = async (values: z.infer<typeof FunnelPageSchema>) => {
     if (order !== 0 && !values.pathName)
       return form.setError("pathName", {
         message: "Pages other than the first page in the funnel require a path name example 'secondstep'.",
       });
     try {
-      await addFunnelPage(
+      const response = await upsertFunnelPage(
         subaccountId,
         {
           ...values,
+          id: defaultData?.id || v4(),
           order: defaultData?.order || order,
           pathName: values.pathName || "",
         },
         funnelId
       );
 
-      // const res = await JSON.parse(response)
-
-      // await saveActivityLogsNotification({
-      //   agencyId: undefined,
-      //   description: `Updated a funnel page | ${response?.name}`,
-      //   subaccountId: subaccountId,
-      // })
+      await saveActivityLogsNotification({
+        agencyId: undefined,
+        description: `Updated a funnel page | ${response?.name}`,
+        subAccountId: subaccountId,
+      });
 
       toast({
         title: "Success",
         description: "Saves Funnel Page Details",
       });
+      setClose();
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -153,18 +161,17 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, subacc
                   {form.formState.isSubmitting ? <Loader loading={form.formState.isSubmitting} /> : <Trash />}
                 </Button>
               )}
-              {defaultData?._id && (
+              {defaultData?.id && (
                 <Button
                   variant={"outline"}
                   size={"icon"}
                   disabled={form.formState.isSubmitting}
                   type="button"
                   onClick={async () => {
-                    const res = await getFunnels(subaccountId);
-                    const response = res ? JSON.parse(res) : [];
-                    const lastFunnelPage = response.find((funnel:any) => funnel._id === funnelId)?.FunnelPages.length;
+                    const response = await getFunnels(subaccountId);
+                    const lastFunnelPage = response.find((funnel: any) => funnel.id === funnelId)?.FunnelPages.length;
 
-                    await addFunnelPage(
+                    await upsertFunnelPage(
                       subaccountId,
                       {
                         ...defaultData,

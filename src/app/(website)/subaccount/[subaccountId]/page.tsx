@@ -1,9 +1,10 @@
+import BlurPage from "@/components/global/blur-page";
 import React from "react";
 
 type Props = {};
 
 const page = (props: Props) => {
-  return <div>page</div>;
+  return <BlurPage>page</BlurPage>;
 };
 
 export default page;

@@ -43,7 +43,7 @@ export const getUserDetails = async () => {
 
 //=============================================================
 
-export const saveActivityLogsNotification = async ({ agencyId, description, subAccountId }: { agencyId: string | undefined; description: string; subAccountId?: string }) => {
+export const saveActivityLogsNotification = async ({ agencyId, description, subAccountId }: { agencyId: string | undefined; description: string; subAccountId?: string | undefined }) => {
   const session = await auth();
   if (!session) redirect("/agency/sign-in");
 
@@ -254,15 +254,12 @@ export const updateUserRole = async (newUser: Partial<User>) => {
   if (!session) return;
 
   await db.user.update({
-    where:
-    { email: session?.user?.email as string }, // Search for user by email
-    data:{
-      role: newUser.role || 'SUBACCOUNT_USER',
+    where: { email: session?.user?.email as string }, // Search for user by email
+    data: {
+      role: newUser.role || "SUBACCOUNT_USER",
       agencyId: newUser.agencyId,
-    }}
-  );
-
-  
+    },
+  });
 };
 
 //==============================================================================
@@ -318,34 +315,44 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
       SidebarOption: {
         create: [
           {
-            name: "Dashboard",
-            icon: "category",
-            link: `/agency/${subAccount.id}`,
-          },
-          {
             name: "Launchpad",
+            link: `/subaccount/${subAccount.id}/launchpad`,
             icon: "clipboardIcon",
-            link: `/agency/${subAccount.id}/launchpad`,
-          },
-          {
-            name: "Billing",
-            icon: "payment",
-            link: `/agency/${subAccount.id}/billing`,
           },
           {
             name: "Settings",
+            link: `/subaccount/${subAccount.id}/settings`,
             icon: "settings",
-            link: `/agency/${subAccount.id}/settings`,
           },
           {
-            name: "Sub Accounts",
+            name: "Funnels",
+            link: `/subaccount/${subAccount.id}/funnels`,
+            icon: "pipelines",
+          },
+          {
+            name: "Media",
+            link: `/subaccount/${subAccount.id}/media`,
+            icon: "database",
+          },
+          {
+            name: "Automations",
+            link: `/subaccount/${subAccount.id}/automations`,
+            icon: "chip",
+          },
+          {
+            name: "Pipelines",
+            link: `/subaccount/${subAccount.id}/pipelines`,
+            icon: "flag",
+          },
+          {
+            name: "Contacts",
+            link: `/subaccount/${subAccount.id}/contacts`,
             icon: "person",
-            link: `/agency/${subAccount.id}/all-subaccounts`,
           },
           {
-            name: "Team",
-            icon: "shield",
-            link: `/agency/${subAccount.id}/team`,
+            name: "Dashboard",
+            link: `/subaccount/${subAccount.id}`,
+            icon: "category",
           },
         ],
       },

@@ -20,26 +20,23 @@ import { Pipeline } from "@/icons/pipeline";
 import { Media } from "@/icons/media";
 import { Chip } from "@/icons/chip";
 import { Funnel } from "@/icons/funnel";
-import { SubAccount } from "@prisma/client";
+import { Agency, SubAccount } from "@prisma/client";
 
 type Props = {
   defaultOption?: boolean;
   subAccounts: SubAccount[];
-  sideBarOptJson: any;
+  sideBarOpt: any;
   sidebarLogo: string;
-  detailsJson: any;
-  userJson: any;
+  details: any;
+  user: any;
   id: string;
 };
 
-function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, detailsJson, userJson, id }: Props) {
+function MenuOptions({ defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user, id }: Props) {
   const { setOpen } = useModal();
 
   const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
 
-  const sideBarOpt = JSON.parse(sideBarOptJson);
-  const details = JSON.parse(detailsJson);
-  const user = JSON.parse(userJson);
 
   const iconMapping: { [key: string]: JSX.Element } = {
     category: <Dashboard />, // Dashboard icon
@@ -110,44 +107,44 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
                 <CommandInput placeholder="Search Accounts..." />
                 <CommandList className="pb-16">
                   <CommandEmpty> No results found</CommandEmpty>
-                  {(user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") && user?.agencyId && (
+                  {(user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") && user?.Agency && (
                     <CommandGroup heading="Agency">
                       <CommandItem className="!bg-transparent my-2 text-primary broder-[1px] border-border p-2 rounded-md hover:!bg-muted cursor-pointer transition-all">
                         {defaultOption ? (
                           <Link
-                            href={`/agency/${user?.agencyId?._id}`}
+                            href={`/agency/${user?.Agency?.id}`}
                             className="flex gap-4 w-full h-full"
                           >
                             <div className="relative w-16">
                               <Image
-                                src={user?.agencyId?.agencyLogo}
+                                src={user?.Agency?.agencyLogo}
                                 alt="Agency Logo"
                                 fill
                                 className="rounded-md object-contain"
                               />
                             </div>
                             <div className="flex flex-col flex-1">
-                              {user?.agencyId?.name}
-                              <span className="text-muted-foreground">{user?.agencyId?.address}</span>
+                              {user?.Agency?.name}
+                              <span className="text-muted-foreground">{user?.Agency?.address}</span>
                             </div>
                           </Link>
                         ) : (
                           <SheetClose asChild>
                             <Link
-                              href={`/agency/${user?.agencyId?.id}`}
+                              href={`/agency/${user?.Agency?.id}`}
                               className="flex gap-4 w-full h-full"
                             >
                               <div className="relative w-16">
                                 <Image
-                                  src={user?.agencyId?.agencyLogo}
+                                  src={user?.Agency?.agencyLogo}
                                   alt="Agency Logo"
                                   fill
                                   className="rounded-md object-contain"
                                 />
                               </div>
                               <div className="flex flex-col flex-1">
-                                {user?.agencyId?.name}
-                                <span className="text-muted-foreground">{user?.agencyId?.address}</span>
+                                {user?.Agency?.name}
+                                <span className="text-muted-foreground">{user?.Agency?.address}</span>
                               </div>
                             </Link>
                           </SheetClose>
@@ -215,9 +212,9 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
                             subheading="You can switch between your agency account and the subaccount from the sidebar"
                           >
                             <SubAccountDetails
-                              agencyDetails={user?.agencyId as IAgency}
-                              userId={user?._id as string}
-                              userName={user?.username}
+                              agencyDetails={user?.Agency as Agency}
+                              userId={user?.id as string}
+                              userName={user?.name}
                             />
                           </CustomModal>
                         );
@@ -243,7 +240,7 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOptJson, sidebarLogo, 
                     const IconComponent = iconMapping[sidebarOptions.icon] || <Fa500Px />; // Fallback to a default icon if not found
                     return (
                       <CommandItem
-                        key={sidebarOptions._id}
+                        key={sidebarOptions.id}
                         className="md:w-[320px] w-full mb-1 -ml-1 group"
                       >
                         <Link

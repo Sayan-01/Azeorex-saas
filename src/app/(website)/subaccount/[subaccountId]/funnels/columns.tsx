@@ -15,7 +15,7 @@ export const columns = [
       return (
         <Link
           className="flex gap-2 items-center"
-          href={`/subaccount/${row.original.subAccountId}/funnels/${row.original._id}`}
+          href={`/subaccount/${row.original.subAccountId}/funnels/${row.original.id}`}
         >
           {row.getValue("name")}
           <ExternalLink size={15} />
@@ -28,8 +28,8 @@ export const columns = [
     header: "Last Updated",
     //@ts-ignore
     cell: ({ row }) => {
-      // const date = ` ${row.original.updatedAt.toDateString()} ${row.original.updatedAt.toLocaleTimeString()} `;
-      // return <span className="text-muted-foreground">{date}</span>;
+      const date = ` ${row.original.updatedAt.toDateString()} ${row.original.updatedAt.toLocaleTimeString()} `;
+      return <span className="text-muted-foreground">{date}</span>;
     },
   },
   {

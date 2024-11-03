@@ -3,19 +3,23 @@ import React from "react";
 import FunnelForm from "@/components/forms/funnel-form";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 // import FunnelProductsTable from "./funnel-products-table";
-import { IFunnel } from "@/types/types";
+import { db } from "@/lib/db";
 import connectDb from "@/lib/dbConnect";
-import { SubAccount } from "../../../../../../../../models/schema";
+import { Funnel } from "@prisma/client";
 
 interface FunnelSettingsProps {
   subaccountId: string;
-  defaultData: IFunnel;
+  defaultData: Funnel;
 }
 
 const FunnelSettings: React.FC<FunnelSettingsProps> = async ({ subaccountId, defaultData }) => {
   //CHALLENGE: go connect your stripe to sell products
   await connectDb();
-  const subaccountDetails = await SubAccount.findById(subaccountId);
+  const subaccountDetails = await db.subAccount.findUnique({
+    where: {
+      id: subaccountId,
+    },
+  });
 
   if (!subaccountDetails) return;
   // if (!subaccountDetails.connectAccountId) return;
@@ -30,6 +34,7 @@ const FunnelSettings: React.FC<FunnelSettingsProps> = async ({ subaccountId, def
         </CardHeader>
         <CardContent>
           <>
+          {/* use in stripe connects */}
             {
               /* {subaccountDetails.connectAccountId ? (
               <FunnelProductsTable
