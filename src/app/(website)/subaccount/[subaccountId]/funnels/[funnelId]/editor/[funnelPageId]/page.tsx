@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import EditorProvider from "../../../../../../../../../providers/editor/editor-provider";
 import FunnelEditorNavigation from "./_components/funnel-editor-navigation";
 import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
+import FunnelEditor from "./_components/funnel-editor";
 
 type Props = {
   params: {

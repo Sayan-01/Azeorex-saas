@@ -1,4 +1,3 @@
-import { EditorElement } from '@/providers/editor/editor-provider'
 import React from 'react'
 import TextComponent from './text'
 import Container from './container'
@@ -6,6 +5,7 @@ import VideoComponent from './video'
 import LinkComponent from './link-component'
 import ContactFormComponent from './contact-form-component'
 import Checkout from './checkout'
+import { EditorElement } from '../../../../../../../../../../../../providers/editor/editor-provider'
 
 type Props = {
   element: EditorElement

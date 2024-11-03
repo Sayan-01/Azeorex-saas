@@ -1,4 +1,4 @@
-import { EditorBtns } from '@/lib/constants'
+import { EditorBtns } from '@/types/types'
 import { Youtube } from 'lucide-react'
 import React from 'react'
 

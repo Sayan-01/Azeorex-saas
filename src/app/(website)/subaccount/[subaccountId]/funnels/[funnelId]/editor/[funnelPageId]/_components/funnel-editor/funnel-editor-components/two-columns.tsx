@@ -1,12 +1,12 @@
 'use client'
-import { EditorElement, useEditor } from '@/providers/editor/editor-provider'
+import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import React from 'react'
 import RecursiveElement from './recursive'
 
 import { v4 } from 'uuid'
 import clsx from 'clsx'
 import { Badge } from '@/components/ui/badge'
-import { EditorBtns, defaultStyles } from '@/lib/constants'
+import { defaultStyles, EditorBtns } from "@/types/types";
 
 type Props = {
   element: EditorElement

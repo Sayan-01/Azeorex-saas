@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { EditorBtns } from '@/lib/constants'
+import { EditorBtns } from "@/types/types";
 import React from 'react'
 import TextPlaceholder from './text-placeholder'
 import ContainerPlaceholder from './container-placeholder'

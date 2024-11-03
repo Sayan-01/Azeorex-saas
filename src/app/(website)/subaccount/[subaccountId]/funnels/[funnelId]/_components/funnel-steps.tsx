@@ -82,7 +82,10 @@ const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
         <aside className="flex-[0.3] bg-background p-6  flex flex-col justify-between ">
           <ScrollArea className="h-full ">
             <div className="flex gap-3 mb-2 items-center">
-              <CheckCheck size={20} className=" text-blue-500"/>
+              <CheckCheck
+                size={20}
+                className=" text-blue-500"
+              />
               Funnel Steps
             </div>
             {pagesState.length ? (
@@ -165,13 +168,12 @@ const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
 
                     <Link
                       target="_blank"
-                      href={`${process.env.NEXT_URL_SHEME}${funnel.subDomainName}.${process.env.NEXT_URL_DOMAIN}/${clickedPage?.pathName}`}
+                      href={`${process.env.NEXT_PUBLIC_URL_SCHEME}${funnel.subDomainName}.${process.env.NEXT_PUBLIC_URL_DOMAIN}/${clickedPage?.pathName}`}
                       className="group flex items-center justify-start p-2 gap-2 hover:text-primary transition-colors duration-200"
                     >
                       <ExternalLink size={15} />
                       <div className="w-64 overflow-hidden overflow-ellipsis ">
-                        {process.env.NEXT_URL_SCHEME}
-                        {funnel.subDomainName}.{process.env.NEXT_URL_DOMAIN}/{clickedPage?.pathName}
+                        {funnel.subDomainName}.{process.env.NEXT_PUBLIC_URL_DOMAIN}/{clickedPage?.pathName}
                       </div>
                     </Link>
                   </div>
@@ -180,7 +182,7 @@ const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
                     subaccountId={subaccountId}
                     defaultData={clickedPage}
                     funnelId={funnelId}
-                    order={clickedPage?.order as number || 0}
+                    order={(clickedPage?.order as number) || 0}
                   />
                 </CardDescription>
               </CardHeader>

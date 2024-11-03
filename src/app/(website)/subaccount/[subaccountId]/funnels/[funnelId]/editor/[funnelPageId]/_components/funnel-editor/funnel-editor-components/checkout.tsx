@@ -1,15 +1,11 @@
 'use client'
-import Loading from '@/components/global/loading'
+import { Loader } from '@/components/global/Loader'
 import { Badge } from '@/components/ui/badge'
-import { toast } from '@/components/ui/use-toast'
-import { EditorBtns } from '@/lib/constants'
+import { useToast } from '@/hooks/use-toast'
 import { getFunnel, getSubaccountDetails } from '@/lib/queries'
-import { getStripe } from '@/lib/stripe/stripe-client'
-import { EditorElement, useEditor } from '@/providers/editor/editor-provider'
-import {
-  EmbeddedCheckout,
-  EmbeddedCheckoutProvider,
-} from '@stripe/react-stripe-js'
+import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
+import { EditorBtns } from '@/types/types'
+
 import clsx from 'clsx'
 import { Trash } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -27,6 +23,7 @@ const Checkout = (props: Props) => {
   const [subAccountConnectAccId, setSubAccountConnectAccId] = useState('')
   const options = useMemo(() => ({ clientSecret }), [clientSecret])
   const styles = props.element.styles
+  const {toast} = useToast()
 
   useEffect(() => {
     if (!subaccountId) return
@@ -157,18 +154,18 @@ const Checkout = (props: Props) => {
         <div className="flex flex-col gap-4 w-full">
           {options.clientSecret && subAccountConnectAccId && (
             <div className="text-white">
-              <EmbeddedCheckoutProvider
+              {/* <EmbeddedCheckoutProvider
                 stripe={getStripe(subAccountConnectAccId)}
                 options={options}
               >
                 <EmbeddedCheckout />
-              </EmbeddedCheckoutProvider>
+              </EmbeddedCheckoutProvider> */}
             </div>
           )}
 
           {!options.clientSecret && (
             <div className="flex items-center justify-center w-full h-40">
-              <Loading />
+              <Loader loading={!!options?.clientSecret} />
             </div>
           )}
         </div>
@@ -176,7 +173,7 @@ const Checkout = (props: Props) => {
 
       {state.editor.selectedElement.id === props.element.id &&
         !state.editor.liveMode && (
-          <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
+          <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
             <Trash
               className="cursor-pointer"
               size={16}

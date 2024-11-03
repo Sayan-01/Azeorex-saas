@@ -1,7 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
 import { getFunnelPageDetails } from '@/lib/queries'
-import { useEditor } from '@/providers/editor/editor-provider'
+import { useEditor } from '../../../../../../../../../../../providers/editor/editor-provider'
 import clsx from 'clsx'
 import { EyeOff } from 'lucide-react'
 import React, { useEffect } from 'react'
@@ -52,7 +52,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
   return (
     <div
       className={clsx(
-        'use-automation-zoom-in h-full overflow-scroll mr-[385px] bg-background transition-all rounded-md',
+        'use-automation-zoom-in h-full overflow-scroll mr-[385px] bg-background transition-all rounded-md box',
         {
           '!p-0 !mr-0':
             state.editor.previewMode === true || state.editor.liveMode === true,
