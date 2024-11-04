@@ -10,6 +10,9 @@ const Page = async ({ params }: { params: { domain: string } }) => {
   if (!domainData) return notFound();
 
   const pageData = domainData.FunnelPages.find((page) => !page.pathName);
+console.log("fff",pageData);
+console.log("first", params.domain);
+
 
   if (!pageData) return notFound();
 

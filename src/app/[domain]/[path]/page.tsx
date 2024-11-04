@@ -14,6 +14,11 @@ const Page = async ({
     (page) => page.pathName === params.path
   )
 
+  console.log("ggggg",pageData, domainData);
+  console.log("first", params.domain, params.path);
+  
+  
+
   if (!pageData || !domainData) return notFound()
 
   return (
