@@ -7,6 +7,8 @@ type Props = {searchParams: {state: string}};
 
 const page = async(props: Props) => {
   const agencyId = await verifyAndAcceptInvitation()
+  console.log(props);
+  
 
   if (!agencyId){
     return <Unauthorized/>

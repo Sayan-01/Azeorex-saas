@@ -1,28 +1,28 @@
 "use client";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
-import { ChartNoAxesGantt, ChevronsUpDown, Menu, PlusCircleIcon } from "lucide-react";
-import clsx from "clsx";
-import { AspectRatio } from "../ui/aspect-ratio";
-import Image from "next/image";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { IAgency, ISubAccount } from "@/types/types";
-import { useMemo } from "react";
-import { AffiliateDuoToneBlack, CarotSort, Compass, CreditCard, Dashboard, FileDuoToneBlack, Settings, ZapDouToneBlack } from "@/icons";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command";
-import Link from "next/link";
-import SubAccountDetails from "../forms/Subaccount_form";
-import { useModal } from "../../../providers/model-provider";
-import CustomModal from "../global/CustomModal";
-import { Separator } from "../ui/separator";
-import { Fa500Px } from "react-icons/fa";
-import { Pipeline } from "@/icons/pipeline";
-import { Media } from "@/icons/media";
+import { AffiliateDuoToneBlack, Compass, CreditCard, Dashboard, FileDuoToneBlack, Settings, ZapDouToneBlack } from "@/icons";
 import { Chip } from "@/icons/chip";
 import { Funnel } from "@/icons/funnel";
+import { Media } from "@/icons/media";
+import { Pipeline } from "@/icons/pipeline";
 import { Agency, SubAccount } from "@prisma/client";
+import clsx from "clsx";
+import { ChevronsUpDown, Menu, PlusCircleIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useMemo } from "react";
+import { Fa500Px } from "react-icons/fa";
+import { useModal } from "../../../providers/model-provider";
+import SubAccountDetails from "../forms/Subaccount_form";
+import CustomModal from "../global/CustomModal";
+import { AspectRatio } from "../ui/aspect-ratio";
+import { Button } from "../ui/button";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Separator } from "../ui/separator";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 
 type Props = {
+  type: string
   defaultOption?: boolean;
   subAccounts: SubAccount[];
   sideBarOpt: any;
@@ -32,19 +32,18 @@ type Props = {
   id: string;
 };
 
-function MenuOptions({ defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user, id }: Props) {
+function MenuOptions({type, defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user, id }: Props) {
   const { setOpen } = useModal();
 
   const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
 
-
   const iconMapping: { [key: string]: JSX.Element } = {
-    category: <Dashboard />, // Dashboard icon
-    clipboardIcon: <FileDuoToneBlack />, // Launchpad icon
+    category: <Dashboard />,
+    clipboardIcon: <FileDuoToneBlack />,
     payment: <CreditCard />,
-    settings: <Settings />, // Settings icon
-    person: <AffiliateDuoToneBlack />, // Sub Accounts icon
-    shield: <ZapDouToneBlack />, // Team icon
+    settings: <Settings />,
+    person: <AffiliateDuoToneBlack />,
+    shield: <ZapDouToneBlack />,
     pipelines: <Funnel />,
     database: <Media />,
     chip: <Chip />,
@@ -68,24 +67,38 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOpt, sidebarLogo, deta
         </Button>
       </SheetTrigger>
       <SheetContent
-        showX={true}
         side="left"
-        className={clsx(" bg-background/80 backdrop-blur-xl fixed borde-r-[1px] p-6", {
+        className={clsx(" bg-background/80 backdrop-blur-xl fixed borde-r-[1px] p-6 pt-7", {
           "hidden md:inline-block z-0 w-[300px]": defaultOption,
           "inline-block md:hidden z-[100] w-full": !defaultOption,
         })}
       >
         <div>
-          <AspectRatio ratio={16 / 5}>
-            <Image
-              src={sidebarLogo}
-              alt="logo"
-              fill
-              className="!rounded-md object-cover"
-            />
-          </AspectRatio>
+          <div className="relative">
+            {type === "agency" ? (
+              <AspectRatio ratio={16 / 5}>
+                <Image
+                  src={sidebarLogo}
+                  alt="logo"
+                  fill
+                  className="!rounded-md object-cover mb-3"
+                />
+              </AspectRatio>
+            ) : (
+              <div className="relative right-0 flex items-center rounded-full mb-3">
+                <Image
+                  src={sidebarLogo}
+                  alt="logo"
+                  width={400}
+                  height={400}
+                  className="!rounded-md   w-14 h-14"
+                />
+                <h1 className=" text-2xl font-bold ml-2">{details.name}</h1>
+              </div>
+            )}
+          </div>
           <Popover>
-            <PopoverTrigger asChild>
+            <PopoverTrigger asChild className="element">
               <div className="inline-flex cursor-pointer px-2 items-center justify-between whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-full my-4 py-4">
                 <div className="flex  items-center text-left gap-4 ">
                   <Compass />
@@ -152,7 +165,7 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOpt, sidebarLogo, deta
                       </CommandItem>
                     </CommandGroup>
                   )}
-                  <CommandGroup heading="Accounts">
+                  <CommandGroup heading="Su accounts">
                     {!!subAccounts
                       ? subAccounts.map((subaccount) => (
                           <CommandItem key={subaccount.id}>
@@ -161,7 +174,7 @@ function MenuOptions({ defaultOption, subAccounts, sideBarOpt, sidebarLogo, deta
                                 href={`/subaccount/${subaccount.id}`}
                                 className="flex gap-4 w-full h-full"
                               >
-                                <div className="relative w-16">
+                                <div className="relative w-10">
                                   <Image
                                     src={subaccount.subAccountLogo}
                                     alt="subaccount Logo"

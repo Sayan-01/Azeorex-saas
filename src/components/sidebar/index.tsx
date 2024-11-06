@@ -31,6 +31,7 @@ const Sidebar = async ({ id, type }: Props) => {
   return (
     <>
       <MenuOptions
+        type={type}
         defaultOption={true}
         subAccounts={subaccounts}
         sideBarOpt={sideBarOpt}

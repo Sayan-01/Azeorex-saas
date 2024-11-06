@@ -8,8 +8,11 @@ import {
   getFilteredRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Plus, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 
+import CustomModal from '@/components/global/CustomModal'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -18,10 +21,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { useModal } from '../../../../../../providers/model-provider'
-import CustomModal from '@/components/global/CustomModal'
 
 interface FunnelsDataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]

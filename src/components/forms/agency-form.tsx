@@ -16,7 +16,7 @@ import { Loader } from "../global/Loader";
 import GlassCard from "../global/glass-card";
 import { Role } from "@/types/types";
 import { deleteAgency, updateUserRole, upsertAgency } from "@/lib/queries";
-import { v4 as uuidv4, v4 } from "uuid";
+import { v4 } from "uuid";
 import { useSession } from "next-auth/react";
 import { Agency } from "@prisma/client";
 

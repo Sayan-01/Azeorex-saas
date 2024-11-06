@@ -5,7 +5,7 @@ import { useToast } from '@/hooks/use-toast'
 import { EditorBtns } from '@/types/types'
 import {
   getFunnel,
-  saveActivityLogsNotification,
+  // saveActivityLogsNotification,
   // upsertContact,
 } from '@/lib/queries'
 

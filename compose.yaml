@@ -34,9 +34,10 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=saas
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=sayan
       - POSTGRES_PASSWORD=example
+      - DATABASE_URL="postgresql://postgres:example@localhost:5432/postgres"
 
 volumes:
   tasked: {}

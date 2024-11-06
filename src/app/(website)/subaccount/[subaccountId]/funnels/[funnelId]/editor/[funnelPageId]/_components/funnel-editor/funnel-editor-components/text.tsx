@@ -53,6 +53,7 @@ const TextComponent = (props: Props) => {
           </Badge>
         )}
       <span
+      className=' border-none outline-none'
         contentEditable={!state.editor.liveMode}
         onBlur={(e) => {
           const spanElement = e.target as HTMLSpanElement
@@ -74,7 +75,7 @@ const TextComponent = (props: Props) => {
       </span>
       {state.editor.selectedElement.id === props.element.id &&
         !state.editor.liveMode && (
-          <div className="absolute bg-primary px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
+          <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
             <Trash
               className="cursor-pointer"
               size={16}

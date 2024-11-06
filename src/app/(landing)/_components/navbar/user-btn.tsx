@@ -1,11 +1,10 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import clsx from "clsx";
 import { LogOut, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { Sign_Out } from "../../../../../server/auth";
-import { auth } from "../../../../../auth";
 
 type Props = {
   children: React.ReactNode;

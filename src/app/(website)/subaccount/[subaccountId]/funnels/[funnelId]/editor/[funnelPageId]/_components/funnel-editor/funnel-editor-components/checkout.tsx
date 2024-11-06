@@ -76,12 +76,12 @@ const Checkout = (props: Props) => {
         } catch (error) {
           toast({
             open: true,
-            className: 'z-[100000]',
-            variant: 'destructive',
-            title: 'Oppse!',
-            //@ts-ignore
+            className: "z-[100000]",
+            variant: "destructive",
+            title: "Oppse!",
+            //@ts-expect-error
             description: error.message,
-          })
+          });
         }
       }
       getClientSercet()
