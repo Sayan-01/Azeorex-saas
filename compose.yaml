@@ -21,7 +21,7 @@ services:
         - path: ./package-lock.json
           action: rebuild
         - path: ./src
-          target: /app/src
+          target: /src/app
           action: sync
     volumes:
       - .:/app
@@ -37,7 +37,7 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=sayan
       - POSTGRES_PASSWORD=example
-      - DATABASE_URL="postgresql://postgres:example@localhost:5432/postgres"
+      - DATABASE_URL=postgresql://postgres:example@localhost:5432/postgres
 
 volumes:
   tasked: {}

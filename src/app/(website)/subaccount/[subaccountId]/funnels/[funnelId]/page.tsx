@@ -20,7 +20,6 @@ const FunnelPage = async ({ params }: Props) => {
           href={`/subaccount/${params.subaccountId}/funnels`}
           className="flex justify-between gap-4 text-muted-foreground"
         >
-          <ArrowBigLeftDash size={28}/>
         </Link>
         <h1 className="text-3xl">{funnelPages.name}</h1>
       </div>

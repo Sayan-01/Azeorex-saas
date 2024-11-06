@@ -115,7 +115,7 @@ function MenuOptions({type, defaultOption, subAccounts, sideBarOpt, sidebarLogo,
                 </div>
               </div>
             </PopoverTrigger>
-            <PopoverContent className=" h-60 w-60 mt-4 p-3 z-[200] box">
+            <PopoverContent className=" h-64 w-60 mt-4 p-3 z-[200] box">
               <Command className="rounded-lg">
                 <CommandInput placeholder="Search Accounts..." />
                 <CommandList className="pb-16">
