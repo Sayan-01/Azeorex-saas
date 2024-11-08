@@ -34,7 +34,7 @@ const TextComponent = (props: Props) => {
   return (
     <div
       style={styles}
-      className={clsx("p-[2px] w-max hover:border-blue-500 m-[5px] relative text-[16px] transition-all hover:border", {
+      className={clsx("p-[2px] w-max hover:border-blue-500 {m-[5px]} relative text-[16px] transition-all hover:border", {
         "!border-blue-500": state.editor.selectedElement.id === props.element.id,
 
         "!border-solid": state.editor.selectedElement.id === props.element.id,
@@ -43,11 +43,11 @@ const TextComponent = (props: Props) => {
       onClick={handleOnClickBody}
     >
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg">{state.editor.selectedElement.name}</Badge>
+        <Badge className="absolute -top-[20px] h-5 -left-[1px] rounded-none rounded-t-lg">{state.editor.selectedElement.name}</Badge>
       )}
       <span
         className=" border-none outline-none"
-        contentEditable={!state.editor.liveMode}
+        contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
         onBlur={(e) => {
           const spanElement = e.target as HTMLSpanElement;
           dispatch({
@@ -66,10 +66,10 @@ const TextComponent = (props: Props) => {
         {!Array.isArray(props.element.content) && props.element.content.innerText}
       </span>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
+        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold -top-[20px] -right-[1px] rounded-none rounded-t-lg !text-white">
           <Trash
             className="cursor-pointer"
-            size={16}
+            size={12}
             onClick={handleDeleteElement}
           />
         </div>

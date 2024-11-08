@@ -184,7 +184,7 @@ const Container = ({ element }: Props) => {
   return (
     <div
       style={styles}
-      className={clsx("relative p-4 py-6 transition-all group box-1", {
+      className={clsx("relative p-4 py-6 transition-all hover:border-blue-500 hover:border group box-1", {
         "max-w-full w-full": type === "container" || type === "2Col",
         "h-fit": type === "container",
         "h-full": type === "__body",
@@ -202,7 +202,7 @@ const Container = ({ element }: Props) => {
       onDragStart={(e) => handleDragStart(e, "container")}
     >
       <Badge
-        className={clsx("absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg hidden", {
+        className={clsx("absolute -top-[20px] h-5 -left-[1px] rounded-none rounded-t-lg hidden", {
           block: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
         })}
       >
@@ -218,9 +218,9 @@ const Container = ({ element }: Props) => {
         ))}
 
       {state.editor.selectedElement.id === element.id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body" && (
-        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
+        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[20px] -right-[1px] rounded-none rounded-t-lg !text-white">
           <Trash
-            size={16}
+            size={12}
             onClick={handleDeleteElement}
           />
         </div>

@@ -92,31 +92,24 @@ const TwoColumns = (props: Props) => {
   return (
     <div
       style={props.element.styles}
-      className={clsx('relative p-4 transition-all', {
-        'h-fit': type === 'container',
-        'h-full': type === '__body',
-        'm-4': type === 'container',
-        '!border-blue-500':
-          state.editor.selectedElement.id === props.element.id &&
-          !state.editor.liveMode,
-        '!border-solid':
-          state.editor.selectedElement.id === props.element.id &&
-          !state.editor.liveMode,
-        'border-dashed border-[1px] border-slate-300': !state.editor.liveMode,
+      className={clsx("relative hover:border-blue-500 hover:border  p-4 transition-all", {
+        "h-fit": type === "container",
+        "h-full": type === "__body",
+        "m-4": type === "container",
+        "!border-blue-500": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
+        "!border-solid": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
+        "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
       })}
       id="innerContainer"
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
-      draggable={type !== '__body'}
+      draggable={type !== "__body"}
       onClick={handleOnClickBody}
-      onDragStart={(e) => handleDragStart(e, 'container')}
+      onDragStart={(e) => handleDragStart(e, "container")}
     >
-      {state.editor.selectedElement.id === props.element.id &&
-        !state.editor.liveMode && (
-          <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg ">
-            {state.editor.selectedElement.name}
-          </Badge>
-        )}
+      {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
+        <Badge className="absolute -top-[20px] h-5 -left-[1px] rounded-none rounded-t-lg ">{state.editor.selectedElement.name}</Badge>
+      )}
       {Array.isArray(content) &&
         content.map((childElement) => (
           <RecursiveElement
@@ -125,7 +118,7 @@ const TwoColumns = (props: Props) => {
           />
         ))}
     </div>
-  )
+  );
 }
 
 export default TwoColumns

@@ -102,7 +102,7 @@ const ContactFormComponent = (props: Props) => {
       draggable
       onDragStart={(e) => handleDragStart(e, "contactForm")}
       onClick={handleOnClickBody}
-      className={clsx("p-[2px] w-full m-[5px] relative text-[16px] transition-all flex items-center justify-center", {
+      className={clsx("p-[2px] w-full hover:border-blue-500 hover:border  m-[5px] relative text-[16px] transition-all flex items-center justify-center", {
         "!border-blue-500": state.editor.selectedElement.id === props.element.id,
 
         "!border-solid": state.editor.selectedElement.id === props.element.id,
@@ -110,7 +110,7 @@ const ContactFormComponent = (props: Props) => {
       })}
     >
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute -top-[23px] -left-[1px] rounded-none rounded-t-lg ">{state.editor.selectedElement.name}</Badge>
+        <Badge className="absolute -top-[20px] h-5 -left-[1px] rounded-none rounded-t-lg ">{state.editor.selectedElement.name}</Badge>
       )}
       {/* <ContactForm
         subTitle="Contact Us"
@@ -118,10 +118,10 @@ const ContactFormComponent = (props: Props) => {
         apiCall={onFormSubmit}
       /> */}
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[25px] -right-[1px] rounded-none rounded-t-lg !text-white">
+        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[20px] -right-[1px] rounded-none rounded-t-lg !text-white">
           <Trash
             className="cursor-pointer"
-            size={16}
+            size={12}
             onClick={handleDeleteElement}
           />
         </div>
