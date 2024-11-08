@@ -11,7 +11,7 @@ const SignInPage = async () => {
       </p>
       {/* <SignInForm /> */}
       <div className="my-10 w-full relative">
-        <div className="bg-black p-3 absolute text-themeTextGray text-xs top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="bg-black w-max p-3 absolute text-themeTextGray text-xs top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           PLEASE CONTINUE WITH
         </div>
         <Separator orientation="horizontal" className="bg-themeGray" />

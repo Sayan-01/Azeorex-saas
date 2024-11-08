@@ -22,7 +22,7 @@ import { Separator } from "../ui/separator";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 
 type Props = {
-  type: string
+  type: string;
   defaultOption?: boolean;
   subAccounts: SubAccount[];
   sideBarOpt: any;
@@ -32,7 +32,7 @@ type Props = {
   id: string;
 };
 
-function MenuOptions({type, defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user, id }: Props) {
+function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user, id }: Props) {
   const { setOpen } = useModal();
 
   const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
@@ -85,20 +85,24 @@ function MenuOptions({type, defaultOption, subAccounts, sideBarOpt, sidebarLogo,
                 />
               </AspectRatio>
             ) : (
-              <div className="relative right-0 flex items-center rounded-full mb-3">
+              <div className="relative right-0 flex items-center w-full overflow-x-hidden mb-3">
                 <Image
                   src={sidebarLogo}
                   alt="logo"
                   width={400}
                   height={400}
-                  className="!rounded-md   w-14 h-14"
+                  className="!rounded-md w-12 h-12"
                 />
-                <h1 className=" text-2xl font-bold ml-2">{details.name}</h1>
+                <h1 className=" text-2xl font-medium mx-3">{details.name}</h1>
+                <Separator/>
               </div>
             )}
           </div>
           <Popover>
-            <PopoverTrigger asChild className="element">
+            <PopoverTrigger
+              asChild
+              className="element"
+            >
               <div className="inline-flex cursor-pointer px-2 items-center justify-between whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-full my-4 py-4">
                 <div className="flex  items-center text-left gap-4 ">
                   <Compass />

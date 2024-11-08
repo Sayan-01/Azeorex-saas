@@ -27,17 +27,16 @@ services:
       - .:/app
       - /app/node_modules
   db:
-    image: postgres
+    image: postgres:latest
     restart: always
     volumes:
       - ./data/db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=sayan
+      - POSTGRES_DB=saas
+      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=example
-      - DATABASE_URL=postgresql://postgres:example@localhost:5432/postgres
 
 volumes:
   tasked: {}
