@@ -48,6 +48,7 @@ import {
   MegaPhoneDuoToneWhite,
   ZapDouToneBlack,
 } from "@/icons";
+import { Plus } from "@/icons/plus";
 
 const page = async () => {
   const session = await auth();
@@ -187,6 +188,7 @@ const page = async () => {
         <p>
           44. <ZapDouToneBlack />
         </p>
+        45.<Plus/>
       </div>
     );
   }

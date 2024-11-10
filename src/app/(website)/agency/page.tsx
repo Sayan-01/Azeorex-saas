@@ -9,11 +9,11 @@ const page = async () => {
   const session = await auth();
   if (!session?.user) redirect("/agency/sign-in");
 
-  const agencyId = await verifyAndAcceptInvitation(); 
-  
+  const agencyId = await verifyAndAcceptInvitation();
+
   console.log(agencyId);
-  
-  const user = await getUserDetails(); 
+
+  const user = await getUserDetails();
 
   if (agencyId) {
     if (user?.role === "SUBACCOUNT_GUEST" || user?.role === "SUBACCOUNT_USER") {
@@ -21,15 +21,19 @@ const page = async () => {
     } else if (user?.role === "AGENCY_OWNER" || user?.role === "AGENCY_ADMIN") {
       return redirect(`/agency/${agencyId}`);
     } else {
-      return <div><Unauthorized/></div>;
+      return (
+        <div>
+          <Unauthorized />
+        </div>
+      );
     }
   }
-  
+
   return (
     <div className="flex justify-center items-center my-4">
       <div className=" max-w-[850px]  p-4 rounded-xl">
-        <h1 className="text-4xl font-bold mb-5">Create An Agency</h1>
-        <AgencyForm data={{companyEmail: session?.user?.email as string}} />
+        <h1 className="text-4xl mb-5">Create An Agency</h1>
+        <AgencyForm data={{ companyEmail: session?.user?.email as string }} />
       </div>
     </div>
   );

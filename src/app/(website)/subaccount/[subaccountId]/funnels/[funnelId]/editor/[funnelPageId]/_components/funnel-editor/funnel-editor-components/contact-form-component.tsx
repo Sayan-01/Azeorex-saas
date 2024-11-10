@@ -1,70 +1,66 @@
-'use client'
+"use client";
 // import ContactForm from '@/components/forms/contact-form'
-import { Badge } from '@/components/ui/badge'
-import { useToast } from '@/hooks/use-toast'
-import { EditorBtns } from '@/types/types'
+import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
+import { EditorBtns } from "@/types/types";
 import {
   getFunnel,
   // saveActivityLogsNotification,
   // upsertContact,
-} from '@/lib/queries'
+} from "@/lib/queries";
 
 // import { ContactUserFormSchema } from '@/lib/types'
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
-import clsx from 'clsx'
-import { Trash } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import clsx from "clsx";
+import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-import React from 'react'
-import { z } from 'zod'
+import React from "react";
+import { z } from "zod";
 
 type Props = {
-  element: EditorElement
-}
+  element: EditorElement;
+};
 
 const ContactFormComponent = (props: Props) => {
-  const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor()
-  const router = useRouter()
-  const {toast} = useToast()
+  const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor();
+  const router = useRouter();
+  const { toast } = useToast();
 
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
-    if (type === null) return
-    e.dataTransfer.setData('componentType', type)
-  }
+    if (type === null) return;
+    e.dataTransfer.setData("componentType", type);
+  };
 
   const handleOnClickBody = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
     dispatch({
-      type: 'CHANGE_CLICKED_ELEMENT',
+      type: "CHANGE_CLICKED_ELEMENT",
       payload: {
         elementDetails: props.element,
       },
-    })
-  }
+    });
+  };
 
-  const styles = props.element.styles
+  const styles = props.element.styles;
 
   const goToNextPage = async () => {
-    if (!state.editor.liveMode) return
-    const funnelPages = await getFunnel(funnelId)
-    if (!funnelPages || !pageDetails) return
+    if (!state.editor.liveMode) return;
+    const funnelPages = await getFunnel(funnelId);
+    if (!funnelPages || !pageDetails) return;
     if (funnelPages.FunnelPages.length > pageDetails.order + 1) {
-      const nextPage = funnelPages.FunnelPages.find(
-        (page) => page.order === pageDetails.order + 1
-      )
-      if (!nextPage) return
-      router.replace(
-        `${process.env.NEXT_PUBLIC_SCHEME}${funnelPages.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`
-      )
+      const nextPage = funnelPages.FunnelPages.find((page) => page.order === pageDetails.order + 1);
+      if (!nextPage) return;
+      router.replace(`${process.env.NEXT_PUBLIC_SCHEME}${funnelPages.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`);
     }
-  }
+  };
 
   const handleDeleteElement = () => {
     dispatch({
-      type: 'DELETE_ELEMENT',
+      type: "DELETE_ELEMENT",
       payload: { elementDetails: props.element },
-    })
-  }
+    });
+  };
 
   // const onFormSubmit = async (
   //   values: z.infer<typeof ContactUserFormSchema>
@@ -102,7 +98,7 @@ const ContactFormComponent = (props: Props) => {
       draggable
       onDragStart={(e) => handleDragStart(e, "contactForm")}
       onClick={handleOnClickBody}
-      className={clsx("p-[2px] w-full hover:border-blue-500 hover:border  m-[5px] relative text-[16px] transition-all flex items-center justify-center", {
+      className={clsx("p-[2px] w-full hover:border-blue-500 hover:border  ok relative text-[16px] transition-all flex items-center justify-center", {
         "!border-blue-500": state.editor.selectedElement.id === props.element.id,
 
         "!border-solid": state.editor.selectedElement.id === props.element.id,
@@ -128,6 +124,6 @@ const ContactFormComponent = (props: Props) => {
       )}
     </div>
   );
-}
+};
 
-export default ContactFormComponent
+export default ContactFormComponent;

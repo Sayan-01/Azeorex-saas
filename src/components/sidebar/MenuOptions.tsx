@@ -91,10 +91,10 @@ function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo
                   alt="logo"
                   width={400}
                   height={400}
-                  className="!rounded-md w-12 h-12"
+                  className="!rounded-md w-10 h-10"
                 />
-                <h1 className=" text-2xl font-medium mx-3">{details.name}</h1>
-                <Separator/>
+                <h1 className=" text-xl font-medium mx-3">{details.name}</h1>
+                {/* <Separator/> */}
               </div>
             )}
           </div>

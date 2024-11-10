@@ -1,44 +1,44 @@
-'use client'
-import { Badge } from '@/components/ui/badge'
+"use client";
+import { Badge } from "@/components/ui/badge";
 
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
-import clsx from 'clsx'
-import { Trash } from 'lucide-react'
-import Link from 'next/link'
+import clsx from "clsx";
+import { Trash } from "lucide-react";
+import Link from "next/link";
 
-import React, { useRef } from 'react'
-import { EditorBtns } from '@/types/types';
+import React, { useRef } from "react";
+import { EditorBtns } from "@/types/types";
 
 type Props = {
-  element: EditorElement
-}
+  element: EditorElement;
+};
 
 const LinkComponent = (props: Props) => {
-  const { dispatch, state } = useEditor()
+  const { dispatch, state } = useEditor();
 
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
-    if (type === null) return
-    e.dataTransfer.setData('componentType', type)
-  }
+    if (type === null) return;
+    e.dataTransfer.setData("componentType", type);
+  };
 
   const handleOnClickBody = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation();
     dispatch({
-      type: 'CHANGE_CLICKED_ELEMENT',
+      type: "CHANGE_CLICKED_ELEMENT",
       payload: {
         elementDetails: props.element,
       },
-    })
-  }
+    });
+  };
 
-  const styles = props.element.styles
+  const styles = props.element.styles;
 
   const handleDeleteElement = () => {
     dispatch({
-      type: 'DELETE_ELEMENT',
+      type: "DELETE_ELEMENT",
       payload: { elementDetails: props.element },
-    })
-  }
+    });
+  };
 
   return (
     <div
@@ -46,7 +46,7 @@ const LinkComponent = (props: Props) => {
       draggable
       onDragStart={(e) => handleDragStart(e, "text")}
       onClick={handleOnClickBody}
-      className={clsx("p-[2px] w-full hover:border-blue-500 hover:border  m-[5px] relative text-[16px] transition-all", {
+      className={clsx("p-[2px] w-full hover:border-blue-500 hover:border  ok relative text-[16px] transition-all", {
         "!border-blue-500": state.editor.selectedElement.id === props.element.id,
 
         "!border-solid": state.editor.selectedElement.id === props.element.id,
@@ -89,6 +89,6 @@ const LinkComponent = (props: Props) => {
       )}
     </div>
   );
-}
+};
 
-export default LinkComponent
+export default LinkComponent;
