@@ -25,7 +25,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
     !!props.element.content.length ? (
       <AccordionItem
         value={props.element.id}
-        className="pl-2 transition-all border-y-[1px] border-r-0 border-l-none border-muted-foreground/30   hover: pb-0"
+        className="pl-4 transition-all border-y-[1px] border-b-0 border-r-0 border-l-none border-muted-foreground/30   hover: pb-0"
         onClick={(e) => handleSelectElement(e, props.element)}
       >
         <AccordionTrigger

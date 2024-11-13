@@ -34,11 +34,11 @@ const TextComponent = (props: Props) => {
   return (
     <div
       style={styles}
-      className={clsx("p-[2px] w-max hover:border-blue-500 {ok} relative text-[16px] transition-all hover:border", {
+      className={clsx("p-[2px] w-max ok relative text-[16px] transition-all ", {
         "!border-blue-500": state.editor.selectedElement.id === props.element.id,
 
         "!border-solid": state.editor.selectedElement.id === props.element.id,
-        "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+        "border-dashed border-[1px] border-slate-300 hover:border-blue-500 ": !state.editor.liveMode,
       })}
       onClick={handleOnClickBody}
     >

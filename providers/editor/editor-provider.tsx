@@ -6,7 +6,8 @@ import { EditorAction } from "./editor-actions";
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
-export type EditorElement = {
+export type EditorElement = { 
+  //=> Eta holo seta jeta amra actual show korbo orthat element gulu
   id: string;
   styles: React.CSSProperties;
   name: string;
@@ -15,6 +16,7 @@ export type EditorElement = {
 };
 
 export type Editor = {
+  //=> j editor a sob inject korchi tar tottho
   liveMode: boolean;
   elements: EditorElement[];
   selectedElement: EditorElement;
@@ -24,16 +26,19 @@ export type Editor = {
 };
 
 export type HistoryState = {
+  //=>
   history: Editor[];
   currentIndex: number;
 };
 
 export type EditorState = {
+  //=> biggest master state
   editor: Editor;
   history: HistoryState;
 };
 
 const initialEditorState: EditorState["editor"] = {
+  //=>
   elements: [
     {
       content: [],
@@ -57,11 +62,13 @@ const initialEditorState: EditorState["editor"] = {
 };
 
 const initialHistoryState: HistoryState = {
+  //=>
   history: [initialEditorState],
   currentIndex: 0,
 };
 
 const initialState: EditorState = {
+  //=>
   editor: initialEditorState,
   history: initialHistoryState,
 };

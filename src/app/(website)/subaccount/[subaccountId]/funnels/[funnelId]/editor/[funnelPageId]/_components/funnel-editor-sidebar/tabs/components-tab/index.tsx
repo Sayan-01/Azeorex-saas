@@ -75,7 +75,7 @@ const ComponentsTab = (props: Props) => {
     >
       <AccordionItem
         value="Layout"
-        className="px-6 py-0 border-y-[1px]"
+        className="px-3 py-0 border-y-[1px]"
       >
         <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-2 ">
@@ -94,7 +94,7 @@ const ComponentsTab = (props: Props) => {
       </AccordionItem>
       <AccordionItem
         value="Elements"
-        className="px-6 py-0 "
+        className="px-3 py-0 "
       >
         <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
         <AccordionContent className="flex flex-wrap gap-2 ">

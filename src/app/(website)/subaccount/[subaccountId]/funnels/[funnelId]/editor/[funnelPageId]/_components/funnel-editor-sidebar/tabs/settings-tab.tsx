@@ -86,8 +86,8 @@ const SettingsTab = (props: Props) => {
   return (
     <Accordion
       type="multiple"
-      className="w-full"
-      defaultValue={['Typography', 'Dimensions', 'Decorations', 'Flexbox']}
+      className="w-[273px] "
+      defaultValue={["Typography", "Dimensions", "Decorations", "Flexbox"]}
     >
       <AccordionItem
         value="Custom"
@@ -95,27 +95,24 @@ const SettingsTab = (props: Props) => {
       >
         <AccordionTrigger className="!no-underline">Custom</AccordionTrigger>
         <AccordionContent>
-          {state.editor.selectedElement.type === 'link' &&
-            !Array.isArray(state.editor.selectedElement.content) && (
-              <div className="flex flex-col gap-2">
-                <p className="text-muted-foreground">Link Path</p>
-                <Input
-                  id="href"
-                  placeholder="https:domain.example.com/pathname"
-                  onChange={handleChangeCustomValues}
-                  value={state.editor.selectedElement.content.href}
-                />
-              </div>
-            )}
+          {state.editor.selectedElement.type === "link" && !Array.isArray(state.editor.selectedElement.content) && (
+            <div className="flex flex-col gap-2">
+              <p className="text-muted-foreground">Link Path</p>
+              <Input
+                id="href"
+                placeholder="https:domain.example.com/pathname"
+                onChange={handleChangeCustomValues}
+                value={state.editor.selectedElement.content.href}
+              />
+            </div>
+          )}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem
         value="Typography"
         className="px-6 py-0  border-y-[1px]"
       >
-        <AccordionTrigger className="!no-underline">
-          Typography
-        </AccordionTrigger>
+        <AccordionTrigger className="!no-underline">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-2 ">
           <div className="flex flex-col gap-2 ">
             <p className="text-muted-foreground">Text Align</p>
@@ -123,7 +120,7 @@ const SettingsTab = (props: Props) => {
               onValueChange={(e) =>
                 handleOnChanges({
                   target: {
-                    id: 'textAlign',
+                    id: "textAlign",
                     value: e,
                   },
                 })
@@ -181,13 +178,13 @@ const SettingsTab = (props: Props) => {
                 onValueChange={(e) =>
                   handleOnChanges({
                     target: {
-                      id: 'font-weight',
+                      id: "font-weight",
                       value: e,
                     },
                   })
                 }
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[150px]">
                   <SelectValue placeholder="Select a weight" />
                 </SelectTrigger>
                 <SelectContent>
@@ -216,9 +213,7 @@ const SettingsTab = (props: Props) => {
         value="Dimensions"
         className=" px-6 py-0 "
       >
-        <AccordionTrigger className="!no-underline">
-          Dimensions
-        </AccordionTrigger>
+        <AccordionTrigger className="!no-underline">Dimensions</AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
@@ -340,22 +335,15 @@ const SettingsTab = (props: Props) => {
         value="Decorations"
         className="px-6 py-0 "
       >
-        <AccordionTrigger className="!no-underline">
-          Decorations
-        </AccordionTrigger>
+        <AccordionTrigger className="!no-underline">Decorations</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4">
           <div>
             <Label className="text-muted-foreground">Opacity</Label>
             <div className="flex items-center justify-end">
               <small className="p-2">
-                {typeof state.editor.selectedElement.styles?.opacity ===
-                'number'
+                {typeof state.editor.selectedElement.styles?.opacity === "number"
                   ? state.editor.selectedElement.styles?.opacity
-                  : parseFloat(
-                      (
-                        state.editor.selectedElement.styles?.opacity || '0'
-                      ).replace('%', '')
-                    ) || 0}
+                  : parseFloat((state.editor.selectedElement.styles?.opacity || "0").replace("%", "")) || 0}
                 %
               </small>
             </div>
@@ -363,19 +351,15 @@ const SettingsTab = (props: Props) => {
               onValueChange={(e) => {
                 handleOnChanges({
                   target: {
-                    id: 'opacity',
+                    id: "opacity",
                     value: `${e[0]}%`,
                   },
-                })
+                });
               }}
               defaultValue={[
-                typeof state.editor.selectedElement.styles?.opacity === 'number'
+                typeof state.editor.selectedElement.styles?.opacity === "number"
                   ? state.editor.selectedElement.styles?.opacity
-                  : parseFloat(
-                      (
-                        state.editor.selectedElement.styles?.opacity || '0'
-                      ).replace('%', '')
-                    ) || 0,
+                  : parseFloat((state.editor.selectedElement.styles?.opacity || "0").replace("%", "")) || 0,
               ]}
               max={100}
               step={1}
@@ -385,14 +369,9 @@ const SettingsTab = (props: Props) => {
             <Label className="text-muted-foreground">Border Radius</Label>
             <div className="flex items-center justify-end">
               <small className="">
-                {typeof state.editor.selectedElement.styles?.borderRadius ===
-                'number'
+                {typeof state.editor.selectedElement.styles?.borderRadius === "number"
                   ? state.editor.selectedElement.styles?.borderRadius
-                  : parseFloat(
-                      (
-                        state.editor.selectedElement.styles?.borderRadius || '0'
-                      ).replace('px', '')
-                    ) || 0}
+                  : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("px", "")) || 0}
                 px
               </small>
             </div>
@@ -400,20 +379,15 @@ const SettingsTab = (props: Props) => {
               onValueChange={(e) => {
                 handleOnChanges({
                   target: {
-                    id: 'borderRadius',
+                    id: "borderRadius",
                     value: `${e[0]}px`,
                   },
-                })
+                });
               }}
               defaultValue={[
-                typeof state.editor.selectedElement.styles?.borderRadius ===
-                'number'
+                typeof state.editor.selectedElement.styles?.borderRadius === "number"
                   ? state.editor.selectedElement.styles?.borderRadius
-                  : parseFloat(
-                      (
-                        state.editor.selectedElement.styles?.borderRadius || '0'
-                      ).replace('%', '')
-                    ) || 0,
+                  : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("%", "")) || 0,
               ]}
               max={100}
               step={1}
@@ -425,8 +399,7 @@ const SettingsTab = (props: Props) => {
               <div
                 className="w-12 "
                 style={{
-                  backgroundColor:
-                    state.editor.selectedElement.styles.backgroundColor,
+                  backgroundColor: state.editor.selectedElement.styles.backgroundColor,
                 }}
               />
               <Input
@@ -444,8 +417,7 @@ const SettingsTab = (props: Props) => {
               <div
                 className="w-12 "
                 style={{
-                  backgroundImage:
-                    state.editor.selectedElement.styles.backgroundImage,
+                  backgroundImage: state.editor.selectedElement.styles.backgroundImage,
                 }}
               />
               <Input
@@ -463,7 +435,7 @@ const SettingsTab = (props: Props) => {
               onValueChange={(e) =>
                 handleOnChanges({
                   target: {
-                    id: 'backgroundSize',
+                    id: "backgroundSize",
                     value: e,
                   },
                 })
@@ -505,7 +477,7 @@ const SettingsTab = (props: Props) => {
             onValueChange={(e) =>
               handleOnChanges({
                 target: {
-                  id: 'justifyContent',
+                  id: "justifyContent",
                   value: e,
                 },
               })
@@ -550,7 +522,7 @@ const SettingsTab = (props: Props) => {
             onValueChange={(e) =>
               handleOnChanges({
                 target: {
-                  id: 'alignItems',
+                  id: "alignItems",
                   value: e,
                 },
               })
@@ -581,10 +553,10 @@ const SettingsTab = (props: Props) => {
               onChange={(va) => {
                 handleOnChanges({
                   target: {
-                    id: 'display',
-                    value: va.target.checked ? 'flex' : 'block',
+                    id: "display",
+                    value: va.target.checked ? "flex" : "block",
                   },
-                })
+                });
               }}
             />
             <Label className="text-muted-foreground">Flex</Label>
@@ -601,7 +573,7 @@ const SettingsTab = (props: Props) => {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  )
+  );
 }
 
 export default SettingsTab

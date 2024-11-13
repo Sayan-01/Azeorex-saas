@@ -31,35 +31,26 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
       modal={false}
     >
       <Tabs
-        className="w-full "
+        className="w-full"
         defaultValue="Settings"
       >
         <SheetContent
           showX={false}
           side="left"
-          className={clsx(
-            'mt-[70px] w-[52px] z-[80] shadow-none  p-0 focus:border-none transition-all overflow-hidden',
-            { hidden: state.editor.previewMode }
-          )}
+          className={clsx("mt-[70px] w-[52px] z-[80] shadow-none  p-0 focus:border-none transition-all overflow-hidden", { hidden: state.editor.previewMode })}
         >
           <TabList />
         </SheetContent>
         <SheetContent
           showX={false}
           side="right"
-          className={clsx(
-            'mt-[58px] w-[280px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden ',
-            { hidden: state.editor.previewMode }
-          )}
+          className={clsx("mt-[64px] w-[280px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden ", { hidden: state.editor.previewMode })}
         >
-          <div className="grid gap-4 h-full pb-32 overflow-scroll  box">
+          <div className="grid gap-4 h-full w-[280px] pb-32 overflow-auto overflow-x-hidden box">
             <TabsContent value="Settings">
-              <SheetHeader className="text-left p-6">
+              <SheetHeader className="text-left p-3">
                 <SheetTitle>Styles</SheetTitle>
-                <SheetDescription>
-                  Show your creativity! You can customize every component as you
-                  like.
-                </SheetDescription>
+                <SheetDescription>Show your creativity! You can customize every component as you like.</SheetDescription>
               </SheetHeader>
               <SettingsTab />
             </TabsContent>
@@ -67,22 +58,20 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               <MediaBucketTab subaccountId={subaccountId} />
             </TabsContent>
             <TabsContent value="Components">
-              <SheetHeader className="text-left p-6 ">
+              <SheetHeader className="text-left p-3 ">
                 <SheetTitle>Components</SheetTitle>
-                <SheetDescription>
-                  You can drag and drop components on the canvas
-                </SheetDescription>
+                <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
               </SheetHeader>
               <ComponentsTab />
             </TabsContent>
             <TabsContent value="Layers">
-              <LayersTab/>
+              <LayersTab />
             </TabsContent>
           </div>
         </SheetContent>
       </Tabs>
     </Sheet>
-  )
+  );
 }
 
 export default FunnelEditorSidebar

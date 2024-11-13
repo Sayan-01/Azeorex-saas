@@ -42,10 +42,10 @@ const VideoComponent = (props: Props) => {
       draggable
       onDragStart={(e) => handleDragStart(e, "video")}
       onClick={handleOnClick}
-      className={clsx("p-[2px] w-full hover:border-blue-500 hover:border   ok relative text-[16px] transition-all flex items-center justify-center", {
+      className={clsx("p-[2px] w-full ok relative text-[16px] transition-all flex items-center justify-center", {
         "!border-blue-500": state.editor.selectedElement.id === props.element.id,
         "!border-solid": state.editor.selectedElement.id === props.element.id,
-        "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+        "border-dashed border-[1px] border-slate-300 hover:border-blue-500 ": !state.editor.liveMode,
       })}
     >
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (

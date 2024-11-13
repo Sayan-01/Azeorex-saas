@@ -92,13 +92,13 @@ const TwoColumns = (props: Props) => {
   return (
     <div
       style={props.element.styles}
-      className={clsx("relative hover:border-blue-500 hover:border  p-4 transition-all", {
+      className={clsx("relative  p-4 transition-all", {
         "h-fit": type === "container",
         "h-full": type === "__body",
         "m-4": type === "container",
         "!border-blue-500": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
         "!border-solid": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
-        "border-dashed border-[1px] border-slate-300": !state.editor.liveMode,
+        "border-dashed border-[1px] border-slate-300 hover:border-blue-500 ": !state.editor.liveMode,
       })}
       id="innerContainer"
       onDrop={(e) => handleOnDrop(e, id)}
