@@ -94,16 +94,16 @@ function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo
                   className="!rounded-md w-10 h-10"
                 />
                 <h1 className=" text-xl font-medium mx-3">{details.name}</h1>
-                {/* <Separator/> */}
+                {/* <Separator /> */}
               </div>
             )}
           </div>
           <Popover>
             <PopoverTrigger
               asChild
-              className="element"
+              className=""
             >
-              <div className="inline-flex cursor-pointer px-2 items-center justify-between whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-full my-4 py-4">
+              <div className="inline-flex cursor-pointer px-2 items-center justify-between whitespace-nowrap rounded-md text-sm font-medium transition-colors  disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground w-full my-4 py-4">
                 <div className="flex  items-center text-left gap-4 ">
                   <Compass />
                   <div className="flex flex-col">
@@ -245,7 +245,7 @@ function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo
               </Command>
             </PopoverContent>
           </Popover>
-          <p className="text-muted-foreground text-xs mb-2">MENU LINKS</p>
+          <p className="text-muted-foreground text-xs mb-4">MENU LINKS</p>
           <Separator className="mb-4" />
           <nav className="relative">
             <Command className="rounded-lg overflow-visible bg-transparent">

@@ -56,6 +56,10 @@ module.exports = withUt({
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        main: {
+          DEFAULT: "#726fff",
+          black: "#272727"
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

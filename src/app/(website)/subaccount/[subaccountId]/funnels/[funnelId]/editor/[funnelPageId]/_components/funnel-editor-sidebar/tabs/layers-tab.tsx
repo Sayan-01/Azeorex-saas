@@ -25,7 +25,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
     !!props.element.content.length ? (
       <AccordionItem
         value={props.element.id}
-        className="pl-4 transition-all border-y-[1px] border-b-0 border-r-0 border-l-none border-muted-foreground/30   hover: pb-0"
+        className="pl-4  transition-all border-y-[1px] border-b-0 border-r-0 border-l-none border-muted-foreground/30   hover: pb-0"
         onClick={(e) => handleSelectElement(e, props.element)}
       >
         <AccordionTrigger
@@ -95,7 +95,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
       </AccordionItem>
     ) : (
       <div
-        className="flex items-center gap-2 pl-4 py-2 cursor-pointer"
+        className="flex items-center gap-2 pl-4  py-2 cursor-pointer"
         onClick={(e) => handleSelectElement(e, props.element)}
       >
         {props.element.type === "container" ? (
@@ -149,7 +149,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
     )
   ) : (
     <div
-      className="flex items-center gap-2 pl-4 py-2 cursor-pointer"
+      className="flex items-center gap-2 pl-6 py-2 cursor-pointer"
       onClick={(e) => handleSelectElement(e, props.element)}
     >
       {props.element.type === "container" ? (

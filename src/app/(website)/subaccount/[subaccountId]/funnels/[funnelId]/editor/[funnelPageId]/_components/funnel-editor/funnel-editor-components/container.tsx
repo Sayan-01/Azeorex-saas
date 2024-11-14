@@ -184,14 +184,14 @@ const Container = ({ element }: Props) => {
   return (
     <div
       style={styles}
-      className={clsx("relative p-4 py-6 transition-all box group", {
+      className={clsx("relative p-4 transition-all box group", {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
         "h-fit max-w-[80rem] mx-auto": type === "container",
         "h-full": type === "__body",
         "overflow-scroll ": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "!border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
-        "!border-yellow-400 !border": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+        "!border-main !border ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "!border-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
         "border-dashed border-[1px] border-slate-300 hover:border-blue-500 ": !state.editor.liveMode,
       })}
