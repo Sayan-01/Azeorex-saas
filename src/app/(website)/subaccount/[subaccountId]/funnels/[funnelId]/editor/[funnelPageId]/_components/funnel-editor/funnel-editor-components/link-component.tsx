@@ -47,10 +47,10 @@ const LinkComponent = (props: Props) => {
       onDragStart={(e) => handleDragStart(e, "text")}
       onClick={handleOnClickBody}
       className={clsx("p-[2px] w-full ok relative text-[16px] transition-all", {
-        "!border-blue-500": state.editor.selectedElement.id === props.element.id,
+        "!outline-blue-500": state.editor.selectedElement.id === props.element.id,
 
-        "!border-solid": state.editor.selectedElement.id === props.element.id,
-        "border-dashed border-[1px] border-slate-300 hover:border-blue-500 ": !state.editor.liveMode,
+        "!outline-solid": state.editor.selectedElement.id === props.element.id,
+        "outline outline-[1px] outline-transparent hover:outline-blue-500 ": !state.editor.liveMode,
       })}
     >
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (

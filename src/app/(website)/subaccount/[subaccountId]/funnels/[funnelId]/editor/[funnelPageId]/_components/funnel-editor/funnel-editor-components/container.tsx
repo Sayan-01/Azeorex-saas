@@ -183,17 +183,42 @@ const Container = ({ element }: Props) => {
 
   return (
     <div
-      style={styles}
+      style={{
+        ...styles,
+      }}
+      // className={clsx("relative p-4 transition-all box group", {
+      //   "max-w-[80rem] w-full": type === "container" || type === "2Col",
+      //   "h-fit max-w-[80rem] mx-auto": type === "container",
+      //   "h-full": type === "__body",
+      //   "overflow-scroll": type === "__body",
+      //   "flex flex-col md:!flex-row": type === "2Col",
+      //   "shadow-inner-gray": !state.editor.liveMode && state.editor.selectedElement.id !== id, // Default gray inner shadow for unselected elements
+      //   "shadow-inner-blue": state.editor.selectedElement.id === id && !state.editor.liveMode, // Blue inner shadow for selected elements
+      //   "group-hover:shadow-inner-blue": !state.editor.liveMode && state.editor.selectedElement.id !== id, // Blue inner shadow on hover for non-selected elements
+      // })}
+
+      // className={clsx("relative p-4 transition-all box group", {
+      //   "max-w-[80rem] w-full": type === "container" || type === "2Col",
+      //   "h-fit max-w-[80rem] mx-auto": type === "container",
+      //   "h-full": type === "__body",
+      //   "overflow-scroll ": type === "__body",
+      //   "flex flex-col md:!flex-row": type === "2Col",
+      //   "!outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
+      //   "!outline-main !outline": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+      //   "!outline-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
+      //   "outline-dashed outline-[1px] outline-slate-300 hover:outline-blue-500": !state.editor.liveMode,
+      // })}
+
       className={clsx("relative p-4 transition-all box group", {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
         "h-fit max-w-[80rem] mx-auto": type === "container",
         "h-full": type === "__body",
         "overflow-scroll ": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
-        "!border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
-        "!border-main !border ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "!border-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
-        "border-dashed border-[1px] border-slate-300 hover:border-blue-500 ": !state.editor.liveMode,
+        "!outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
+        "!outline-main !outline": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+        "!outline-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        "outline outline-[1px] outline-transparent hover:outline-blue-500": !state.editor.liveMode,
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}

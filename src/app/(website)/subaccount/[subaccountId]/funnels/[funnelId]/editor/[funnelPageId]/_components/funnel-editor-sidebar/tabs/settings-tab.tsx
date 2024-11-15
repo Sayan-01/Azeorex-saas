@@ -435,34 +435,37 @@ const SettingsTab = (props: Props) => {
       >
         <AccordionTrigger className="!no-underline font-semibold">Background</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3">
-          {/* 1st bg color */}
+          {/* 1st */}
           <div className="flex gap-2 mb-3">
+            {/* bcgc */}
             <div className="flex flex-col w-full">
               <p className="text-muted-foreground text-xs">Background Color</p>
               <div
                 className={
-                  "flex h-8 mt-1 w-full rounded border-2 group hover:border-[#6A6A6A] bg-[#272727] px-2 items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:border-[#726FFF]  disabled:cursor-not-allowed disabled:opacity-50 "
+                  "flex w-[120px] h-8 mt-1 rounded border-2 group hover:border-[#6A6A6A] bg-[#272727] pr-2 items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:border-[#726FFF]  disabled:cursor-not-allowed disabled:opacity-50 "
                 }
               >
-                <input
-                  className="h-8 w-7 mr-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[9px] rounded-l"
-                  type="color"
-                  id="backgroundColor"
-                  placeholder="transparent"
-                  onChange={handleOnChanges}
-                  value={state.editor.selectedElement.styles.backgroundColor}
-                />
+                <div className=" overflow-hidden h-full rounded-l-[3px] w-[39px] mr-2">
+                  <input
+                    className="h-12 -mt-2 border-2 group-hover:border-[#6A6A6A] transition-colors border-r-0 hover:border-[#6A6A6A] bg-[#272727] -ml-[8px] rounded-l"
+                    type="color"
+                    id="backgroundColor"
+                    placeholder="transparent"
+                    onChange={handleOnChanges}
+                    value={state.editor.selectedElement.styles.backgroundColor}
+                  />
+                </div>
                 {state.editor.selectedElement.styles?.backgroundColor || "transparent"}
               </div>
             </div>
-
+            {/* opacity */}
             <div className="w-full">
               <p className="text-muted-foreground text-xs">Opacity</p>
               <div className="flex items-center justify-end">
                 <small className="pb-[14px] pt-[9px] -mt-[22px] text-xs">
                   {typeof state.editor.selectedElement.styles?.opacity === "number"
                     ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "0").replace("%", "")) || 0}
+                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 100}
                   %
                 </small>
               </div>
@@ -478,7 +481,7 @@ const SettingsTab = (props: Props) => {
                 value={[
                   typeof state.editor.selectedElement.styles?.opacity === "number"
                     ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "0").replace("%", "")) || 0,
+                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 100,
                 ]}
                 max={100}
                 step={1}
@@ -487,7 +490,7 @@ const SettingsTab = (props: Props) => {
           </div>
           {/* 2rd radius */}
           <div className="flex w-full gap-2 items-center">
-            <p className="text-muted-foreground text-xs w-full">Border Radius</p>
+            <p className="text-muted-foreground text-xs w-min">Border Radius</p>
             <div className="w-full relative">
               <div className="flex items-center justify-end right-0 bottom-1 absolute">
                 <small className="pb-[14px] pt-[6px] -mt-[22px] text-xs ">
@@ -528,13 +531,14 @@ const SettingsTab = (props: Props) => {
               />
               <Input
                 placeholder="url()"
-                className="mt-0 rounded-l-none "
+                className="mt-0 rounded-l-none hover:border-l-none group-hover:border-[#6a6a6a]"
                 id="backgroundImage"
                 onChange={handleOnChanges}
                 value={state.editor.selectedElement.styles.backgroundImage}
               />
             </div>
           </div>
+          {/* image position */}
           <div className="flex flex-col gap-2">
             <Label className="text-muted-foreground text-xs">Image Position</Label>
             <Tabs
@@ -652,9 +656,7 @@ const SettingsTab = (props: Props) => {
           </Tabs>
           {/* flex */}
           <div className="flex items-center gap-2 py-3">
-            <Switch
-              defaultChecked={false}
-            />
+            <Switch defaultChecked={false} />
             <Input
               className="h-4 w-4"
               placeholder="px"
