@@ -225,7 +225,7 @@ const Container = ({ element }: Props) => {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
         "h-fit max-w-[80rem] mx-auto": type === "container",
         "h-full": type === "__body",
-        "overflow-scroll bg-[#161616] rounded-xl": type === "__body",
+        "overflow-scroll bg-[#161616] rounded-r-xl": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "shadow-inner-border-main": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",

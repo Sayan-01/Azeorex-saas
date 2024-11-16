@@ -24,16 +24,17 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
       modal={false}
     >
       <Tabs
-        className="w-full "
+        className="w-full"
         defaultValue="Settings"
       >
-        <SheetContent
+        {/* <SheetContent
           showX={false}
           side="left"
           className={clsx("mt-[48px] ml-[1px] w-[48px] z-[80] shadow-none p-0 pt-6 focus:border-none transition-all overflow-hidden border-none", { hidden: state.editor.previewMode })}
         >
           <TabList />
-        </SheetContent>
+        </SheetContent> */}
+        <TabList />
         <SheetContent
           showX={false}
           side="right"
@@ -41,12 +42,8 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
         >
           <div className="grid gap-4 h-full w-[249px] pb-32 overflow-auto overflow-x-hidden box">
             <TabsContent value="Settings">
-              {/* <SheetHeader className="text-left p-3">
-                <SheetTitle>Styles</SheetTitle>
-                <SheetDescription>Show your creativity! You can customize every component as you like.</SheetDescription>
-              </SheetHeader> */}
               <SettingsTab />
-              <Sidebar/>
+              <Sidebar />
             </TabsContent>
             <TabsContent value="Media">
               <MediaBucketTab subaccountId={subaccountId} />

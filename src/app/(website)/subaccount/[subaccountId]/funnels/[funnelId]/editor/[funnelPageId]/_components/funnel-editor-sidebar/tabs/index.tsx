@@ -8,29 +8,29 @@ type Props = {}
 
 const TabList = (props: Props) => {
   return (
-    <TabsList className=" flex items-center flex-col justify-evenly w-full bg-transparent h-fit gap-4">
+    <TabsList className=" flex items-center  justify-evenly w-fit bg-zinc-900 px-2 py-2 element h-fit gap-4 absolute z-20 bottom-6 right-[272px]">
       <TabsTrigger
         value="Settings"
-        className="w-7 h-7 p-0 data-[state=active]:border-2  data-[state=active]:border-main data-[state=active]:rounded"
+        className="w-10 h-8 p-0 data-[state=active]:bg-zinc-950  data-[state=active] data-[state=active]:rounded"
       >
         <Settings />
       </TabsTrigger>
       <TabsTrigger
         value="Components"
-        className="w-7 h-7 p-0 data-[state=active]:border-2  data-[state=active]:border-main data-[state=active]:rounded"
+        className="w-10 h-8 p-0 data-[state=active]:bg-zinc-950  data-[state=active] data-[state=active]:rounded"
       >
         <Plus />
       </TabsTrigger>
 
       <TabsTrigger
         value="Layers"
-        className="w-7 h-7 p-0 data-[state=active]:border-2  data-[state=active]:border-main data-[state=active]:rounded"
+        className="w-10 h-8 p-0 data-[state=active]:bg-zinc-950  data-[state=active] data-[state=active]:rounded"
       >
         < Layers/>
       </TabsTrigger>
       <TabsTrigger
         value="Media"
-        className="w-7 h-7 p-0 data-[state=active]:border-2  data-[state=active]:border-main data-[state=active]:rounded"
+        className="w-10 h-8 p-0 data-[state=active]:bg-zinc-950  data-[state=active] data-[state=active]:rounded"
       >
         < Funnel/>
       </TabsTrigger>
