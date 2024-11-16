@@ -25,7 +25,7 @@ const Container = ({ element }: Props) => {
           payload: {
             containerId: id,
             elementDetails: {
-              content: { innerText: 'Text Element' },
+              content: { innerText: 'Element' },
               id: v4(),
               name: 'Text',
               styles: {
@@ -218,7 +218,7 @@ const Container = ({ element }: Props) => {
         "!outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "!outline-main !outline": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "!outline-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
-        "outline outline-[1px] outline-transparent hover:outline-blue-500": !state.editor.liveMode,
+        "outline-dashed outline-[1px] outline-slate-500 hover:outline-blue-500": !state.editor.liveMode,
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}

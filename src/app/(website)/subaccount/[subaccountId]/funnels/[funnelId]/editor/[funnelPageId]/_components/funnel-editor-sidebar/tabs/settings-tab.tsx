@@ -17,10 +17,13 @@ import {
   AlignVerticalJustifyStart,
   Blinds,
   ChevronsLeftRightIcon,
+  CircleOff,
   Eye,
   EyeClosed,
+  Italic,
   LucideImageDown,
   Mouse,
+  Underline,
 } from "lucide-react";
 import { Tabs, TabsTrigger, TabsList } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -87,19 +90,10 @@ const SettingsTab = (props: Props) => {
       >
         <AccordionTrigger className="!no-underline font-semibold">Dimensions</AccordionTrigger>
         <AccordionContent>
-          {/* 1st */}
+          {/* 1st width nad height */}
           <div className="flex gap-2 mb-3">
             <div className="flex flex-col">
               <p className="text-muted-foreground text-xs">Width</p>
-              <Input
-                id="height"
-                placeholder="Auto"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.height || ""}
-              />
-            </div>
-            <div className="flex flex-col">
-              <p className="text-muted-foreground text-xs">Height</p>
               <Input
                 placeholder="Auto"
                 id="width"
@@ -107,8 +101,18 @@ const SettingsTab = (props: Props) => {
                 value={state.editor.selectedElement.styles.width || ""}
               />
             </div>
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs">Height</p>
+
+              <Input
+                id="height"
+                placeholder="Auto"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.height || ""}
+              />
+            </div>
           </div>
-          {/* 2nd */}
+          {/* 2nd Angle and rotation*/}
           <div className="flex gap-2 mb-3">
             <div className="flex flex-col">
               <p className="text-muted-foreground text-xs">Angle</p>
@@ -129,7 +133,7 @@ const SettingsTab = (props: Props) => {
               />
             </div>
           </div>
-          {/* 3rd */}
+          {/* 3rd radius and opacity*/}
           <div className="flex gap-2 mb-3">
             <div className="flex flex-col w-full">
               <p className="text-muted-foreground text-xs">Border Radius</p>
@@ -170,7 +174,7 @@ const SettingsTab = (props: Props) => {
               />
             </div>
           </div>
-          {/* 4rt */}
+          {/* 4rt overflow */}
           <div className="flex flex-col">
             <p className="text-muted-foreground text-xs mb-1">Overflow</p>
             <Tabs
@@ -220,6 +224,7 @@ const SettingsTab = (props: Props) => {
       >
         <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3 ">
+          {/* 1st Txt align */}
           <div className="flex flex-col gap-1 ">
             <p className="text-muted-foreground text-xs ">Text Align</p>
             <Tabs
@@ -261,23 +266,27 @@ const SettingsTab = (props: Props) => {
               </TabsList>
             </Tabs>
           </div>
+          {/* 2nd font family */}
           <div className="flex flex-col ">
             <p className="text-muted-foreground text-xs">Font Family 🌟</p>
             <Input
+              placeholder="Default"
               id="DM Sans"
               onChange={handleOnChanges}
               value={state.editor.selectedElement.styles.fontFamily}
             />
           </div>
+          {/* 3rd color */}
           <div className="flex flex-col ">
             <p className="text-muted-foreground text-xs">Color</p>
             <Input
               id="color"
-              placeholder="white"
+              placeholder="transparent"
               onChange={handleOnChanges}
               value={state.editor.selectedElement.styles.color || ""}
             />
           </div>
+          {/* 4th weight and size */}
           <div className="flex gap-2">
             <div className="w-full">
               <Label className="text-muted-foreground text-xs mb-1">Weight</Label>
@@ -329,8 +338,78 @@ const SettingsTab = (props: Props) => {
               />
             </div>
           </div>
+          {/* line height and letter spaccing */}
+          <div className="flex gap-2">
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs">Line Height</p>
+              <Input
+                id="lineHeight"
+                placeholder="Auto"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.lineHeight || ""}
+              />
+            </div>
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs">Letter Specing</p>
+              <Input
+                placeholder="auto"
+                id="letterSpacing"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.letterSpacing || ""}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 ">
+            <p className="text-muted-foreground text-xs ">Text Decoration</p>
+
+            <Tabs
+              onValueChange={(e) =>
+                handleOnChanges({
+                  target: {
+                    id: "textDecoration",
+                    value: e,
+                  },
+                })
+              }
+              value={String(state.editor.selectedElement.styles.textDecoration || "none")}
+            >
+              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
+                <TabsTrigger
+                  value="none"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <CircleOff size={13} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="underline"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <Underline size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="italic"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  🌟
+                </TabsTrigger>
+                <TabsTrigger
+                  value="overline"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <AlignCenter size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="line-through"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950 "
+                >
+                  <AlignJustify size={15} />
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </AccordionContent>
       </AccordionItem>
+      {/* ///////////////////////////////////////////////////////////////// */}
       <AccordionItem
         value="Spacing"
         className=" px-3 py-0"
@@ -347,7 +426,7 @@ const SettingsTab = (props: Props) => {
                       id="marginTop"
                       placeholder="16px"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginTop}
+                      value={state.editor.selectedElement.styles.marginTop || ""}
                     />
                   </div>
                   <div>
@@ -356,7 +435,7 @@ const SettingsTab = (props: Props) => {
                       placeholder="16px"
                       id="marginBottom"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginBottom}
+                      value={state.editor.selectedElement.styles.marginBottom || ""}
                     />
                   </div>
                 </div>
@@ -367,7 +446,7 @@ const SettingsTab = (props: Props) => {
                       placeholder="16px"
                       id="marginLeft"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginLeft}
+                      value={state.editor.selectedElement.styles.marginLeft || ""}
                     />
                   </div>
                   <div>
@@ -376,7 +455,7 @@ const SettingsTab = (props: Props) => {
                       placeholder="16px"
                       id="marginRight"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginRight}
+                      value={state.editor.selectedElement.styles.marginRight || ""}
                     />
                   </div>
                 </div>
@@ -391,7 +470,7 @@ const SettingsTab = (props: Props) => {
                       placeholder="16px"
                       id="paddingTop"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingTop}
+                      value={state.editor.selectedElement.styles.paddingTop || ""}
                     />
                   </div>
                   <div>
@@ -400,7 +479,7 @@ const SettingsTab = (props: Props) => {
                       placeholder="16px"
                       id="paddingBottom"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingBottom}
+                      value={state.editor.selectedElement.styles.paddingBottom || ""}
                     />
                   </div>
                 </div>
@@ -411,7 +490,7 @@ const SettingsTab = (props: Props) => {
                       placeholder="16px"
                       id="paddingLeft"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingLeft}
+                      value={state.editor.selectedElement.styles.paddingLeft || ""}
                     />
                   </div>
                   <div>
@@ -420,7 +499,7 @@ const SettingsTab = (props: Props) => {
                       placeholder="16px"
                       id="paddingRight"
                       onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingRight}
+                      value={state.editor.selectedElement.styles.paddingRight || ""}
                     />
                   </div>
                 </div>
@@ -436,7 +515,7 @@ const SettingsTab = (props: Props) => {
         <AccordionTrigger className="!no-underline font-semibold">Background</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3">
           {/* 1st */}
-          <div className="flex gap-2 mb-3">
+          <div className="flex gap-2 ">
             {/* bcgc */}
             <div className="flex flex-col w-full">
               <p className="text-muted-foreground text-xs">Background Color</p>
@@ -491,9 +570,9 @@ const SettingsTab = (props: Props) => {
           {/* 2rd radius */}
           <div className="flex w-full gap-2 items-center">
             <p className="text-muted-foreground text-xs w-min">Border Radius</p>
-            <div className="w-full relative">
-              <div className="flex items-center justify-end right-0 bottom-1 absolute">
-                <small className="pb-[14px] pt-[6px] -mt-[22px] text-xs ">
+            <div className="w-full relative flex flex-row-reverse gap-2 items-center">
+              <div className="flex items-center justify-end ">
+                <small className=" text-xs ">
                   {typeof state.editor.selectedElement.styles?.borderRadius === "number"
                     ? state.editor.selectedElement.styles?.borderRadius
                     : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("px", "")) || 0}

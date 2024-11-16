@@ -454,7 +454,7 @@ export const upsertFunnelPage = async (subaccountId: string, funnelPage: any, fu
               content: [],
               id: "__body",
               name: "Body",
-              styles: { backgroundColor: "white" },
+              styles: { backgroundColor: "" },
               type: "__body",
             },
           ]),

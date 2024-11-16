@@ -20,7 +20,7 @@ const layout = async ({ children, params }: Props) => {
   if (!session?.user) redirect("agency/sign-in");
   if (!agencyId) redirect("/agency");
 
-  //@ts-expect-error
+  // @ts-expect-error: session.user.role might be undefined, and Role type comparison may throw a TypeScript error.
   if (session?.user?.role !== Role.AGENCY_ADMIN && session?.user?.role !== Role.AGENCY_OWNER) return <Unauthorized />;
   //=>TODO: notification
 

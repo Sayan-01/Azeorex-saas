@@ -9,6 +9,7 @@ import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-tab";
 import { useEditor } from "../../../../../../../../../../../providers/editor/editor-provider";
 import LayersTab from "./tabs/layers-tab";
+import Sidebar from "./tabs/m_ali";
 
 type Props = {
   subaccountId: string;
@@ -45,6 +46,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
                 <SheetDescription>Show your creativity! You can customize every component as you like.</SheetDescription>
               </SheetHeader> */}
               <SettingsTab />
+              <Sidebar/>
             </TabsContent>
             <TabsContent value="Media">
               <MediaBucketTab subaccountId={subaccountId} />
