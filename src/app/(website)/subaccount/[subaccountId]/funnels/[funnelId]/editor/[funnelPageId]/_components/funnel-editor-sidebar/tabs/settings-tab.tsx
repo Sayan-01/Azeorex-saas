@@ -2,7 +2,6 @@
 import React, { ChangeEventHandler } from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/custom-input";
-import { Label } from "@/components/ui/label";
 import {
   AlignCenter,
   AlignHorizontalJustifyCenterIcon,
@@ -14,7 +13,9 @@ import {
   AlignLeft,
   AlignRight,
   AlignVerticalJustifyCenter,
-  AlignVerticalJustifyStart,
+  AlignVerticalJustifyEnd,
+  AlignVerticalSpaceBetween,
+  ArrowRightLeft,
   Blinds,
   ChevronsLeftRightIcon,
   CircleOff,
@@ -23,13 +24,14 @@ import {
   Italic,
   LucideImageDown,
   Mouse,
+  MoveDown,
+  MoveRight,
   Underline,
 } from "lucide-react";
 import { Tabs, TabsTrigger, TabsList } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
-import { Switch } from "@/components/ui/switch";
 
 type Props = {};
 
@@ -176,7 +178,7 @@ const SettingsTab = (props: Props) => {
           </div>
           {/* 4rt overflow */}
           <div className="flex flex-col">
-            <p className="text-muted-foreground text-xs mb-1">Overflow</p>
+            <p className="text-muted-foreground text-xs mb-2">Overflow</p>
             <Tabs
               onValueChange={(e) =>
                 handleOnChanges({
@@ -225,7 +227,7 @@ const SettingsTab = (props: Props) => {
         <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3 ">
           {/* 1st Txt align */}
-          <div className="flex flex-col gap-1 ">
+          <div className="flex flex-col gap-2">
             <p className="text-muted-foreground text-xs ">Text Align</p>
             <Tabs
               onValueChange={(e) =>
@@ -289,7 +291,7 @@ const SettingsTab = (props: Props) => {
           {/* 4th weight and size */}
           <div className="flex gap-2">
             <div className="w-full">
-              <Label className="text-muted-foreground text-xs mb-1">Weight</Label>
+              <p className=" text-muted-foreground text-xs mb-2">Weight</p>
               <Select
                 onValueChange={(e) =>
                   handleOnChanges({
@@ -329,7 +331,7 @@ const SettingsTab = (props: Props) => {
               </Select>
             </div>
             <div className="w-full">
-              <Label className="text-muted-foreground text-xs">Size</Label>
+              <p className=" text-muted-foreground text-xs">Size</p>
               <Input
                 placeholder="px"
                 id="fontSize"
@@ -359,7 +361,7 @@ const SettingsTab = (props: Props) => {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-1 ">
+          <div className="flex flex-col gap-2">
             <p className="text-muted-foreground text-xs ">Text Decoration</p>
 
             <Tabs
@@ -421,7 +423,7 @@ const SettingsTab = (props: Props) => {
               <div className="flex gap-3 flex-col">
                 <div className="flex gap-2">
                   <div>
-                    <Label className="text-muted-foreground text-xs">Margin Top</Label>
+                    <p className=" text-muted-foreground text-xs">Margin Top</p>
                     <Input
                       id="marginTop"
                       placeholder="16px"
@@ -430,7 +432,7 @@ const SettingsTab = (props: Props) => {
                     />
                   </div>
                   <div>
-                    <Label className="text-muted-foreground text-xs">Margin Bottom</Label>
+                    <p className=" text-muted-foreground text-xs">Margin Bottom</p>
                     <Input
                       placeholder="16px"
                       id="marginBottom"
@@ -441,7 +443,7 @@ const SettingsTab = (props: Props) => {
                 </div>
                 <div className="flex gap-2">
                   <div>
-                    <Label className="text-muted-foreground text-xs">Margin Left</Label>
+                    <p className=" text-muted-foreground text-xs">Margin Left</p>
                     <Input
                       placeholder="16px"
                       id="marginLeft"
@@ -450,7 +452,7 @@ const SettingsTab = (props: Props) => {
                     />
                   </div>
                   <div>
-                    <Label className="text-muted-foreground text-xs">Margin Right</Label>
+                    <p className=" text-muted-foreground text-xs">Margin Right</p>
                     <Input
                       placeholder="16px"
                       id="marginRight"
@@ -465,7 +467,7 @@ const SettingsTab = (props: Props) => {
               <div className="flex gap-3 flex-col">
                 <div className="flex gap-2">
                   <div>
-                    <Label className="text-muted-foreground text-xs">Padding Top</Label>
+                    <p className=" text-muted-foreground text-xs">Padding Top</p>
                     <Input
                       placeholder="16px"
                       id="paddingTop"
@@ -474,7 +476,7 @@ const SettingsTab = (props: Props) => {
                     />
                   </div>
                   <div>
-                    <Label className="text-muted-foreground text-xs">Padding Bottom</Label>
+                    <p className=" text-muted-foreground text-xs">Padding Bottom</p>
                     <Input
                       placeholder="16px"
                       id="paddingBottom"
@@ -485,7 +487,7 @@ const SettingsTab = (props: Props) => {
                 </div>
                 <div className="flex gap-2">
                   <div>
-                    <Label className="text-muted-foreground text-xs">Padding Left</Label>
+                    <p className=" text-muted-foreground text-xs">Padding Left</p>
                     <Input
                       placeholder="16px"
                       id="paddingLeft"
@@ -494,7 +496,7 @@ const SettingsTab = (props: Props) => {
                     />
                   </div>
                   <div>
-                    <Label className="text-muted-foreground text-xs">Padding Right</Label>
+                    <p className=" text-muted-foreground text-xs">Padding Right</p>
                     <Input
                       placeholder="16px"
                       id="paddingRight"
@@ -517,11 +519,11 @@ const SettingsTab = (props: Props) => {
           {/* 1st */}
           <div className="flex gap-2 ">
             {/* bcgc */}
-            <div className="flex flex-col w-full">
-              <p className="text-muted-foreground text-xs">Background Color</p>
+            <div className="flex flex-col w-full ">
+              <p className=" text-muted-foreground text-xs">Background Color</p>
               <div
                 className={
-                  "flex w-[120px] h-8 mt-1 rounded border-2 group hover:border-[#6A6A6A] bg-[#272727] pr-2 items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:border-[#726FFF]  disabled:cursor-not-allowed disabled:opacity-50 "
+                  "flex w-[120px] h-8 mt-2 rounded border-2 group hover:border-[#6A6A6A] bg-[#272727] pr-2 items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:border-[#726FFF]  disabled:cursor-not-allowed disabled:opacity-50 "
                 }
               >
                 <div className=" overflow-hidden h-full rounded-l-[3px] w-[39px] mr-2">
@@ -600,7 +602,7 @@ const SettingsTab = (props: Props) => {
           </div>
           {/* 3rd bcg image */}
           <div className="flex flex-col gap-2">
-            <Label className="text-muted-foreground text-xs">Background Image</Label>
+            <p className=" text-muted-foreground text-xs">Background Image</p>
             <div className="flex  rounded-md group">
               <div
                 className="w-12 border-2 group-hover:border-[#6a6a6a]  transition-colors border-main-black rounded-l border-r-0"
@@ -619,7 +621,7 @@ const SettingsTab = (props: Props) => {
           </div>
           {/* image position */}
           <div className="flex flex-col gap-2">
-            <Label className="text-muted-foreground text-xs">Image Position</Label>
+            <p className=" text-muted-foreground text-xs">Image Position</p>
             <Tabs
               onValueChange={(e) =>
                 handleOnChanges({
@@ -659,9 +661,82 @@ const SettingsTab = (props: Props) => {
         value="Flexbox"
         className="px-3 py-0 "
       >
-        <AccordionTrigger className="!no-underline font-semibold">Flexbox</AccordionTrigger>
+        <AccordionTrigger className="!no-underline font-semibold">Auto Layoutx</AccordionTrigger>
         <AccordionContent>
-          <p className="text-muted-foreground text-xs mb-1">Justify Content</p>
+          <div className="flex items-center gap-2 py-3">
+            <div className="w-full">
+              <p className=" text-muted-foreground text-xs mb-2">Display</p>
+
+              <Tabs
+                onValueChange={(e) =>
+                  handleOnChanges({
+                    target: {
+                      id: "display",
+                      value: e,
+                    },
+                  })
+                }
+                value={state.editor.selectedElement.styles.display || "block"}
+              >
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-1">
+                  <TabsTrigger
+                    value="flex"
+                    className="w-full h-[26.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    F
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="block"
+                    className="w-full h-[26.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    B
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="grid"
+                    className="w-full h-[26.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    G
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+            <div className="w-full">
+              <p className=" text-muted-foreground text-xs mb-2"> Direction</p>
+              <Tabs
+                onValueChange={(e) =>
+                  handleOnChanges({
+                    target: {
+                      id: "flexFlow",
+                      value: e,
+                    },
+                  })
+                }
+                value={state.editor.selectedElement.styles.flexFlow || "row"}
+              >
+                <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-1">
+                  <TabsTrigger
+                    value="row"
+                    className="w-full h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <MoveRight size={15} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="column"
+                    className="w-full h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <MoveDown size={15} />
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="wrap"
+                    className="w-full h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                  >
+                    <ArrowRightLeft size={15} />
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+          </div>
+          <p className="text-muted-foreground text-xs mb-2">Justify Content</p>
           <Tabs
             onValueChange={(e) =>
               handleOnChanges({
@@ -671,42 +746,42 @@ const SettingsTab = (props: Props) => {
                 },
               })
             }
-            value={state.editor.selectedElement.styles.justifyContent}
+            value={state.editor.selectedElement.styles.justifyContent || "center"}
           >
-            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
+            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
               <TabsTrigger
                 value="space-between"
-                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted"
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
               >
                 <AlignHorizontalSpaceBetween size={15} />
               </TabsTrigger>
               <TabsTrigger
                 value="space-evenly"
-                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted"
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
               >
                 <AlignHorizontalSpaceAround size={15} />
               </TabsTrigger>
               <TabsTrigger
                 value="center"
-                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted"
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
               >
                 <AlignHorizontalJustifyCenterIcon size={15} />
               </TabsTrigger>
               <TabsTrigger
                 value="start"
-                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted "
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950 "
               >
                 <AlignHorizontalJustifyStart size={15} />
               </TabsTrigger>
               <TabsTrigger
                 value="end"
-                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted "
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950 "
               >
                 <AlignHorizontalJustifyEndIcon size={15} />
               </TabsTrigger>
             </TabsList>
           </Tabs>
-          <p className="text-muted-foreground text-xs mb-1 mt-3">Align Items</p>
+          <p className="text-muted-foreground text-xs mb-2 mt-3">Align Items</p>
           <Tabs
             onValueChange={(e) =>
               handleOnChanges({
@@ -716,51 +791,35 @@ const SettingsTab = (props: Props) => {
                 },
               })
             }
-            value={state.editor.selectedElement.styles.alignItems}
+            value={state.editor.selectedElement.styles.alignItems || "center"}
           >
-            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
+            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
               <TabsTrigger
                 value="center"
-                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted"
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
               >
                 <AlignVerticalJustifyCenter size={15} />
               </TabsTrigger>
               <TabsTrigger
                 value="normal"
-                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted "
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
               >
-                <AlignVerticalJustifyStart size={15} />
+                <AlignVerticalJustifyCenter size={15} />
+              </TabsTrigger>
+              <TabsTrigger
+                value="end"
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+              >
+                <AlignVerticalJustifyEnd size={15} />
+              </TabsTrigger>
+              <TabsTrigger
+                value="stretch"
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950 "
+              >
+                <AlignVerticalSpaceBetween size={15} />
               </TabsTrigger>
             </TabsList>
           </Tabs>
-          {/* flex */}
-          <div className="flex items-center gap-2 py-3">
-            <Switch defaultChecked={false} />
-            <Input
-              className="h-4 w-4"
-              placeholder="px"
-              type="checkbox"
-              id="display"
-              onChange={(va) => {
-                handleOnChanges({
-                  target: {
-                    id: "display",
-                    value: va.target.checked ? "flex" : "block",
-                  },
-                });
-              }}
-            />
-            <Label className="text-muted-foreground text-xs">Auto Layout</Label>
-          </div>
-          <div>
-            <Label className="text-muted-foreground text-xs"> Direction</Label>
-            <Input
-              placeholder="px"
-              id="flexDirection"
-              onChange={handleOnChanges}
-              value={state.editor.selectedElement.styles.flexDirection}
-            />
-          </div>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

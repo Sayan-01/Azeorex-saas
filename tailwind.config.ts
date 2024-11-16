@@ -58,8 +58,8 @@ module.exports = withUt({
         },
         main: {
           DEFAULT: "#726fff",
-          black: "#272727"
-        }
+          black: "#272727",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -79,6 +79,11 @@ module.exports = withUt({
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      boxShadow: {
+        "inner-border-main": "inset 0 0 0 1px #726FFF66",
+        "inner-border-blue-500": "inset 0 0 0 1px #3b82f6",
+        "inner-border-slate-500": "inset 0 0 0 1px #64748b22",
       },
     },
   },

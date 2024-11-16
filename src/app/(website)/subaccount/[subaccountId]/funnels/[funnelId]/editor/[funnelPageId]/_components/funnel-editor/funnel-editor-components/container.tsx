@@ -209,16 +209,28 @@ const Container = ({ element }: Props) => {
       //   "outline-dashed outline-[1px] outline-slate-300 hover:outline-blue-500": !state.editor.liveMode,
       // })}
 
+      // className={clsx("relative p-4 transition-all box group", {
+      //   "max-w-[80rem] w-full": type === "container" || type === "2Col",
+      //   "h-fit max-w-[80rem] mx-auto": type === "container",
+      //   "h-full": type === "__body",
+      //   "overflow-scroll bg-[#161616] rounded-xl": type === "__body",
+      //   "flex flex-col md:!flex-row": type === "2Col",
+      //   "!outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
+      //   "shadow-inner-border-main": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+      //   "!outline-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
+      //   "outline-dashed outline-[1px] outline-slate-500 hover:outline-blue-500": !state.editor.liveMode && type !== "__body",
+      // })}
+
       className={clsx("relative p-4 transition-all box group", {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
         "h-fit max-w-[80rem] mx-auto": type === "container",
         "h-full": type === "__body",
-        "overflow-scroll ": type === "__body",
+        "overflow-scroll bg-[#161616] rounded-xl": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
-        "!outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
-        "!outline-main !outline": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "!outline-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
-        "outline-dashed outline-[1px] outline-slate-500 hover:outline-blue-500": !state.editor.liveMode,
+        "shadow-inner-border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
+        "shadow-inner-border-main": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+        "": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        "shadow-inner-border-slate-500 hover:shadow-inner-border-blue-500": !state.editor.liveMode && type !== "__body",
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
