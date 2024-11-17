@@ -85,9 +85,15 @@ html {
 .element {
   border-width: 1px;
 }
+.element-main {
+  border: 1px solid #726fff;
+}
 
 @media (min-width: 768px) {
   .element {
+    border-width: 2px;
+  }
+  .element-main {
     border-width: 2px;
   }
 }

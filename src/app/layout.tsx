@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="en">
-        <body className={`bg-black dark w-full overflo min-h-screen antialiased box `}>
+        <body className={`bg-black dark w-full overflow min-h-screen antialiased box `}>
           <ModalProvider>
             <NextTopLoader
               color="#ffffff"
