@@ -27,11 +27,13 @@ import {
   MoveDown,
   MoveRight,
   Underline,
+  X,
 } from "lucide-react";
 import { Tabs, TabsTrigger, TabsList } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
+import PM from "@/icons/p-m";
 
 type Props = {};
 
@@ -84,7 +86,7 @@ const SettingsTab = (props: Props) => {
     <Accordion
       type="multiple"
       className="w-[249px]"
-      defaultValue={["Dimensions", "Typography", "Spacing", "Background", "Decorations", "Flexbox"]}
+      defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox"]}
     >
       <AccordionItem
         value="Dimensions"
@@ -418,98 +420,153 @@ const SettingsTab = (props: Props) => {
       >
         <AccordionTrigger className="!no-underline font-semibold">Spacing</AccordionTrigger>
         <AccordionContent>
-          <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-3 flex-col">
-                <div className="flex gap-2">
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Margin Top</p>
-                    <Input
-                      id="marginTop"
-                      placeholder="16px"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginTop || ""}
-                    />
-                  </div>
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Margin Bottom</p>
-                    <Input
-                      placeholder="16px"
-                      id="marginBottom"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginBottom || ""}
-                    />
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Margin Left</p>
-                    <Input
-                      placeholder="16px"
-                      id="marginLeft"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginLeft || ""}
-                    />
-                  </div>
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Margin Right</p>
-                    <Input
-                      placeholder="16px"
-                      id="marginRight"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.marginRight || ""}
-                    />
-                  </div>
-                </div>
-              </div>
+          <div className="w-full relative">
+            <div className="w-full opacity-60">
+              <PM />
             </div>
-            <div className="flex flex-col gap-2">
-              <div className="flex gap-3 flex-col">
-                <div className="flex gap-2">
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Padding Top</p>
-                    <Input
-                      placeholder="16px"
-                      id="paddingTop"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingTop || ""}
-                    />
-                  </div>
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Padding Bottom</p>
-                    <Input
-                      placeholder="16px"
-                      id="paddingBottom"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingBottom || ""}
-                    />
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Padding Left</p>
-                    <Input
-                      placeholder="16px"
-                      id="paddingLeft"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingLeft || ""}
-                    />
-                  </div>
-                  <div>
-                    <p className=" text-muted-foreground text-xs">Padding Right</p>
-                    <Input
-                      placeholder="16px"
-                      id="paddingRight"
-                      onChange={handleOnChanges}
-                      value={state.editor.selectedElement.styles.paddingRight || ""}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
+              id="marginTop"
+              placeholder="16px"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.marginTop || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
+              placeholder="16px"
+              id="marginBottom"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.marginBottom || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
+              placeholder="16px"
+              id="marginLeft"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.marginLeft || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
+              placeholder="16px"
+              id="marginRight"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.marginRight || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-8 left-1/2 -translate-x-1/2"
+              placeholder="16px"
+              id="paddingTop"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.paddingTop || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-8 left-1/2 -translate-x-1/2"
+              placeholder="16px"
+              id="paddingBottom"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.paddingBottom || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 left-9 -translate-y-1/2"
+              placeholder="16px"
+              id="paddingLeft"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.paddingLeft || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-9 -translate-y-1/2"
+              placeholder="16px"
+              id="paddingRight"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.paddingRight || ""}
+            />
           </div>
         </AccordionContent>
       </AccordionItem>
+
+      <AccordionItem
+        value="Spacing"
+        className=" px-3 py-0"
+      >
+        <AccordionTrigger className="!no-underline font-semibold">Position</AccordionTrigger>
+        <AccordionContent>
+          <Tabs
+            onValueChange={(e) =>
+              handleOnChanges({
+                target: {
+                  id: "position",
+                  value: e,
+                },
+              })
+            }
+            value={state.editor.selectedElement.styles.position || "relative"}
+          >
+            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
+              <TabsTrigger
+                value="static"
+                className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
+                disabled
+              >
+                <X size={15} />
+              </TabsTrigger>
+              <TabsTrigger
+                value="relative"
+                className="w-10 h-[26.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
+              >
+                R
+              </TabsTrigger>
+              <TabsTrigger
+                value="absolute"
+                className="w-10 h-[26.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
+              >
+                A
+              </TabsTrigger>
+              <TabsTrigger
+                value="fixed"
+                className="w-10 h-[26.4px] text-xs p-0 data-[state=active]:bg-zinc-950 "
+              >
+                F
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
+
+          <div className="w-full relative mt-3">
+            <div className="w-full opacity-60">
+              <PM />
+            </div>
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
+              id="top"
+              placeholder="auto"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.top || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none bottom-1 left-1/2 -translate-x-1/2"
+              placeholder="auto"
+              id="bottom"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.bottom || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 -translate-y-1/2"
+              placeholder="auto"
+              id="left"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.left || ""}
+            />
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-0 -translate-y-1/2"
+              placeholder="auto"
+              id="right"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.marginRight || ""}
+            />
+            
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+
       <AccordionItem
         value="Background"
         className="px-3 py-0"
@@ -570,8 +627,8 @@ const SettingsTab = (props: Props) => {
             </div>
           </div>
           {/* 2rd radius */}
-          <div className="flex w-full gap-2 items-center">
-            <p className="text-muted-foreground text-xs w-min">Border Radius</p>
+          <div className="flex w-full gap-3 my-3 flex-col items-center">
+            <p className="text-muted-foreground text-xs w-full">Border Radius</p>
             <div className="w-full relative flex flex-row-reverse gap-2 items-center">
               <div className="flex items-center justify-end ">
                 <small className=" text-xs ">
@@ -631,24 +688,24 @@ const SettingsTab = (props: Props) => {
                   },
                 })
               }
-              value={state.editor.selectedElement.styles.backgroundSize?.toString()}
+              value={state.editor.selectedElement.styles.backgroundSize?.toString() || "cover"}
             >
-              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
+              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
                 <TabsTrigger
                   value="cover"
-                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
                   <ChevronsLeftRightIcon size={18} />
                 </TabsTrigger>
                 <TabsTrigger
                   value="contain"
-                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
                   <AlignVerticalJustifyCenter size={15} />
                 </TabsTrigger>
                 <TabsTrigger
                   value="auto"
-                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-muted"
+                  className="w-10 h-[26.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
                   <LucideImageDown size={15} />
                 </TabsTrigger>

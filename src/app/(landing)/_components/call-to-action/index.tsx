@@ -11,13 +11,13 @@ const CallToAction = () => {
     <div className="flex flex-col items-start md:items-center gap-y-5 md:gap-y-0">
       <AnimatedBtn />
       <GradientText
-        className="text-[35px] mt-6 mb-4 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[70px] leading-[1.1] font-semibold"
+        className="text-[35px] cursor-default mt-6 mb-4 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[70px] leading-[1.1] font-semibold"
         element="H1"
       >
         Launch your business <br />
         with our saas in some steps
       </GradientText>
-      <p className="text md:text-center text-left my-2 text-muted-foreground">
+      <p className="text md:text-center cursor-default text-left my-2 text-muted-foreground">
         Stemp is a vibrant online community platform that empowers
         <br className="md:hidden" />
         people <br className="hidden md:block" />
@@ -33,7 +33,7 @@ const CallToAction = () => {
           Demo
         </Button>
         <Link href="/sign-in">
-          <Button className="rounded-lg bg-main text-base text-white hover:text-zinc-600 flex gap-2 w-full">
+          <Button className="rounded-lg bg-main/70 element-main text-base text-white hover:bg-main flex gap-2 w-full">
             <BadgePlusIcon size={18} /> Get Started your journey
           </Button>
         </Link>

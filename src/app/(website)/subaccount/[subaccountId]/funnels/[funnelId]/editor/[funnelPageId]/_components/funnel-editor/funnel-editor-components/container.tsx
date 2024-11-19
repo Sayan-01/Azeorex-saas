@@ -228,8 +228,8 @@ const Container = ({ element }: Props) => {
         "overflow-scroll bg-[#161616] rounded-r-xl": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
-        "shadow-inner-border-main": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        "shadow-inner-border-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+        "!shadow-inner-border-blue-500-500": state.editor.selectedElement.id === id && !state.editor.liveMode,
         "shadow-inner-border-slate-500 hover:shadow-inner-border-blue-500": !state.editor.liveMode && type !== "__body",
       })}
       onDrop={(e) => handleOnDrop(e, id)}
@@ -239,7 +239,7 @@ const Container = ({ element }: Props) => {
       onDragStart={(e) => handleDragStart(e, "container")}
     >
       <Badge
-        className={clsx("absolute -top-[20px] h-5 -left-[1px] rounded-none rounded-t-lg hidden", {
+        className={clsx("absolute -top-[19px] h-5 left-0 rounded-none rounded-t-lg hidden", {
           block: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
         })}
       >
@@ -255,7 +255,7 @@ const Container = ({ element }: Props) => {
         ))}
 
       {state.editor.selectedElement.id === element.id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body" && (
-        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[20px] -right-[1px] rounded-none rounded-t-lg !text-white">
+        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[19px] right-0 rounded-none rounded-t-lg !text-white">
           <Trash
             size={12}
             onClick={handleDeleteElement}
