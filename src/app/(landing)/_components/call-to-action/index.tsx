@@ -4,9 +4,12 @@ import { BadgePlus } from "@/icons"
 import Link from "next/link"
 import AnimatedBtn from "../animated-button"
 import { Badge, BadgePlusIcon } from "lucide-react"
+import { auth } from "../../../../../auth"
 
 
-const CallToAction = () => {
+const CallToAction = async() => {
+  const session = await auth()
+
   return (
     <div className="flex flex-col items-start md:items-center gap-y-5 md:gap-y-0">
       <AnimatedBtn />
@@ -32,7 +35,13 @@ const CallToAction = () => {
         >
           Demo
         </Button>
-        <Link href="/sign-in">
+        <Link
+          href={
+            session?.user
+              ? "/subaccount/test/funnels/test/editor/test"
+              : "agency/sign-in"
+          }
+        >
           <Button className="rounded-lg bg-main/70 element-main text-base text-white hover:bg-main flex gap-2 w-full">
             <BadgePlusIcon size={18} /> Get Started your journey
           </Button>

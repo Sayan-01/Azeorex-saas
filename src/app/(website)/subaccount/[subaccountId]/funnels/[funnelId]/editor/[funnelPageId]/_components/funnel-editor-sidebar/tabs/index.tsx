@@ -3,12 +3,15 @@ import { Settings } from '@/icons'
 import { Funnel } from '@/icons/funnel'
 import { Layers } from '@/icons/layers'
 import { Plus } from '@/icons/plus'
+import clsx from 'clsx'
 
-type Props = {}
+type Props = {
+  className: string
+}
 
 const TabList = (props: Props) => {
   return (
-    <TabsList className=" flex items-center  justify-evenly w-fit bg-zinc-900 px-2 py-2 element h-fit gap-4 absolute z-20 bottom-6 right-[272px]">
+    <TabsList draggable className={clsx("flex items-center  justify-evenly w-fit bg-zinc-900 px-2 py-2 element h-fit gap-4 absolute z-20 bottom-6 right-[272px]", props.className)} >
       <TabsTrigger
         value="Settings"
         className="w-10 h-8 p-0 data-[state=active]:bg-zinc-950  data-[state=active] data-[state=active]:rounded"

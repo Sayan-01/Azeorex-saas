@@ -25,6 +25,7 @@ const GlassSheet = ({
           className,
         )}
       >
+        
         {children}
       </SheetContent>
     </Sheet>

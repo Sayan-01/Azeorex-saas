@@ -1,3 +1,5 @@
+import { getMedia } from "@/lib/queries";
+import { Prisma } from "@prisma/client";
 import { Document } from "mongoose";
 import { Types } from "mongoose";
 import { z } from "zod";
@@ -274,3 +276,7 @@ export const defaultStyles: React.CSSProperties = {
   textAlign: "left",
   opacity: "100%",
 };
+
+export type CreateMediaType = Prisma.MediaCreateWithoutSubaccountInput;
+export type GetMediaFiles = Prisma.PromiseReturnType<typeof getMedia>;
+

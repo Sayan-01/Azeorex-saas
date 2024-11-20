@@ -99,12 +99,7 @@ html {
 }
 
 .radial {
-  background-image: radial-gradient(
-    ellipse farthest-side,
-    white,
-    #716768,
-    black
-  );
+  background-image: radial-gradient(ellipse farthest-side, white, #716768, black);
   background-size: 100% 90%;
   background-repeat: no-repeat;
 }
@@ -116,21 +111,13 @@ html {
 }
 
 .text-radial {
-  background-image: radial-gradient(
-    ellipse farthest-side,
-    rgba(113, 103, 104, 0.2) 30%,
-    black 70%
-  );
+  background-image: radial-gradient(ellipse farthest-side, rgba(113, 103, 104, 0.2) 30%, black 70%);
   background-size: 100% 50%;
   background-repeat: no-repeat;
 }
 
 .text-radial--circle {
-  background-image: radial-gradient(
-    circle farthest-side,
-    rgba(113, 103, 104, 0.35) 20%,
-    black 70%
-  );
+  background-image: radial-gradient(circle farthest-side, rgba(113, 103, 104, 0.35) 20%, black 70%);
   background-size: 50% 70%;
   background-repeat: no-repeat;
   background-position: top center;
@@ -148,11 +135,7 @@ html {
 
 @media only screen and (max-width: 800px) {
   .text-radial--circle {
-    background-image: radial-gradient(
-      circle farthest-side,
-      rgba(113, 103, 104, 0.2) 20%,
-      black 70%
-    );
+    background-image: radial-gradient(circle farthest-side, rgba(113, 103, 104, 0.2) 20%, black 70%);
     background-size: 100% 50%;
     background-repeat: no-repeat;
     background-position: top center;
@@ -168,76 +151,24 @@ html {
 }
 
 .img--overlay {
-  background-image: -webkit-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 1)
-  ); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
-  background-image: -moz-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 1)
-  ); /* For Firefox (3.6 to 15) */
-  background-image: -o-linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 1)
-  ); /* For old Opera (11.1 to 12.0) */
-  background-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 1)
-  ); /* Standard syntax; must be last */
+  background-image: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  background-image: -moz-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); /* For Firefox (3.6 to 15) */
+  background-image: -o-linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); /* For old Opera (11.1 to 12.0) */
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)); /* Standard syntax; must be last */
 }
 
 .slider-overlay {
-  background-image: -webkit-linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0)
-  ); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
-  background-image: -moz-linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0)
-  ); /* For Firefox (3.6 to 15) */
-  background-image: -o-linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0)
-  ); /* For old Opera (11.1 to 12.0) */
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0)
-  ); /* Standard syntax; must be last */
+  background-image: -webkit-linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  background-image: -moz-linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* For Firefox (3.6 to 15) */
+  background-image: -o-linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* For old Opera (11.1 to 12.0) */
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* Standard syntax; must be last */
 }
 
 .slider-overlay-rev {
-  background-image: -webkit-linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 1)
-  ); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
-  background-image: -moz-linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 1)
-  ); /* For Firefox (3.6 to 15) */
-  background-image: -o-linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 1)
-  ); /* For old Opera (11.1 to 12.0) */
-  background-image: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 0.8),
-    rgba(0, 0, 0, 1)
-  ); /* Standard syntax; must be last */
+  background-image: -webkit-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* For Chrome 25 and Safari 6, iOS 6.1, Android 4.3 */
+  background-image: -moz-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* For Firefox (3.6 to 15) */
+  background-image: -o-linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* For old Opera (11.1 to 12.0) */
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)); /* Standard syntax; must be last */
 }
 
 .tiptap p.is-editor-empty:first-child::before {
@@ -252,14 +183,11 @@ html {
   display: none !important;
 }
 
-
-
 /* Scrollbar styling */
-
 
 .box-1::-webkit-scrollbar {
   width: 6px;
-  position: fixed; /* Ensures the scrollbar behaves like an absolute element */
+  position: absolute; /* Ensures the scrollbar behaves like an absolute element */
 }
 
 .box-1::-webkit-scrollbar-track {
@@ -269,5 +197,13 @@ html {
 .box-1::-webkit-scrollbar-thumb {
   background: #515151;
   border-radius: 50px;
-  
+}
+
+.gradient {
+  background: conic-gradient(from 230.29deg at 51.63% 52.16%, #2400ff 0deg, #0087ff 67.5deg, #6c279d 198.75deg, #1826a3 251.25deg, #3667c4 301.88deg, #691eff 1turn);
+}
+
+.x::selection {
+  background-color: #716fff57;
+  color: hsl(var(--foreground));
 }

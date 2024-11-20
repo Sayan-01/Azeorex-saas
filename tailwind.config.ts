@@ -75,10 +75,24 @@ module.exports = withUt({
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "image-glow": {
+          "0%": {
+            opacity: "0",
+            "animation-timing-function": "cubic-bezier(.74, .25, .76, 1)",
+          },
+          "10%": {
+            opacity: "0.5",
+            "animation-timing-function": "cubic-bezier(.12, .01, .08, .99)",
+          },
+          "100%": {
+            opacity: "0.7",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "image-glow": "image-glow 4s ease-out 0.6s forwards",
       },
       boxShadow: {
         "inner-border-main": "inset 0 0 0 1px #726FFF66",

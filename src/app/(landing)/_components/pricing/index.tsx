@@ -3,7 +3,15 @@ import GradientText from "@/components/global/gradient-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { Check } from "@/icons";
+import clsx from "clsx";
 import Link from "next/link";
+
+type Props = {
+  border: string;
+  title: string;
+  tag: string;
+  color: string;
+};
 
 export const PricingSection = () => {
   return (
@@ -23,17 +31,35 @@ export const PricingSection = () => {
           collaborate, and cultivate meaningful relationships
         </p>
       </BackdropGradient>
-
-      <PriceCard />
+      <div className="flex gap-8">
+        <PriceCard
+          border="border-main/70"
+          title="Premium Plane"
+          tag="9$ / monthh"
+          color="text-pink-400"
+        />
+        <PriceCard
+          border="border-main/70"
+          title="Premium Plane"
+          tag="9$ / monthh"
+          color="text-pink-400"
+        />
+        <PriceCard
+          border="border-main/70"
+          title="Premium Plane"
+          tag="9$ / monthh"
+          color="text-pink-400"
+        />
+      </div>
     </div>
   );
 };
 
-const PriceCard = () => {
+const PriceCard = ({ border, title, tag, color }: Props) => {
   return (
-    <Card className="p-7 mt-10 md:w-auto w-full bg-themeBlack border-themeGray">
+    <Card className={clsx("p-7 mt-10 md:w-auto w-full bg-themeBlack border-2 ", border)}>
       <div className="flex flex-col gap-2">
-        <CardTitle>99/m</CardTitle>
+        <CardTitle className={clsx(color)}>{title}</CardTitle>
         <CardDescription className="text-[#B4B0AE]">Great if you’re just getting started</CardDescription>
         <Link
           href="#"
@@ -43,7 +69,7 @@ const PriceCard = () => {
             variant="default"
             className="bg-[#333337] w-full rounded-2xl text-white hover:text-[#333337]"
           >
-            Start for free
+            {tag}
           </Button>
         </Link>
       </div>

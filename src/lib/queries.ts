@@ -473,11 +473,10 @@ export const getFunnelPageDetails = async (funnelPageId: string) => {
     where: {
       id: funnelPageId,
     },
-  })
+  });
 
-  return response
-  
-}
+  return response;
+};
 
 //============================================================================
 
@@ -489,4 +488,41 @@ export const getDomainContent = async (subDomainName: string) => {
     include: { FunnelPages: true },
   });
   return response;
+};
+
+//=============================================================================
+
+export const deleteMedia = async (mediaId: string) => {
+  const response = await db.media.delete({
+    where: {
+      id: mediaId,
+    },
+  });
+  return response;
+};
+
+//=============================================================================
+
+export const createMedia = async (subaccountId: string, mediaFile: any) => {
+  const response = await db.media.create({
+    data: {
+      link: mediaFile.link,
+      name: mediaFile.name,
+      subAccountId: subaccountId,
+    },
+  });
+
+  return response;
+};
+
+//=========================================================================
+
+export const getMedia = async (subaccountId: string) => {
+  const mediafiles = await db.subAccount.findUnique({
+    where: {
+      id: subaccountId,
+    },
+    include: { Media: true },
+  });
+  return mediafiles;
 };

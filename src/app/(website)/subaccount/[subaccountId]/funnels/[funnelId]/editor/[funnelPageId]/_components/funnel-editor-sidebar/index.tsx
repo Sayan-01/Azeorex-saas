@@ -27,7 +27,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
         className="w-full"
         defaultValue="Settings"
       >
-        <TabList />
+        <TabList className={clsx({ hidden: state.editor.previewMode })} />
         <SheetContent
           showX={false}
           side="right"

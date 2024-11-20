@@ -85,7 +85,7 @@ const SettingsTab = (props: Props) => {
   return (
     <Accordion
       type="multiple"
-      className="w-[249px]"
+      className="w-[249px] select-none"
       defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox"]}
     >
       <AccordionItem
@@ -485,7 +485,7 @@ const SettingsTab = (props: Props) => {
       </AccordionItem>
 
       <AccordionItem
-        value="Spacing"
+        value="Position"
         className=" px-3 py-0"
       >
         <AccordionTrigger className="!no-underline font-semibold">Position</AccordionTrigger>
@@ -560,9 +560,15 @@ const SettingsTab = (props: Props) => {
               placeholder="auto"
               id="right"
               onChange={handleOnChanges}
-              value={state.editor.selectedElement.styles.marginRight || ""}
+              value={state.editor.selectedElement.styles.right || ""}
             />
-            
+            <input
+              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-1/2 -translate-x-1/2  -translate-y-1/2"
+              placeholder="0"
+              id="zIndex"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles.zIndex || ""}
+            />
           </div>
         </AccordionContent>
       </AccordionItem>
@@ -590,7 +596,7 @@ const SettingsTab = (props: Props) => {
                     id="backgroundColor"
                     placeholder="transparent"
                     onChange={handleOnChanges}
-                    value={state.editor.selectedElement.styles.backgroundColor}
+                    value={state.editor.selectedElement.styles.backgroundColor || ""}
                   />
                 </div>
                 {state.editor.selectedElement.styles?.backgroundColor || "transparent"}
@@ -657,6 +663,37 @@ const SettingsTab = (props: Props) => {
               />
             </div>
           </div>
+          {/* 2rd blur*/}
+          <div className="flex w-full gap-3 my-3 flex-col items-center">
+            <p className="text-muted-foreground text-xs w-full">Blur</p>
+            <div className="w-full relative flex flex-row-reverse gap-2 items-center">
+              <div className="flex items-center justify-end ">
+                <small className=" text-xs ">
+                  {typeof state.editor.selectedElement.styles?.filter === "number"
+                    ? state.editor.selectedElement.styles?.filter
+                    : parseFloat((state.editor.selectedElement.styles?.filter || "0").replace("px", "")) || 0}
+                  px
+                </small>
+              </div>
+              <Slider
+                onValueChange={(e) => {
+                  handleOnChanges({
+                    target: {
+                      id: "filter",
+                      value: `blur(${e[0]}px)`,
+                    },
+                  });
+                }}
+                value={[
+                  typeof state.editor.selectedElement.styles?.filter === "number"
+                    ? state.editor.selectedElement.styles?.filter
+                    : parseFloat((state.editor.selectedElement.styles?.filter || "0").replace("%", "")) || 0,
+                ]}
+                max={100}
+                step={1}
+              />
+            </div>
+          </div>
           {/* 3rd bcg image */}
           <div className="flex flex-col gap-2">
             <p className=" text-muted-foreground text-xs">Background Image</p>
@@ -672,7 +709,7 @@ const SettingsTab = (props: Props) => {
                 className="mt-0 rounded-l-none hover:border-l-none group-hover:border-[#6a6a6a]"
                 id="backgroundImage"
                 onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.backgroundImage}
+                value={state.editor.selectedElement.styles.backgroundImage || ""}
               />
             </div>
           </div>
@@ -848,7 +885,7 @@ const SettingsTab = (props: Props) => {
                 },
               })
             }
-            value={state.editor.selectedElement.styles.alignItems || "center"}
+            value={state.editor.selectedElement.styles.alignItems || "normal"}
           >
             <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
               <TabsTrigger

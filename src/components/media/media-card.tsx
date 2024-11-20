@@ -24,13 +24,14 @@ import {
 import { Copy, MoreHorizontal, Trash } from 'lucide-react'
 import Image from 'next/image'
 import { deleteMedia, saveActivityLogsNotification } from '@/lib/queries'
-import { toast } from '../ui/use-toast'
+import { useToast } from '@/hooks/use-toast'
 
 type Props = { file: Media }
 
 const MediaCard = ({ file }: Props) => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const {toast} = useToast()
 
   return (
     <AlertDialog>
@@ -98,7 +99,7 @@ const MediaCard = ({ file }: Props) => {
               await saveActivityLogsNotification({
                 agencyId: undefined,
                 description: `Deleted a media file | ${response?.name}`,
-                subaccountId: response.subAccountId,
+                subAccountId: response.subAccountId,
               })
               toast({
                 title: 'Deleted File',
