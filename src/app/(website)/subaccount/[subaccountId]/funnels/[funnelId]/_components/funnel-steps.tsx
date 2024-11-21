@@ -8,15 +8,15 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import FunnelPagePlaceholder from "@/icons/funnel-page-placeholder";
 import { upsertFunnelPage } from "@/lib/queries";
-import { FunnelPage } from "@prisma/client";
-import { Check, CheckCheck, ExternalLink, LucideEdit } from "lucide-react";
+import { Funnel, FunnelPage } from "@prisma/client";
+import { CheckCheck, ExternalLink, LucideEdit } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { DragDropContext, DragStart, DropResult, Droppable } from "react-beautiful-dnd";
 import { useModal } from "../../../../../../../../providers/model-provider";
 import FunnelStepCard from "./funnel-step-card";
 
-type Props = { funnel: any; subaccountId: string; pages: FunnelPage[]; funnelId: string };
+type Props = { funnel: Funnel; subaccountId: string; pages: FunnelPage[]; funnelId: string };
 
 
 const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
@@ -29,7 +29,7 @@ const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
   const onDragStart = (event: DragStart) => {
     //current chosen page
     const { draggableId } = event;
-    const value = pagesState.find((page: any) => page.id === draggableId);
+    // const value = pagesState.find((page: any) => page.id === draggableId);
   };
 
   const onDragEnd = (dropResult: DropResult) => {

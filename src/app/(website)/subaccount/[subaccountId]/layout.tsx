@@ -34,7 +34,7 @@ const SubaccountLayout = async ({ children, params }: Props) => {
 
     const allNotifications = await getNotificationAndUser(agencyId);
 
-    //@ts-ignore
+    //@ts-expect-error
     if (user.role === "AGENCY_ADMIN" || user.role === "AGENCY_OWNER") {
       notifications = allNotifications;
     } else {

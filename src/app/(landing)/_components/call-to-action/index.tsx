@@ -1,9 +1,8 @@
 import GradientText from "@/components/global/gradient-text"
 import { Button } from "@/components/ui/button"
-import { BadgePlus } from "@/icons"
 import Link from "next/link"
 import AnimatedBtn from "../animated-button"
-import { Badge, BadgePlusIcon } from "lucide-react"
+import { BadgePlusIcon } from "lucide-react"
 import { auth } from "../../../../../auth"
 
 

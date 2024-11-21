@@ -121,7 +121,7 @@ const AgencyForm = ({ data }: Props) => {
     setDeletingAgency(true);
     //WIP: discontinue the subscription
     try {
-      const response = await deleteAgency(data.id);
+      // const response = await deleteAgency(data.id);
       toast({
         title: "Deleted Agency",
         description: "Deleted your agency and all subaccounts",

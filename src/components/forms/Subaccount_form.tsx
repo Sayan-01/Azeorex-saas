@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AlertDialog } from "../ui/alert-dialog";
 import { CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -40,7 +40,7 @@ interface SubAccountDetailsProps {
   userName: string;
 }
 
-const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDetails, userId, userName }) => {
+const SubAccountDetails: React.FC<SubAccountDetailsProps> = ({ details, agencyDetails, userName }) => {
   const { toast } = useToast();
   const router = useRouter();
   const { setClose } = useModal();
