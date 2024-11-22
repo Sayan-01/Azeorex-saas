@@ -4,13 +4,15 @@ import { getFunnelPageDetails } from "@/lib/queries";
 import { useEditor } from "../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
 import { EyeOff } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Recursive from "./funnel-editor-components/recursive";
+import { Loader } from "@/components/global/Loader";
 
 type Props = { funnelPageId: string; liveMode?: boolean };
 
 const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
   const { dispatch, state } = useEditor();
+  const [load, setLoade] = useState(true);
 
   useEffect(() => {
     if (liveMode) {
@@ -26,7 +28,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
     const fetchData = async () => {
       const response = await getFunnelPageDetails(funnelPageId);
       if (!response) return;
-
+      setLoade(false);
       dispatch({
         type: "LOAD_DATA",
         payload: {
@@ -49,9 +51,11 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
     dispatch({ type: "TOGGLE_PREVIEW_MODE" });
     dispatch({ type: "TOGGLE_LIVE_MODE" });
   };
-  return (
+  return load ? (
+    <Loader loading className="pb-12 mr-[250px]"/>
+  ) : (
     <div
-      className={clsx("use-automation-zoom-in h-full pb-[48px] overflow-scroll mr-[250px] bg-background transition-all box", {
+      className={clsx("use-automation-zoom-in h-full pb-[48px] overflow-y-scroll mr-[250px] bg-background transition-all box", {
         "!p-0 !mr-0 !mx-0 ": state.editor.previewMode === true || state.editor.liveMode === true,
         "!w-[850px]": state.editor.device === "Tablet",
         "!w-[420px]": state.editor.device === "Mobile",

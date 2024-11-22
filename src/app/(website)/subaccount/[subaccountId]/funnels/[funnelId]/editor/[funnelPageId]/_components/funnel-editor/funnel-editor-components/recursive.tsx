@@ -27,7 +27,6 @@ const Recursive = ({ element }: Props) => {
       return <Container element={element} />
     case '__body':
       return <Container element={element} />
-
     case 'link':
       return <LinkComponent element={element} />
     default:

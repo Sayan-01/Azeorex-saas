@@ -13,7 +13,7 @@ const InfoBar = async() => {
         href="/"
         className="md:ml-0 ml-12"
       >
-        <p className="font-bold w-[100px] text-2xl">Grouple.</p>
+        <p className="font-bold w-[100px] text-2xl">Sayan.</p>
       </Link>
       <div className="flex items-center gap-5">
         <div className=" md:flex gap-4 hidden">

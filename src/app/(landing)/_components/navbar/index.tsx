@@ -13,7 +13,7 @@ const LandingPageNavbar = async () => {
 
   return (
     <div className="w-full md:px-10 flex justify-between sticky top-0 items-center py-5 z-50">
-      <p className="font-bold w-[100px] text-2xl">Grouple.</p>
+      <p className="font-bold w-[100px] text-2xl">Sayan.</p>
       <Menu orientation="desktop" />
       <div className="flex gap-2 w-[100px] justify-end">
         {session?.user?.email ? (

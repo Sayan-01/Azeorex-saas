@@ -10,10 +10,11 @@ import clsx from "clsx";
 import { ArrowLeftCircle, EyeIcon, Laptop, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { FocusEventHandler, useEffect } from "react";
+import React, { FocusEventHandler, useEffect, useState } from "react";
 import { DeviceTypes, useEditor } from "../../../../../../../../../../providers/editor/editor-provider";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
+import { Loader } from "@/components/global/Loader";
 
 type Props = {
   funnelId: string;
@@ -24,6 +25,7 @@ type Props = {
 const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: Props) => {
   const router = useRouter();
   const { state, dispatch } = useEditor();
+  const [ load, setLoade] = useState(false)
   const { toast } = useToast();
 
   useEffect(() => {
@@ -72,6 +74,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
   };
 
   const handleOnSave = async () => {
+    setLoade(true)
     const content = JSON.stringify(state.editor.elements);
     try {
       const response = await upsertFunnelPage(
@@ -87,6 +90,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
         description: `Updated a funnel page | ${response?.name}`,
         subAccountId: subaccountId,
       });
+      setLoade(false)
       toast({
         description: "✨Saved Editor",
       });
@@ -102,12 +106,18 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
       <nav className={clsx("border- border-main-black flex items-center justify-between px-3 py-1 gap-2 transition-all", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
           <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
-            <Image src={"/azeorex.png"} alt="logo" width={30} height={30} className="rounded"/>
+            <Image
+              src={"/azeorex.png"}
+              alt="logo"
+              width={30}
+              height={30}
+              className="rounded"
+            />
           </Link>
-          <div className="flex flex-col w-full ">
+          <div className="flex  w-full ">
             <Input
               defaultValue={funnelPageDetails.name}
-              className="h-7 -ml-2 mt-0 text-lg"
+              className="h-7 -ml-2 mt-0 text-lg bg-transparent border-none opacity-60"
               onBlur={handleOnBlurTitleChange}
             />
             {/* <span className="text-sm text-muted-foreground">Path: /{funnelPageDetails.pathName}</span> */}
@@ -116,7 +126,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
         <aside>
           <Tabs
             defaultValue="Desktop"
-            className="w-fit "
+            className="w-fit"
             value={state.editor.device}
             onValueChange={(value) => {
               dispatch({
@@ -210,7 +220,13 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             size={"sm"}
             onClick={handleOnSave}
           >
-            Save
+            {load ? (
+              <>
+                <Loader loading={load} />
+              </>
+            ) : (
+              <p>Save</p>
+            )}
           </Button>
         </aside>
       </nav>
