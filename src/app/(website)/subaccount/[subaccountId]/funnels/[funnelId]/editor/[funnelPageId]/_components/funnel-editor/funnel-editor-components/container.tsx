@@ -234,7 +234,7 @@ const Container = ({ element }: Props) => {
         "shadow-inner-border-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "!shadow-inner-border-blue-500-500": state.editor.selectedElement.id === id && !state.editor.liveMode,
         "shadow-inner-border-slate-500 hover:shadow-inner-border-blue-500": !state.editor.liveMode && type !== "__body",
-        "shadow-inner-border-empty": content && !state.editor.liveMode,
+        "!shadow-inner-border-empty": state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
