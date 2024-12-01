@@ -107,7 +107,6 @@ const SettingsTab = (props: Props) => {
             </div>
             <div className="flex flex-col">
               <p className="text-muted-foreground text-xs">Height</p>
-
               <Input
                 id="height"
                 placeholder="Auto"

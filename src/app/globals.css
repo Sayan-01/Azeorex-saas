@@ -191,8 +191,8 @@ html {
 }
 
 .box-1::-webkit-scrollbar-track {
-  background: #2e2e2e02;
-  border-radius: 50px;
+  background: #272727;
+  /* border-radius: 50px; */
 }
 .box-1::-webkit-scrollbar-thumb {
   background: #515151;

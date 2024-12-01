@@ -70,7 +70,7 @@ const ComponentsTab = (props: Props) => {
   return (
     <Accordion
       type="multiple"
-      className="w-full"
+      className="w-full select-none"
       defaultValue={['Layout', 'Elements']}
     >
       <AccordionItem

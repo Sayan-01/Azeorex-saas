@@ -2,17 +2,19 @@
 import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { Trash } from "lucide-react";
 import { defaultStyles, EditorBtns } from "@/types/types";
+import { useOverlay } from "../../../../../../../../../../../../providers/overlay-provider";
 
 type Props = { element: EditorElement };
 
 const Container = ({ element }: Props) => {
   const { id, content, name, styles, type } = element;
   const { dispatch, state } = useEditor();
+  const { setHoverStyle, setClickStyle } = useOverlay();
 
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation();
@@ -170,6 +172,7 @@ const Container = ({ element }: Props) => {
         elementDetails: element,
       },
     });
+    updateClickStyle(e);
   };
 
   const handleDeleteElement = () => {
@@ -180,75 +183,90 @@ const Container = ({ element }: Props) => {
       },
     });
   };
-  {
-    console.log("gggg",content,"hhhh",state.editor.selectedElement.id);
-  }
+
+  const updateClickStyle = (e: React.MouseEvent<Element, MouseEvent>) => {
+    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    setClickStyle({
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      display: "block",
+    });
+  };
+
+  const updateHoverStyle = (e: React.MouseEvent<Element, MouseEvent>) => {
+    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    setHoverStyle({
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+      height: rect.height,
+      display: "block",
+    });
+  };
+
+  useEffect(() => {
+    const updateOverlayDimensions = () => {
+      const rect = document.getElementById(id)?.getBoundingClientRect();
+      if (rect) {
+        setHoverStyle({
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+          display: "block",
+        });
+        setClickStyle({
+          top: rect.top,
+          left: rect.left,
+          width: rect.width,
+          height: rect.height,
+          display: "block",
+        });
+      }
+    };
+
+    // Call on mount and whenever the element's styles change
+    updateOverlayDimensions();
+    return () => {
+      // Cleanup if necessary
+    };
+  }, [styles]); // Add any dependencies that would cause a re-render
 
   return (
     <div
       style={{
         ...styles,
       }}
-      // className={clsx("relative p-4 transition-all box group", {
-      //   "max-w-[80rem] w-full": type === "container" || type === "2Col",
-      //   "h-fit max-w-[80rem] mx-auto": type === "container",
-      //   "h-full": type === "__body",
-      //   "overflow-scroll": type === "__body",
-      //   "flex flex-col md:!flex-row": type === "2Col",
-      //   "shadow-inner-gray": !state.editor.liveMode && state.editor.selectedElement.id !== id, // Default gray inner shadow for unselected elements
-      //   "shadow-inner-blue": state.editor.selectedElement.id === id && !state.editor.liveMode, // Blue inner shadow for selected elements
-      //   "group-hover:shadow-inner-blue": !state.editor.liveMode && state.editor.selectedElement.id !== id, // Blue inner shadow on hover for non-selected elements
-      // })}
-
-      // className={clsx("relative p-4 transition-all box group", {
-      //   "max-w-[80rem] w-full": type === "container" || type === "2Col",
-      //   "h-fit max-w-[80rem] mx-auto": type === "container",
-      //   "h-full": type === "__body",
-      //   "overflow-scroll ": type === "__body",
-      //   "flex flex-col md:!flex-row": type === "2Col",
-      //   "!outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
-      //   "!outline-main !outline": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-      //   "!outline-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
-      //   "outline-dashed outline-[1px] outline-slate-300 hover:outline-blue-500": !state.editor.liveMode,
-      // })}
-
-      // className={clsx("relative p-4 transition-all box group", {
-      //   "max-w-[80rem] w-full": type === "container" || type === "2Col",
-      //   "h-fit max-w-[80rem] mx-auto": type === "container",
-      //   "h-full": type === "__body",
-      //   "overflow-scroll bg-[#161616] rounded-xl": type === "__body",
-      //   "flex flex-col md:!flex-row": type === "2Col",
-      //   "!outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
-      //   "shadow-inner-border-main": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-      //   "!outline-solid": state.editor.selectedElement.id === id && !state.editor.liveMode,
-      //   "outline-dashed outline-[1px] outline-slate-500 hover:outline-blue-500": !state.editor.liveMode && type !== "__body",
-      // })}
-
       className={clsx("relative p-4 transition-all box-1 group", {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
         "h-fit max-w-[80rem] mx-auto": type === "container",
         "h-full": type === "__body",
-        "overflow-scroll bg-[#161616] rounded-r-xl overflow-x-hidden": type === "__body",
+        "overflow-scroll bg-[#161616] overflow-x-hidden": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "shadow-inner-border-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "!shadow-inner-border-blue-500-500": state.editor.selectedElement.id === id && !state.editor.liveMode,
         "shadow-inner-border-slate-500 hover:shadow-inner-border-blue-500": !state.editor.liveMode && type !== "__body",
-        "!shadow-inner-border-empty": state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
+        // "!shadow-inner-border-empty":
+        //   state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
       onDragStart={(e) => handleDragStart(e, "container")}
+      onMouseOver={(e) => updateHoverStyle(e)}
+      // onClick={(e) => updateClickStyle(e)}
     >
-      <Badge
+      {/* <Badge
         className={clsx("absolute -top-[19px] h-5 left-0 rounded-none rounded-t-lg hidden", {
           block: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
         })}
       >
         {element.name}
-      </Badge>
+      </Badge> */}
 
       {Array.isArray(content) &&
         content.map((childElement) => (
@@ -258,14 +276,14 @@ const Container = ({ element }: Props) => {
           />
         ))}
 
-      {state.editor.selectedElement.id === element.id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body" && (
+      {/* {state.editor.selectedElement.id === element.id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body" && (
         <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[19px] right-0 rounded-none rounded-t-lg !text-white">
           <Trash
             size={12}
             onClick={handleDeleteElement}
           />
         </div>
-      )}
+      )} */}
     </div>
   );
 };

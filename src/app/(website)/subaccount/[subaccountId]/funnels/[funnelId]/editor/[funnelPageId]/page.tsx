@@ -5,6 +5,7 @@ import EditorProvider from "../../../../../../../../../providers/editor/editor-p
 import FunnelEditorNavigation from "./_components/funnel-editor-navigation";
 import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
 import FunnelEditor from "./_components/funnel-editor";
+import { OverlayProvider } from "../../../../../../../../../providers/overlay-provider";
 
 type Props = {
   params: {
@@ -32,15 +33,17 @@ const page = async ({ params }: Props) => {
         funnelId={params.funnelId}
         pageDetails={funnelPageDetails}
       >
-        <FunnelEditorNavigation
-          funnelId={params.funnelId}
-          funnelPageDetails={funnelPageDetails}
-          subaccountId={params.subaccountId}
-        />
-        <div className="h-full flex justify-center">
-          <FunnelEditor funnelPageId={params.funnelPageId} />
-        </div>
-        <FunnelEditorSidebar subaccountId={params.subaccountId} />
+        <OverlayProvider>
+          <FunnelEditorNavigation
+            funnelId={params.funnelId}
+            funnelPageDetails={funnelPageDetails}
+            subaccountId={params.subaccountId}
+          />
+          <div className="h-full flex justify-center">
+            <FunnelEditor funnelPageId={params.funnelPageId} />
+          </div>
+          <FunnelEditorSidebar subaccountId={params.subaccountId} />
+        </OverlayProvider>
       </EditorProvider>
     </div>
   );

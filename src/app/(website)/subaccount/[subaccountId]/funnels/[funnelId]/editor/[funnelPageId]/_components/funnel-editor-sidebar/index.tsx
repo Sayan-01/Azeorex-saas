@@ -36,7 +36,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <div className="grid gap-4 h-full w-[249px] pb-32 overflow-auto overflow-x-hidden box">
             <TabsContent value="Settings">
               <SettingsTab />
-              <Sidebar />
+              {/* <Sidebar /> */}
             </TabsContent>
             <TabsContent value="Media">
               <MediaBucketTab subaccountId={subaccountId} />
