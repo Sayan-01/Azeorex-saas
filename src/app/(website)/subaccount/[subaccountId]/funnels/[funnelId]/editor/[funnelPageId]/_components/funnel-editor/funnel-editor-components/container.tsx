@@ -14,9 +14,6 @@ type Props = { element: EditorElement };
 const Container = ({ element }: Props) => {
   const { id, content, name, styles, type } = element;
   const { dispatch, state } = useEditor();
-  console.log("first");
-  
-  
 
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation();
@@ -186,6 +183,20 @@ const Container = ({ element }: Props) => {
       },
     });
   };
+
+   useEffect(() => {
+     const handleKeyDown = (e: KeyboardEvent) => {
+       if (e.key === "Backspace" && state.editor.selectedElement.id === id) {
+         e.preventDefault(); // Prevent default browser behavior
+         handleDeleteElement();
+       }
+     };
+
+     document.addEventListener("keydown", handleKeyDown);
+     return () => {
+       document.removeEventListener("keydown", handleKeyDown);
+     };
+   }, [handleDeleteElement, id, state.editor.selectedElement.id]);
 
   return (
     <div
