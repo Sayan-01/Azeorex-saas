@@ -86,7 +86,7 @@ const SettingsTab = (props: Props) => {
   return (
     <Accordion
       type="multiple"
-      className="w-[249px] select-none"
+      className="w-[249px] select-none bg-[#151515] pb-10"
       defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox"]}
     >
       <AccordionItem
@@ -732,7 +732,7 @@ const SettingsTab = (props: Props) => {
       </AccordionItem>
       <AccordionItem
         value="Flexbox"
-        className="px-3 py-0 "
+        className="px-3 py-0 border-none"
       >
         <AccordionTrigger className="!no-underline font-semibold">Auto Layoutx</AccordionTrigger>
         <AccordionContent>

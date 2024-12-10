@@ -186,7 +186,7 @@ const Container = ({ element }: Props) => {
 
    useEffect(() => {
      const handleKeyDown = (e: KeyboardEvent) => {
-       if (e.key === "Backspace" && state.editor.selectedElement.id === id) {
+       if (e.key === "Backspace" && state.editor.selectedElement.id === id && type !== "__body") {
          e.preventDefault(); // Prevent default browser behavior
          handleDeleteElement();
        }

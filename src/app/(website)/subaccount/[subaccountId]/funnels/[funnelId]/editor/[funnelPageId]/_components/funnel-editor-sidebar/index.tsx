@@ -33,7 +33,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           side="right"
           className={clsx("mt-[48px] mr-[1px] w-[249px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", { hidden: state.editor.previewMode })}
         >
-          <div className="grid gap-4 h-full w-[249px] pb-32 overflow-auto overflow-x-hidden box">
+          <div className="grid gap-4 h-full w-[249px] pb-12 overflow-auto overflow-x-hidden box">
             <TabsContent value="Settings">
               <SettingsTab />
               {/* <Sidebar /> */}
