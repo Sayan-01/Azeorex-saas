@@ -43,7 +43,7 @@ export const PricingSection = () => {
         />
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
-          border="relative border-main/10 z-10  bg-main/40 pricing-shadow"
+          border="relative border-white/10 z-10  bg-main/40 pricing-shadow"
           title="Pro Plane"
           tag="$15 / month"
           color="text-[#b4b0a3]"

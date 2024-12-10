@@ -189,7 +189,16 @@ const Container = ({ element }: Props) => {
 
   return (
     <div
-      style={{width: styles?.width || "", height: styles?.height || "", position: styles?.position || "relative"}}
+      style={{
+        width: styles?.width || "",
+        height: styles?.height || "",
+        position: styles?.position || "relative",
+        top: styles?.top || 0,
+        bottom: styles?.bottom || 0,
+        left: styles?.left || 0,
+        right: styles?.right || 0,
+        zIndex: styles?.zIndex || 0,
+      }}
       className={clsx("relative z-[1004] box-1", {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
         "h-fit max-w-[80rem] mx-auto": type === "container",
@@ -214,8 +223,8 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
         }}
-        className={clsx("p-4 transition-all box-1 z-[1002]", {
-          "cursor-move": !state.editor.liveMode && type !== "__body",
+        className={clsx("p-4 !relative !top-0 !bottom-0 !left-0 !right-0 transition-all box-1 z-[1002]", {
+          "cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode && type !== "__body",
         })}
       >
         {Array.isArray(content) &&

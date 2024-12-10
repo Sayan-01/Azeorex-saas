@@ -1,119 +1,72 @@
-// 'use client'
-// import React, { useState } from "react";
+"use client";
+import { useEffect, useRef, useState } from "react";
+// import Background from "./components/Background";
+// import Foreground from "./components/Foreground";
+import { motion } from "motion/react";
 
-// const App = () => {
-//   const [activeContainer, setActiveContainer] = useState(null);
-//   const [styles, setStyles] = useState({
-//     container1: { opacity: 1, borderRadius: 0 },
-//     container2: { opacity: 1, borderRadius: 0 },
-//     container3: { opacity: 1, borderRadius: 0 },
-//   });
+function App() {
+  const [mousePosition, setMousePosition] = useState({
+    x: 0,
+    y: 0,
+  });
 
-//   const handleContainerClick = (index) => {
-//     setActiveContainer(index);
-//   };
+  useEffect(() => {
+    const mouseMove = (e: any) => {
+      setMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+    window.addEventListener("mousemove", mouseMove);
+    return () => {
+      window.removeEventListener("mousemove", mouseMove);
+    };
+  }, []);
 
-//   const handleSliderChange = (index, property, value) => {
-//     setStyles((prevStyles) => ({
-//       ...prevStyles,
-//       [`container${index}`]: {
-//         ...prevStyles[`container${index}`],
-//         [property]: value,
-//       },
-//     }));
-//   };
+  const ref = useRef(null);
 
-//   return (
-//     <div style={{ padding: "20px" }}>
-//       <div style={{ display: "flex", gap: "20px" }}>
-//         {[1, 2, 3].map((index) => (
-//           <div
-//             key={index}
-//             onClick={() => handleContainerClick(index)}
-//             onMouseEnter={() => setActiveContainer(index)}
-//             onMouseLeave={() => setActiveContainer(null)}
-//             style={{
-//               width: "100px",
-//               height: "100px",
-//               backgroundColor: "lightblue",
-//               opacity: styles[`container${index}`].opacity,
-//               borderRadius: `${styles[`container${index}`].borderRadius}px`,
-//               position: "relative",
-//               cursor: "pointer",
-//               transition: "all 0.3s",
-//             }}
-//           >
-//             {/* Outline effect */}
-//             {activeContainer === index && (
-//               <div
-//                 style={{
-//                   position: "absolute",
-//                   top: 0,
-//                   left: 0,
-//                   right: 0,
-//                   bottom: 0,
-//                   border: "2px solid blue", // Rectangular outline
-//                   opacity: 0.7, // Outline opacity
-//                   pointerEvents: "none", // Make sure the outline doesn't block interactions
-//                 }}
-//               ></div>
-//             )}
-//           </div>
-//         ))}
-//       </div>
-//       {[1, 2, 3].map((index) => (
-//         <div
-//           key={index}
-//           style={{ marginTop: "20px" }}
-//         >
-//           <h4>Container {index} Controls</h4>
-//           <label>
-//             Opacity:
-//             <input
-//               type="range"
-//               min="0.1"
-//               max="1"
-//               step="0.1"
-//               value={styles[`container${index}`].opacity}
-//               onChange={(e) => handleSliderChange(index, "opacity", parseFloat(e.target.value))}
-//             />
-//           </label>
-//           <br />
-//           <label>
-//             Border Radius:
-//             <input
-//               type="range"
-//               min="0"
-//               max="50"
-//               step="1"
-//               value={styles[`container${index}`].borderRadius}
-//               onChange={(e) => handleSliderChange(index, "borderRadius", parseInt(e.target.value, 10))}
-//             />
-//           </label>
-//         </div>
-//       ))}
-//     </div>
-//   );
-// };
+  const variants = {
+    default: {
+      x: mousePosition.x - 16,
+      y: mousePosition.y - 16,
+    },
+  };
 
-// export default App;
-
-
-
-const RectangularBorderEffect = () => {
   return (
-    <div className="relative group">
-      {/* Content */}
-      <div className="w-48 h-48 bg-gray-100 rounded-full opacity-10">Hover or Click Me</div>
-
-      {/* Border */}
-      <div className="absolute top-0 left-0 w-48 h-48 group-hover:inner-border-blue-500  pointer-events-none" />
+    <div className="relative w-full h-screen bg-zinc-800">
+      {/* <Background /> */}
+      <div
+        ref={ref}
+        className="fixed flex z-[3] p-2 top-0 left-0 w-full h-full bg-sky-800/5"
+      >
+        <Card reference={ref} />
+        <Card reference={ref} />
+        <Card reference={ref} />
+      </div>
     </div>
   );
-};
+}
 
-export default RectangularBorderEffect;
+export default App;
 
+function Card({ reference }: { reference: any }) {
+  return (
+    <motion.div
+      drag
+      dragConstraints={reference}
+      whileDrag={{ scale: 1 }}
+      dragTransition={{
+        power: 0, // Adjust to change the drag responsiveness
+        timeConstant: 0, // Reduces the smoothness during dragging
+        modifyTarget: (target) => Math.round(target), // Snaps the position
+      }}
 
-
-
+      className="relative w-60 h-80 bg-zinc-900/90 text-white rounded-[25px] p-8 m-2 overflow-hidden"
+    >
+      {/* <FaRegFileLines /> */}
+      <p className="text-sm mt-3">Lorem ipsum dolor sit amet consectetur.</p>
+      <div className="absolute bottom-0 bg-blue-400 w-full h-[45px] left-0"></div>
+      data tag
+    </motion.div>
+  );
+}
