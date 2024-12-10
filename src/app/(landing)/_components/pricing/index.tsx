@@ -2,6 +2,7 @@ import BackdropGradient from "@/components/global/backdrop-gradient";
 import GradientText from "@/components/global/gradient-text";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Check } from "@/icons";
 import clsx from "clsx";
 import Link from "next/link";
@@ -11,6 +12,7 @@ type Props = {
   title: string;
   tag: string;
   color: string;
+  features: [string, string, string, string, string];
 };
 
 export const PricingSection = () => {
@@ -26,75 +28,69 @@ export const PricingSection = () => {
         >
           Pricing Plans That Fit Your Right
         </GradientText>
-        <p className="text-sm md:text-center text-left text-muted-foreground">
+        <p className="text-sm md:text-center text-left mt-4 mb-10 text-muted-foreground">
           Grouple is a vibrant online community platform that empowers people to connect, <br className="hidden md:block" />
           collaborate, and cultivate meaningful relationships
         </p>
       </BackdropGradient>
-      <div className="flex gap-8">
+      <div className="flex md:flex-row flex-col gap-4">
         <PriceCard
-          border="border-main/70"
-          title="Premium Plane"
-          tag="9$ / monthh"
-          color="text-pink-400"
+          features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
+          border="border-white/5  bg-[#0C0E13]"
+          title="Free Plane"
+          tag="$0 forever"
+          color="text-[#b4b0a3]"
         />
         <PriceCard
-          border="border-main/70"
-          title="Premium Plane"
-          tag="9$ / monthh"
-          color="text-pink-400"
+          features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
+          border="relative border-main/10 z-10  bg-main/40 pricing-shadow"
+          title="Pro Plane"
+          tag="$15 / month"
+          color="text-[#b4b0a3]"
         />
         <PriceCard
-          border="border-main/70"
+          features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
+          border="border-white/5 bg-[#0C0E13]"
           title="Premium Plane"
-          tag="9$ / monthh"
-          color="text-pink-400"
+          tag="$45 / month"
+          color="text-[#b4b0a3]"
         />
       </div>
     </div>
   );
 };
 
-const PriceCard = ({ border, title, tag, color }: Props) => {
+const PriceCard = ({ border, title, tag, color, features }: Props) => {
   return (
-    <Card className={clsx("p-7 mt-10 md:w-auto w-full bg-themeBlack border-2 ", border)}>
-      <div className="flex flex-col gap-2">
+    <Card className={clsx("p-8 mt-10 w-[22rem] border-2", border)}>
+      <div className="flex flex-col gap-2 mb-8">
         <CardTitle className={clsx(color)}>{title}</CardTitle>
-        <CardDescription className="text-[#B4B0AE]">Great if you’re just getting started</CardDescription>
+        <CardDescription className="my-5">
+          <div className="text-5xl text-white font-medium mb-3">{tag}</div>
+          <p className="text-[#B4B0AE]">Great if you’re just getting started</p>
+        </CardDescription>
         <Link
           href="#"
-          className="w-full mt-3"
+          className="w-full"
         >
           <Button
             variant="default"
-            className="bg-[#333337] w-full rounded-2xl text-white hover:text-[#333337]"
+            className="py-[22px] text-md font-semibold w-full rounded-xl btn-shadow"
           >
-            {tag}
+            Start your journey
           </Button>
         </Link>
+        <p className="text-xs opacity-60 mx-auto">powered by azeorex company</p>
       </div>
-      <div className="flex flex-col gap-2 text-[#B4B0AE] mt-5">
+      <Separator className={tag === "$9 / month" ? "bg-white/50": ""}/>
+      <div className={clsx("flex flex-col gap-2 mt-5", tag === "$9 / month" ? "text-white" : "text-[#d3cfcd]")}>
         <p>Features</p>
-        <span className="flex gap-2 mt-3 items-center">
-          <Check />
-          Feature number 1
-        </span>
-        <span className="flex gap-2 items-center">
-          <Check />
-          Feature number 1
-        </span>
-        <span className="flex gap-2 items-center">
-          <Check />
-          Feature number 1
-        </span>
-        <span className="flex gap-2 items-center">
-          <Check />
-          Feature number 1
-        </span>
-        <span className="flex gap-2 items-center">
-          <Check />
-          Feature number 1
-        </span>
+        {features.map((i) => (
+          <span className="flex gap-2 mt-2 items-center">
+            <Check />
+            {i}
+          </span>
+        ))}
       </div>
     </Card>
   );

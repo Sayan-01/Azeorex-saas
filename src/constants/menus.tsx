@@ -45,12 +45,32 @@ export const LANDING_PAGE_MENU: MenuProps[] = [
     section: true,
   },
   {
-    id: 1,
+    id: 2,
     label: "Explore",
     icon: <Explore />,
     path: "/explore",
   },
-]
+  {
+    id: 3,
+    label: "Home",
+    icon: <Home />,
+    path: "#",
+    section: true,
+  },
+  {
+    id: 4,
+    label: "Pricing",
+    icon: <CreditCard />,
+    path: "#",
+    section: true,
+  },
+  {
+    id: 5,
+    label: "Explore",
+    icon: <Explore />,
+    path: "/explore",
+  },
+];
 export const GROUP_PAGE_MENU: MenuProps[] = [
   {
     id: 0,

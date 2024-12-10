@@ -11,7 +11,7 @@ type Props = {
 
 const TabList = (props: Props) => {
   return (
-    <TabsList draggable className={clsx("flex items-center  justify-evenly w-fit bg-zinc-900 px-2 py-2 element h-fit gap-4 absolute z-20 bottom-6 right-[272px]", props.className)} >
+    <TabsList draggable className={clsx("flex items-center z-[2000] justify-evenly w-fit bg-zinc-900 px-2 py-2 element h-fit gap-4 absolute bottom-6 right-[272px]", props.className)} >
       <TabsTrigger
         value="Settings"
         className="w-10 h-8 p-0 data-[state=active]:bg-zinc-950  data-[state=active] data-[state=active]:rounded"

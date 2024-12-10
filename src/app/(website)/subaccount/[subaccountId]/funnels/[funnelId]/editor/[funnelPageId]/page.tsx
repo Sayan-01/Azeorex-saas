@@ -6,6 +6,7 @@ import FunnelEditorNavigation from "./_components/funnel-editor-navigation";
 import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
 import FunnelEditor from "./_components/funnel-editor";
 import { OverlayProvider } from "../../../../../../../../../providers/overlay-provider";
+import Canvas from "./_components/canvas";
 
 type Props = {
   params: {
@@ -41,6 +42,7 @@ const page = async ({ params }: Props) => {
           />
           <div className="h-full flex justify-center">
             <FunnelEditor funnelPageId={params.funnelPageId} />
+            {/* <Canvas/> */}
           </div>
           <FunnelEditorSidebar subaccountId={params.subaccountId} />
         </OverlayProvider>

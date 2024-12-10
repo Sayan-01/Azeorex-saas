@@ -34,6 +34,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { Slider } from "@/components/ui/slider";
 import { useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import PM from "@/icons/p-m";
+import Position from "@/icons/position";
 
 type Props = {};
 
@@ -137,8 +138,8 @@ const SettingsTab = (props: Props) => {
             </div>
           </div>
           {/* 3rd radius and opacity*/}
-          <div className="flex gap-2 mb-3">
-            <div className="flex flex-col w-full">
+          <div className="flex gap-2 mb-4">
+            {/* <div className="flex flex-col w-full">
               <p className="text-muted-foreground text-xs">Border Radius</p>
               <Input
                 id="borderRadius"
@@ -146,12 +147,40 @@ const SettingsTab = (props: Props) => {
                 onChange={handleOnChanges}
                 value={state.editor.selectedElement.styles.borderRadius || ""}
               />
+            </div> */}
+            <div className="w-full">
+              <p className="text-muted-foreground text-xs w-full">B Radius</p>
+              <div className="flex items-center justify-end">
+                <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
+                  {typeof state.editor.selectedElement.styles?.borderRadius === "number"
+                    ? state.editor.selectedElement.styles?.borderRadius
+                    : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("px", "")) || 0}
+                  px
+                </small>
+              </div>
+              <Slider
+                onValueChange={(e) => {
+                  handleOnChanges({
+                    target: {
+                      id: "borderRadius",
+                      value: `${e[0]}px`,
+                    },
+                  });
+                }}
+                value={[
+                  typeof state.editor.selectedElement.styles?.borderRadius === "number"
+                    ? state.editor.selectedElement.styles?.borderRadius
+                    : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("%", "")) || 0,
+                ]}
+                max={100}
+                step={1}
+              />
             </div>
 
             <div className="w-full">
               <p className="text-muted-foreground text-xs">Opacity</p>
               <div className="flex items-center justify-end">
-                <small className="pb-[14px] pt-[9px] -mt-[22px] text-xs">
+                <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
                   {typeof state.editor.selectedElement.styles?.opacity === "number"
                     ? state.editor.selectedElement.styles?.opacity
                     : parseFloat((state.editor.selectedElement.styles?.opacity || "0").replace("%", "")) || 0}
@@ -531,7 +560,7 @@ const SettingsTab = (props: Props) => {
 
           <div className="w-full relative mt-3">
             <div className="w-full opacity-60">
-              <PM />
+              <Position />
             </div>
             <input
               className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1 left-1/2 -translate-x-1/2"
@@ -561,13 +590,16 @@ const SettingsTab = (props: Props) => {
               onChange={handleOnChanges}
               value={state.editor.selectedElement.styles.right || ""}
             />
-            <input
-              className="w-10 text-xs absolute text-center text-sky-300 bg-transparent border-none outline-none top-1/2 right-1/2 -translate-x-1/2  -translate-y-1/2"
-              placeholder="0"
-              id="zIndex"
-              onChange={handleOnChanges}
-              value={state.editor.selectedElement.styles.zIndex || ""}
-            />
+            <div className=" absolute  top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex ">
+              <p className=" text-muted-foreground text-xs ">z-index: </p>
+              <input
+                className="w-5 text-xs text-center text-sky-300 bg-transparent border-none outline-none"
+                placeholder="0"
+                id="zIndex"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.zIndex || ""}
+              />
+            </div>
           </div>
         </AccordionContent>
       </AccordionItem>
@@ -631,67 +663,15 @@ const SettingsTab = (props: Props) => {
               />
             </div>
           </div>
-          {/* 2rd radius */}
-          <div className="flex w-full gap-3 my-3 flex-col items-center">
-            <p className="text-muted-foreground text-xs w-full">Border Radius</p>
-            <div className="w-full relative flex flex-row-reverse gap-2 items-center">
-              <div className="flex items-center justify-end ">
-                <small className=" text-xs ">
-                  {typeof state.editor.selectedElement.styles?.borderRadius === "number"
-                    ? state.editor.selectedElement.styles?.borderRadius
-                    : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("px", "")) || 0}
-                  px
-                </small>
-              </div>
-              <Slider
-                onValueChange={(e) => {
-                  handleOnChanges({
-                    target: {
-                      id: "borderRadius",
-                      value: `${e[0]}px`,
-                    },
-                  });
-                }}
-                value={[
-                  typeof state.editor.selectedElement.styles?.borderRadius === "number"
-                    ? state.editor.selectedElement.styles?.borderRadius
-                    : parseFloat((state.editor.selectedElement.styles?.borderRadius || "0").replace("%", "")) || 0,
-                ]}
-                max={100}
-                step={1}
-              />
-            </div>
-          </div>
           {/* 2rd blur*/}
-          <div className="flex w-full gap-3 my-3 flex-col items-center">
-            <p className="text-muted-foreground text-xs w-full">Blur</p>
-            <div className="w-full relative flex flex-row-reverse gap-2 items-center">
-              <div className="flex items-center justify-end ">
-                <small className=" text-xs ">
-                  {typeof state.editor.selectedElement.styles?.filter === "number"
-                    ? state.editor.selectedElement.styles?.filter
-                    : parseFloat((state.editor.selectedElement.styles?.filter || "0").replace("px", "")) || 0}
-                  px
-                </small>
-              </div>
-              <Slider
-                onValueChange={(e) => {
-                  handleOnChanges({
-                    target: {
-                      id: "filter",
-                      value: `blur(${e[0]}px)`,
-                    },
-                  });
-                }}
-                value={[
-                  typeof state.editor.selectedElement.styles?.filter === "number"
-                    ? state.editor.selectedElement.styles?.filter
-                    : parseFloat((state.editor.selectedElement.styles?.filter || "0").replace("%", "")) || 0,
-                ]}
-                max={100}
-                step={1}
-              />
-            </div>
+          <div className="w-full">
+            <p className=" text-muted-foreground text-xs">Blur</p>
+            <Input
+              placeholder="px"
+              id="filter"
+              onChange={handleOnChanges}
+              value={state.editor.selectedElement.styles?.filter || 0}
+            />
           </div>
           {/* 3rd bcg image */}
           <div className="flex flex-col gap-2">

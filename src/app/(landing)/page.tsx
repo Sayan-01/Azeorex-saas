@@ -12,7 +12,7 @@ const PriceSection = dynamic(
 
 export default function Home() {
   return (
-    <div className="md:px-10 py-20 pt-24 flex-col gap-36">
+    <div className="md:px-10 md:py-20 py-10 flex-col gap-36">
       <div>
         <CallToAction />
         <DashboardSnippet />

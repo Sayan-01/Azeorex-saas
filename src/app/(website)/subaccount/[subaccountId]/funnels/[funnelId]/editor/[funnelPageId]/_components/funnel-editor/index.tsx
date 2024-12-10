@@ -25,7 +25,6 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
     }
   }, [liveMode]);
 
-  //CHALLENGE: make this more performant
   useEffect(() => {
     const fetchData = async () => {
       const response = await getFunnelPageDetails(funnelPageId);

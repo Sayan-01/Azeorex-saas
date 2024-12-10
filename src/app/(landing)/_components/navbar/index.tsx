@@ -12,12 +12,12 @@ const LandingPageNavbar = async () => {
   const session = await auth();
 
   return (
-    <div className="w-full md:px-10 flex justify-between sticky top-0 items-center py-5 z-50">
+    <div className="w-full md:px-10 flex justify-between sticky top-0 items-center py-5 z-50 bg-blend-color-dodge">
       <p className="font-bold w-[100px] text-2xl">Sayan.</p>
       <Menu orientation="desktop" />
-      <div className="flex gap-2 w-[100px] justify-end">
+      <div className="flex gap-2 w-[100px] justify-end ">
         {session?.user?.email ? (
-          <div className="flex gap-4">
+          <div className="md:flex gap-4 hidden">
             <Link href="/agency">
               <Button
                 variant="outline"
@@ -60,7 +60,7 @@ const LandingPageNavbar = async () => {
           trigger={
             <Button
               variant="ghost"
-              className="hover:bg-transparent"
+              className="hover:bg-transparent px-0"
             >
               <MenuIcon size={30} />
             </Button>
