@@ -6,13 +6,10 @@ import FunnelEditor from "../(website)/subaccount/[subaccountId]/funnels/[funnel
 import EditorProvider from "../../../providers/editor/editor-provider";
 
 const Page = async ({ params }: { params: { domain: string } }) => {
-  const domainData = await getDomainContent(params.domain.slice(0, -1));
+  const domainData = await getDomainContent(params.domain);
   if (!domainData) return notFound();
 
   const pageData = domainData.FunnelPages.find((page) => !page.pathName);
-console.log("fff",pageData);
-console.log("first", params.domain);
-
 
   if (!pageData) return notFound();
 

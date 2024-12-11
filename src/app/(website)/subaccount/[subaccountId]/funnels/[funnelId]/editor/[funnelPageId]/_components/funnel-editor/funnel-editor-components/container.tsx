@@ -7,7 +7,6 @@ import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { Trash } from "lucide-react";
 import { defaultStyles, EditorBtns } from "@/types/types";
-import { useOverlay } from "../../../../../../../../../../../../providers/overlay-provider";
 
 type Props = { element: EditorElement };
 
@@ -184,19 +183,19 @@ const Container = ({ element }: Props) => {
     });
   };
 
-   useEffect(() => {
-     const handleKeyDown = (e: KeyboardEvent) => {
-       if (e.key === "Backspace" && state.editor.selectedElement.id === id && type !== "__body") {
-         e.preventDefault(); // Prevent default browser behavior
-         handleDeleteElement();
-       }
-     };
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Backspace" && state.editor.selectedElement.id === id && type !== "__body") {
+        e.preventDefault(); // Prevent default browser behavior
+        handleDeleteElement();
+      }
+    };
 
-     document.addEventListener("keydown", handleKeyDown);
-     return () => {
-       document.removeEventListener("keydown", handleKeyDown);
-     };
-   }, [handleDeleteElement, id, state.editor.selectedElement.id]);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleDeleteElement, id, state.editor.selectedElement.id]);
 
   return (
     <div
@@ -209,6 +208,10 @@ const Container = ({ element }: Props) => {
         left: styles?.left || 0,
         right: styles?.right || 0,
         zIndex: styles?.zIndex || 0,
+        marginTop: styles?.marginTop,
+        marginBottom: styles?.marginBottom,
+        marginLeft: styles?.marginLeft,
+        marginRight: styles?.marginRight,
       }}
       className={clsx("relative z-[1004] box-1", {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
@@ -234,7 +237,7 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
         }}
-        className={clsx("p-4 !relative !top-0 !bottom-0 !left-0 !right-0 transition-all box-1 z-[1002]", {
+        className={clsx("p-4 !relative !top-0 !bottom-0 !left-0 !right-0 transition-all box-1 z-[1002] min-h-full !w-full !m-0", {
           "cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode && type !== "__body",
         })}
       >

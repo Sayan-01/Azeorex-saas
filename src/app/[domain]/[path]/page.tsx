@@ -13,10 +13,8 @@ const Page = async ({
   const pageData = domainData?.FunnelPages.find(
     (page) => page.pathName === params.path
   )
+console.log(params.domain, params.path);
 
-  console.log("ggggg",pageData, domainData);
-  console.log("first", params.domain, params.path);
-  
   
 
   if (!pageData || !domainData) return notFound()

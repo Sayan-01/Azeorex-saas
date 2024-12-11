@@ -18,18 +18,16 @@ import FunnelStepCard from "./funnel-step-card";
 
 type Props = { funnel: Funnel; subaccountId: string; pages: FunnelPage[]; funnelId: string };
 
-
 const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
   const [clickedPage, setClickedPage] = useState<FunnelPage | undefined>(pages[0]);
   const [pagesState, setPagesState] = useState<any | undefined>(pages);
   const { toast } = useToast();
   const { setOpen } = useModal();
-  
 
   const onDragStart = (event: DragStart) => {
     //current chosen page
     const { draggableId } = event;
-    // const value = pagesState.find((page: any) => page.id === draggableId);
+    const value = pagesState.find((page: any) => page.id === draggableId);
   };
 
   const onDragEnd = (dropResult: DropResult) => {
@@ -173,6 +171,7 @@ const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
                     >
                       <ExternalLink size={15} />
                       <div className="w-64 overflow-hidden overflow-ellipsis ">
+                        {process.env.NEXT_PUBLIC_URL_SCHEME}
                         {funnel.subDomainName}.{process.env.NEXT_PUBLIC_URL_DOMAIN}/{clickedPage?.pathName}
                       </div>
                     </Link>

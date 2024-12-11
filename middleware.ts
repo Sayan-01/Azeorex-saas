@@ -3,13 +3,13 @@ import { auth } from "./auth";
 
 export default auth((req) => {
   const { pathname, searchParams, host } = req.nextUrl;
-  console.log("hhh",req.nextUrl.pathname);
+  console.log("hhh",req.nextUrl.pathname, req.url);
   
   const searchParamsString = searchParams.toString();
   const pathWithSearchParams = `${pathname}${searchParamsString.length > 0 ? `?${searchParamsString}` : ""}`;
 
   // Check for subdomain
-  const customSubDomain = host.split(`.${process.env.NEXT_PUBLIC_URL_DOMAIN}`).filter(Boolean)[0];
+  const customSubDomain = host.split(`${process.env.NEXT_PUBLIC_URL_DOMAIN}`).filter(Boolean)[0];
 
   if (customSubDomain) {
     return NextResponse.rewrite(new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url));
@@ -32,10 +32,5 @@ export default auth((req) => {
 
 // Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
-  ],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

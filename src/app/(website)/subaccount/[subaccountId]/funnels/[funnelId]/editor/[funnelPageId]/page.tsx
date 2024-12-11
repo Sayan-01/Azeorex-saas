@@ -42,7 +42,6 @@ const page = async ({ params }: Props) => {
           />
           <div className="h-full flex justify-center">
             <FunnelEditor funnelPageId={params.funnelPageId} />
-            {/* <Canvas/> */}
           </div>
           <FunnelEditorSidebar subaccountId={params.subaccountId} />
         </OverlayProvider>
