@@ -40,7 +40,7 @@ const page = async ({ params }: Props) => {
             funnelPageDetails={funnelPageDetails}
             subaccountId={params.subaccountId}
           />
-          <div className="h-full flex justify-center">
+          <div className="h-full flex justify-center ">
             <FunnelEditor funnelPageId={params.funnelPageId} />
           </div>
           <FunnelEditorSidebar subaccountId={params.subaccountId} />

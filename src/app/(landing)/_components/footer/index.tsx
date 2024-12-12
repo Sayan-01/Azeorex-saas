@@ -2,10 +2,12 @@ import Image from "next/image";
 import React from "react";
 import { MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
+import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
+import { Instagram, LucideFacebook } from "lucide-react";
 
 const Footer = () => {
   return (
-    <div className="pt-10 bg-gradient-to-t from-[#1c247c] ">
+    <div className="pt-1 bg-gradient-to-t from-[#1c247c] ">
       <div className="w-[88%] mx-auto bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 mb-12 h-[1px]" />
 
       <div className=" flex flex-col w-full py-1 max-w-7xl sm:px-8 px-5 mx-auto">
@@ -14,14 +16,8 @@ const Footer = () => {
           <div className="flex-col md:flex-row flex gap-20">
             {/* left */}
             <div className="flex flex-col md:w-[45%] w-full">
-              <div className="flex items-center justify-between w-full mb-6">
-                <Image
-                  className="w-32"
-                  alt="logo"
-                  src="/logo.svg"
-                  width={400}
-                  height={200}
-                />
+              <div className="font-bold text-xl w-full mb-6">
+                Sayan.
               </div>
               <p className=" text-white/60">
                 Azeorex is a software company which provide many tech solution. Azeorex has a huge collection of premium templates and components. We also create complete mern stack & nextjs website.
@@ -93,27 +89,22 @@ const Footer = () => {
                 {
                   id: "0",
                   title: "LinkedIn",
-                  iconUrl: "/social/linkedin.png",
+                  iconUrl: <LinkedInLogoIcon color="white"/>,
                   url: "https://www.linkedin.com/in/sayandas-s1",
                 },
                 {
                   id: "1",
                   title: "Instagram",
-                  iconUrl: "/social/instagram.png",
+                  iconUrl: <InstagramLogoIcon />,
                   url: "https://www.instagram.com/sayan_200462/",
                 },
                 {
                   id: "2",
                   title: "Github",
-                  iconUrl: "/social/github.png",
+                  iconUrl: <GitHubLogoIcon/>,
                   url: "https://github.com/Sayan-01",
                 },
-                {
-                  id: "3",
-                  title: "Facebook",
-                  iconUrl: "/social/facebook.png",
-                  url: "https://www.facebook.com/profile.php?id=100035727935505",
-                },
+                
               ].map((item) => (
                 <a
                   key={item.id}
@@ -121,13 +112,8 @@ const Footer = () => {
                   target="_blank"
                   className="flex items-center justify-center w-10 h-10 bg-n-7 rounded-full transition-colors hover:bg-n-6"
                 >
-                  <Image
-                    className="w-6 h-6"
-                    src={item.iconUrl}
-                    width={20}
-                    height={20}
-                    alt={item.title}
-                  />
+                  {item.iconUrl}
+                  
                 </a>
               ))}
             </div>

@@ -34,9 +34,8 @@ const TextComponent = (props: Props) => {
   return (
     <div
       className={clsx("p-[2px] w-max ok relative text-[16px] transition-all ", {
-        "!outline-blue-500": state.editor.selectedElement.id === props.element.id,
-        "!outline-solid": state.editor.selectedElement.id === props.element.id,
-        "outline outline-[1px] outline-transparent hover:outline-blue-500 ": !state.editor.liveMode,
+        "!shadow-inner-border-blue-500 outline-[1px] !outline-dotted !outline-blue-500": state.editor.selectedElement.id === props.element.id,
+        "shadow-inner-border-slate-500 hover:outline hover:outline-[1px] hover:outline-blue-500": !state.editor.liveMode,
       })}
       onClick={handleOnClickBody}
     >
@@ -66,7 +65,7 @@ const TextComponent = (props: Props) => {
         </span>
       </div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute -top-[20px] h-5 -left-[1px] rounded-none rounded-t-lg">{state.editor.selectedElement.name}</Badge>
+        <Badge className="absolute -top-[15px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">{state.editor.selectedElement.name}</Badge>
       )}
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
         <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold -top-[20px] -right-[1px] rounded-none rounded-t-lg !text-white">

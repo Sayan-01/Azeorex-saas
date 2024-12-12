@@ -103,7 +103,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
 
   return (
     <TooltipProvider>
-      <nav className={clsx("border- border-main-black flex items-center justify-between px-3 py-1 gap-2 transition-all", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
+      <nav className={clsx("border- border-main-black flex items-center justify-between px-3 py-1 gap-2 transition-all bg-[#151515]", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
           <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
             <Image

@@ -3,7 +3,7 @@ import Image from "next/image"
 const DashboardSnippet = () => {
   return (
     <div className="relative md:py-28 py-16">
-      <div className="w-full h-3/6 absolute rounded-[50%] radial--blur md:opacity-40 opacity-50 mx-10" />
+      <div className="w-full h-3/6 absolute rounded-[50%] radial--blur md:opacity-40 opacity-50 mx-auto" />
       <div className="w-full aspect-video relative">
         <Image
           priority

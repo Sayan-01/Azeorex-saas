@@ -3,13 +3,16 @@ import { auth } from "./auth";
 
 export default auth((req) => {
   const { pathname, searchParams, host } = req.nextUrl;
-  console.log("hhh",req.nextUrl.pathname, req.url);
-  
+
+  console.log("Middleware Pathname:", pathname, "Host:", host, "URL:", req.url);
+
   const searchParamsString = searchParams.toString();
   const pathWithSearchParams = `${pathname}${searchParamsString.length > 0 ? `?${searchParamsString}` : ""}`;
 
-  // Check for subdomain
-  const customSubDomain = host.split(`${process.env.NEXT_PUBLIC_URL_DOMAIN}`).filter(Boolean)[0];
+  // Extract custom subdomain
+  const domain = process.env.NEXT_PUBLIC_URL_DOMAIN;
+  const subdomains = host.split(`.${domain}`).filter(Boolean); // Ensure domain is handled as expected
+  const customSubDomain = subdomains.length > 0 ? subdomains[0] : null;
 
   if (customSubDomain) {
     return NextResponse.rewrite(new URL(`/${customSubDomain}${pathWithSearchParams}`, req.url));
@@ -19,7 +22,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL(`/agency/sign-in`, req.url));
   }
 
-  if (pathname === "/" || (pathname === "/site" && host === process.env.NEXT_PUBLIC_URL_DOMAIN)) {
+  if (pathname === "/" || (pathname === "/site" && host === domain)) {
     return NextResponse.rewrite(new URL("/site", req.url));
   }
 
@@ -28,9 +31,14 @@ export default auth((req) => {
   }
 
   return NextResponse.next();
-})
+});
 
-// Optionally, don't invoke Middleware on some paths
+// Exclude static files and `_next` paths
 export const config = {
-  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: [
+    "/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)", // Exclude specific static paths
+    "/",
+    "/(api|trpc)(.*)",
+    "/sign-in",
+  ],
 };

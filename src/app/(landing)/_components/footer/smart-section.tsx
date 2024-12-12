@@ -6,6 +6,7 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 import Link from "next/link";
 import BackdropGradient from "@/components/global/backdrop-gradient";
 import GradientText from "@/components/global/gradient-text";
+import { Button } from "@/components/ui/button";
 
 const Smart = () => {
   return (
@@ -19,7 +20,7 @@ const Smart = () => {
           alt="glob"
         />
       </div>
-      <div className="w-full h-[17rem] sm:-bottom-56 absolute bg-[#000000] blur-xl"></div>
+      <div className="w-full md:h-[17rem] h-[10rem] sm:-bottom-56 absolute bg-[#000000] blur-xl"></div>
       <BackdropGradient className="w-8/12 h-full opacity-40 flex flex-col items-center">
         <GradientText
           className="text-4xl font-semibold text-center"
@@ -27,19 +28,19 @@ const Smart = () => {
         >
           Start Your Journey
         </GradientText>
-        <p className="text-sm md:text-center text-left mt-4 mb-10 text-muted-foreground">
+        <p className="text-sm text-center mt-4 mb-10 text-muted-foreground">
           Boost your creativity and business with Azeorex Team. Start your journey towards success and innovation today!
         </p>
       </BackdropGradient>
       
-      {/* <Link
+      <Link
         href={`${process.env.NEXT_URL}/connection`}
-        className="md:absolute relative  md:left-1/2 md:-translate-x-1/2 -bottom-16 md:-bottom-20 z-50 w-max"
+        className="md:absolute relative  md:left-1/2 md:-translate-x-1/2 -bottom-1 md:-bottom-20 z-50 w-max"
       >
         <Button className={" w-full flex items-center justify-center gap-2 "}>
           Contact <MdOutlineArrowOutward />
         </Button>
-      </Link> */}
+      </Link>
     </section>
   );
 };

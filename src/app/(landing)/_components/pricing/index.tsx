@@ -10,7 +10,7 @@ import Link from "next/link";
 type Props = {
   border: string;
   title: string;
-  tag: string;
+  tag: React.ReactNode;
   color: string;
   features: [string, string, string, string, string];
 };
@@ -18,7 +18,7 @@ type Props = {
 export const PricingSection = () => {
   return (
     <div
-      className="w-full pt-20 flex flex-col items-center gap-3"
+      className="w-full pt-20 flex flex-col items-center gap-y-3"
       id="pricing"
     >
       <BackdropGradient className="w-8/12 h-full opacity-40 flex flex-col items-center">
@@ -33,26 +33,26 @@ export const PricingSection = () => {
           collaborate, and cultivate meaningful relationships
         </p>
       </BackdropGradient>
-      <div className="flex md:flex-row flex-col gap-2">
+      <div className="flex xl:flex-row flex-col gap-2">
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
-          border="border-white/5  bg-[#0C0E13] scale-90"
+          border="border-white/5  bg-[#0C0E13] md:scale-90"
           title="Free Plane"
-          tag="$0 forever"
+          tag="$0 /"
           color="text-[#b4b0a3]"
         />
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
           border="relative border-white/10 z-10  bg-main/40 pricing-shadow"
           title="Pro Plane"
-          tag="$15 / month"
+          tag="$15 /"
           color="text-[#b4b0a3]"
         />
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
-          border="border-white/5 bg-[#0C0E13] scale-90"
+          border="border-white/5 bg-[#0C0E13] md:scale-90"
           title="Premium Plane"
-          tag="$45 / month"
+          tag="$45 /"
           color="text-[#b4b0a3]"
         />
       </div>
@@ -62,11 +62,14 @@ export const PricingSection = () => {
 
 const PriceCard = ({ border, title, tag, color, features }: Props) => {
   return (
-    <Card className={clsx("p-8 mt-10 w-[22rem] rounded-[40px] border-2", border)}>
+    <Card className={clsx("p-8 mt-10 md:w-[20rem] w-[18rem] rounded-[40px] border-2", border)}>
       <div className="flex flex-col gap-2 mb-8">
         <CardTitle className={clsx(color)}>{title}</CardTitle>
         <CardDescription className="my-5">
-          <div className="text-5xl text-white font-medium mb-3">{tag}</div>
+          <div className="flex items-end gap-2 mb-3">
+            <div className="text-5xl text-white font-medium">{tag}</div>
+            <div className="text-xl"> month</div>
+          </div>
           <p className="text-[#B4B0AE]">Great if you’re just getting started</p>
         </CardDescription>
         <Link
@@ -82,7 +85,7 @@ const PriceCard = ({ border, title, tag, color, features }: Props) => {
         </Link>
         <p className="text-xs opacity-60 mx-auto">powered by azeorex company</p>
       </div>
-      <Separator className={tag === "$9 / month" ? "bg-white/50": ""}/>
+      <Separator className={tag === "$15 / month" ? "bg-white/50" : ""} />
       <div className={clsx("flex flex-col gap-2 mt-5", tag === "$9 / month" ? "text-white" : "text-[#d3cfcd]")}>
         <p>Features</p>
         {features.map((i) => (

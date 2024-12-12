@@ -12,15 +12,14 @@ const CallToAction = async () => {
     <div className="flex flex-col items-center gap-y-5 md:gap-y-0">
       <AnimatedBtn />
       <GradientText
-        className="text-[35px] cursor-default md:mt-4 md:mb-2 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[65px] leading-[1.1] font-semibold"
+        className="text-[35px] cursor-default md:mt-4 md:mb-2 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[65px] md:leading-[1.1] leading-[1.2] font-semibold"
         element="H1"
       >
-        Launch <br className="md:hidden" /> Your Business <br />
-        With Our Saas in Some Steps
+        Next-gen SaaS <br className="block md:hidden" />For <br className="md:block hidden" /> Your Online Presence. {/* Revolutionize <br/>Your Presence  Our Powerful Saas */}
       </GradientText>
-      <p className=" text-center cursor-default md:my-2 mb-2 md:text-base text-xs text-muted-foreground">
-        Stemp is a vibrant online community platform that empowers people <br className="hidden md:block" />
-        to connect, collaborate, and cultivate meaningful relationships dfdfkier iijfskpc eryi
+      <p className=" text-center cursor-default md:my-2 mb-2 md:text-base text-sm text-muted-foreground">
+        Empower your business with Bester’s AI-driven solutions designed to streamline <br className="hidden md:block" />
+        operations and enhance customer relationships.
       </p>
       <div className="flex md:flex-row flex-col md:justify-center gap-5 md:mt-5 w-full">
         <Button

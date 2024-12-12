@@ -96,8 +96,8 @@ module.exports = withUt({
       },
       boxShadow: {
         "inner-border-main": "inset 0 0 0 1px #726FFF66",
-        "inner-border-blue-500": "inset 0 0 0 1px #3b82f6",
-        "inner-border-blue-500-500": "inset 0 0 0 1px #3b82f6",
+        "inner-border-blue-500": "inset 0 0 0 0.5px #ff0130",
+        "inner-border-blue-500-500": "inset 0 0 0 0.5px #ff0130",
         "inner-border-slate-500": "inset 0 0 0 1px #64748b22",
         "inner-border-red-500": "inset 0 0 0 1px #e73927",
         "inner-border-empty": "inset 0 0 0 6px #64748b52",

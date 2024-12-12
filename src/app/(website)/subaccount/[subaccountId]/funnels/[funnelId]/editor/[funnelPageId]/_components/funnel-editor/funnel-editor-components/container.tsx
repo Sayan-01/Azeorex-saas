@@ -185,9 +185,16 @@ const Container = ({ element }: Props) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Backspace" && state.editor.selectedElement.id === id && type !== "__body") {
-        e.preventDefault(); // Prevent default browser behavior
-        handleDeleteElement();
+      // Check if the currently focused element is an editable field
+      const activeElement = document.activeElement as HTMLElement;
+      const isEditable = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.isContentEditable;
+
+      // Prevent deletion if an input or editable field is focused
+      if (e.key === "Backspace" && !isEditable) {
+        if (state.editor.selectedElement.id === id && type !== "__body") {
+          e.preventDefault(); // Prevent default browser behavior
+          handleDeleteElement();
+        }
       }
     };
 
@@ -200,8 +207,8 @@ const Container = ({ element }: Props) => {
   return (
     <div
       style={{
-        width: styles?.width || "",
-        height: styles?.height || "",
+        width: styles?.width,
+        height: styles?.height,
         position: styles?.position || "relative",
         top: styles?.top || 0,
         bottom: styles?.bottom || 0,
@@ -213,18 +220,19 @@ const Container = ({ element }: Props) => {
         marginLeft: styles?.marginLeft,
         marginRight: styles?.marginRight,
       }}
-      className={clsx("relative z-[1004] box-1", {
+      className={clsx("relative z-[1004] box inset-0", {
         "max-w-[80rem] w-full": type === "container" || type === "2Col",
         "h-fit max-w-[80rem] mx-auto": type === "container",
         "h-full": type === "__body",
         "overflow-scroll bg-[#161616] overflow-x-hidden": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
-        "shadow-inner-border-blue-500 outline-[1px] outline-dashed outline-red-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
-        "shadow-inner-border-500 outline-dashed outline-red-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "!shadow-inner-border-blue-500-500 !outline-dashed !outline-red-500": state.editor.selectedElement.id === id && !state.editor.liveMode,
-        "shadow-inner-border-slate-500 hover:shadow-inner-border-blue-500": !state.editor.liveMode && type !== "__body",
-        "!shadow-inner-border-empty":
-          state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
+        "shadow-inner-border-blue-500 outline-[1px] outline-dotted outline-blue-400":
+          state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
+        "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
+        "!shadow-inner-border-blue-500-500 outline-[1px] !outline-dotted !outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        "shadow-inner-border-slate-500  hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
+        // "!shadow-inner-border-empty":
+        //   state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
       })}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
@@ -250,20 +258,12 @@ const Container = ({ element }: Props) => {
           ))}
       </div>
       <Badge
-        className={clsx("absolute -top-[19px] h-5 left-0 rounded-none rounded-t-lg hidden", {
-          block: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
+        className={clsx("absolute  z-[1006] -top-[15px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
+          flex: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
         })}
       >
         {element.name}
       </Badge>
-      {state.editor.selectedElement.id === element.id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body" && (
-        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold  -top-[19px] right-0 rounded-none rounded-t-lg !text-white">
-          <Trash
-            size={12}
-            onClick={handleDeleteElement}
-          />
-        </div>
-      )}
     </div>
   );
 };

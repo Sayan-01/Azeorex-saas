@@ -33,16 +33,8 @@ function App() {
   };
 
   return (
-    <div className="relative w-full h-screen bg-zinc-800">
-      {/* <Background /> */}
-      <div
-        ref={ref}
-        className="fixed flex z-[3] p-2 top-0 left-0 w-full h-full bg-sky-800/5"
-      >
-        <Card reference={ref} />
-        <Card reference={ref} />
-        <Card reference={ref} />
-      </div>
+    <div className="w-40 h-40 relative before:content-[''] before:absolute before:inset-0 before:shadow-inner-border-blue-500 before:pointer-events-none">
+      <div className="w-full h-full bg-orange-400 rounded-xl"></div>
     </div>
   );
 }
