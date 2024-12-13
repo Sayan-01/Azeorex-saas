@@ -12,8 +12,8 @@ type Props = {
   element: EditorElement;
 };
 
-const TwoColumns = (props: Props) => {
-  const { id, content, type } = props.element;
+const Section = (props: Props) => {
+  const { id, content, styles, type } = props.element;
   const { dispatch, state } = useEditor();
 
   const handleOnDrop = (e: React.DragEvent, type: string) => {
@@ -30,7 +30,7 @@ const TwoColumns = (props: Props) => {
               id: v4(),
               name: "Text",
               styles: {
-                color: "black",
+                color: "#ffffff",
                 ...defaultStyles,
               },
               type: "text",
@@ -106,14 +106,26 @@ const TwoColumns = (props: Props) => {
 
   return (
     <div
-      style={props.element.styles}
-      className={clsx("relative  p-4 transition-all", {
+      style={{
+        width: styles?.width,
+        height: styles?.height,
+        position: styles?.position || "relative",
+        top: styles?.top || 0,
+        bottom: styles?.bottom || 0,
+        left: styles?.left || 0,
+        right: styles?.right || 0,
+        zIndex: styles?.zIndex || 0,
+        marginTop: styles?.marginTop,
+        marginBottom: styles?.marginBottom,
+        marginLeft: styles?.marginLeft,
+        marginRight: styles?.marginRight,
+      }}
+      className={clsx("relative transition-all z-[1004] box inset-0", {
         "h-fit": type === "container",
         "h-full": type === "__body",
         "m-4": type === "container",
-        "!border-blue-500": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
-        "!border-solid": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
-        "border-dashed border-[1px] border-slate-300 hover:border-blue-500 ": !state.editor.liveMode,
+        "!shadow-inner-border-blue-500 outline-[1px] outline-dotted outline-blue-400": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
+        "shadow-inner-border-slate-500  hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode,
       })}
       id="innerContainer"
       onDrop={(e) => handleOnDrop(e, id)}
@@ -122,18 +134,24 @@ const TwoColumns = (props: Props) => {
       onClick={handleOnClickBody}
       onDragStart={(e) => handleDragStart(e, "container")}
     >
+      <div
+        id={id}
+        style={props.element.styles}
+        className={clsx("p-4 transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full !m-0", {})}
+      >
+        {Array.isArray(content) &&
+          content.map((childElement) => (
+            <RecursiveElement
+              key={childElement.id}
+              element={childElement}
+            />
+          ))}
+      </div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute -top-[20px] h-5 -left-[1px] rounded-none rounded-t-lg ">{state.editor.selectedElement.name}</Badge>
+        <Badge className="absolute  z-[1006] -top-[15px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md">{state.editor.selectedElement.name}</Badge>
       )}
-      {Array.isArray(content) &&
-        content.map((childElement) => (
-          <RecursiveElement
-            key={childElement.id}
-            element={childElement}
-          />
-        ))}
     </div>
   );
 };
 
-export default TwoColumns;
+export default Section;

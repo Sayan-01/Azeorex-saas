@@ -13,6 +13,7 @@ import TwoColumnsPlaceholder from './two-columns-placeholder'
 import LinkPlaceholder from './link-placeholder'
 import ContactFormComponentPlaceholder from './contact-form-placeholder'
 import CheckoutPlaceholder from './checkout-placeholder'
+import SectionPlaceholder from './section-placeholder';
 
 type Props = {}
 
@@ -40,6 +41,12 @@ const ComponentsTab = (props: Props) => {
       label: '2 Columns',
       id: '2Col',
       group: 'layout',
+    },
+    {
+      Component: <SectionPlaceholder/>,
+      label: "Section",
+      id: "section",
+      group: "layout"
     },
     {
       Component: <VideoPlaceholder />,

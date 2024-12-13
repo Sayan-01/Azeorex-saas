@@ -88,8 +88,8 @@ const PriceCard = ({ border, title, tag, color, features }: Props) => {
       <Separator className={tag === "$15 / month" ? "bg-white/50" : ""} />
       <div className={clsx("flex flex-col gap-2 mt-5", tag === "$9 / month" ? "text-white" : "text-[#d3cfcd]")}>
         <p>Features</p>
-        {features.map((i) => (
-          <span className="flex gap-2 mt-2 items-center">
+        {features.map((i, idx) => (
+          <span className="flex gap-2 mt-2 items-center" key={idx}>
             <Check />
             {i}
           </span>

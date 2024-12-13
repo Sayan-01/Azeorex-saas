@@ -1,12 +1,10 @@
-import React from "react";
-import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
+import { redirect } from "next/navigation";
 import EditorProvider from "../../../../../../../../../providers/editor/editor-provider";
+import { OverlayProvider } from "../../../../../../../../../providers/overlay-provider";
+import FunnelEditor from "./_components/funnel-editor";
 import FunnelEditorNavigation from "./_components/funnel-editor-navigation";
 import FunnelEditorSidebar from "./_components/funnel-editor-sidebar";
-import FunnelEditor from "./_components/funnel-editor";
-import { OverlayProvider } from "../../../../../../../../../providers/overlay-provider";
-import Canvas from "./_components/canvas";
 
 type Props = {
   params: {

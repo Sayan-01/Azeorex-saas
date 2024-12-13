@@ -1,13 +1,12 @@
+import GlassSheet from "@/components/global/glass-sheet";
 import { Button } from "@/components/ui/button";
 import { Compass, Logout } from "@/icons";
-import Link from "next/link";
-import Menu from "./menu";
-import { MenuIcon } from "lucide-react";
-import GlassSheet from "@/components/global/glass-sheet";
-import { auth } from "../../../../../auth";
 import Image from "next/image";
-import UserBtn from "./user-btn";
+import Link from "next/link";
 import { RiMenu5Line } from "react-icons/ri";
+import { auth } from "../../../../../auth";
+import Menu from "./menu";
+import UserBtn from "./user-btn";
 
 const LandingPageNavbar = async () => {
   const session = await auth();

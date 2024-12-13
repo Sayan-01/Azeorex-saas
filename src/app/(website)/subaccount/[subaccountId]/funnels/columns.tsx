@@ -9,7 +9,7 @@ export const columns = [
   {
     accessorKey: "name",
     header: "Name",
-    //@ts-expect-error
+    //@ts-expect-error row.original row.original might not have the expected type
     cell: ({ row }) => {
       return (
         <Link
@@ -25,7 +25,7 @@ export const columns = [
   {
     accessorKey: "updatedAt",
     header: "Last Updated",
-    //@ts-expect-error
+    //@ts-expect-error row.original might not have the expected type
     cell: ({ row }) => {
       const date = ` ${row.original.updatedAt.toDateString()} ${row.original.updatedAt.toLocaleTimeString()} `;
       return <span className="text-muted-foreground">{date}</span>;
@@ -34,7 +34,7 @@ export const columns = [
   {
     accessorKey: "published",
     header: "Status",
-    //@ts-expect-error
+    //@ts-expect-error row.original might not have the expected type
     cell: ({ row }) => {
       const status = row.original.published;
       return status ? <Badge variant={"default"}>Live - {row.original.subDomainName}</Badge> : <Badge variant={"secondary"}>Draft</Badge>;

@@ -1,11 +1,10 @@
+import BlurPage from "@/components/global/blur-page";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getFunnel } from "@/lib/queries";
-import { ArrowBigLeftDash } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import FunnelSettings from "./_components/funnel-settings";
 import FunnelSteps from "./_components/funnel-steps";
-import BlurPage from "@/components/global/blur-page";
 
 type Props = { params: { funnelId: string; subaccountId: string } };
 

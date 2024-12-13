@@ -1,9 +1,6 @@
-import Image from "next/image";
-import React from "react";
-import { MdOutlineArrowOutward } from "react-icons/md";
-import Link from "next/link";
 import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
-import { Instagram, LucideFacebook } from "lucide-react";
+import Link from "next/link";
+import { MdOutlineArrowOutward } from "react-icons/md";
 
 const Footer = () => {
   return (

@@ -29,7 +29,7 @@ const Container = ({ element }: Props) => {
               id: v4(),
               name: "Text",
               styles: {
-                color: "black",
+                color: "#ffffff",
                 ...defaultStyles,
               },
               type: "text",
@@ -50,7 +50,7 @@ const Container = ({ element }: Props) => {
               id: v4(),
               name: "Link",
               styles: {
-                color: "black",
+                color: "#ffffff",
                 ...defaultStyles,
               },
               type: "link",
@@ -86,6 +86,21 @@ const Container = ({ element }: Props) => {
               name: "Container",
               styles: { ...defaultStyles },
               type: "container",
+            },
+          },
+        });
+        break;
+      case "section":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: [],
+              id: v4(),
+              name: "Section",
+              styles: { ...defaultStyles },
+              type: "section",
             },
           },
         });
@@ -220,11 +235,11 @@ const Container = ({ element }: Props) => {
         marginLeft: styles?.marginLeft,
         marginRight: styles?.marginRight,
       }}
-      className={clsx("relative z-[1004] box inset-0", {
-        "max-w-[80rem] w-full": type === "container" || type === "2Col",
-        "h-fit max-w-[80rem] mx-auto": type === "container",
+      className={clsx("relative transition-all z-[1004] box inset-0", {
+        "w-full": type === "section",
+        "h-fit max-w-[80rem] mx-auto w-full": type === "container" || type === "2Col",
         "h-full": type === "__body",
-        "overflow-scroll bg-[#161616] overflow-x-hidden": type === "__body",
+        "overflow-scroll bg-[#212121]  overflow-x-hidden": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500 outline-[1px] outline-dotted outline-blue-400":
           state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
@@ -245,8 +260,8 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
         }}
-        className={clsx("p-4 !relative !top-0 !bottom-0 !left-0 !right-0 transition-all box-1 z-[1002] min-h-full !w-full !m-0", {
-          "cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode && type !== "__body",
+        className={clsx("transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full !m-0", {
+          "p-4": type !== "__body",
         })}
       >
         {Array.isArray(content) &&

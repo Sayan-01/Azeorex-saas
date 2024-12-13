@@ -33,7 +33,7 @@ const TextComponent = (props: Props) => {
   //WE ARE NOT ADDING DRAG DROP
   return (
     <div
-      className={clsx("p-[2px] w-max ok relative text-[16px] transition-all ", {
+      className={clsx("p-[2px] w-max relative text-[16px] transition-all ", {
         "!shadow-inner-border-blue-500 outline-[1px] !outline-dotted !outline-blue-500": state.editor.selectedElement.id === props.element.id,
         "shadow-inner-border-slate-500 hover:outline hover:outline-[1px] hover:outline-blue-500": !state.editor.liveMode,
       })}
@@ -41,10 +41,10 @@ const TextComponent = (props: Props) => {
     >
       <div
         style={styles}
-        className="p-[2px] transition-all "
+        className="p-[2px] transition-all text-white"
       >
         <span
-          className=" border-none outline-none"
+          className=" border-none outline-none "
           contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
           onBlur={(e) => {
             const spanElement = e.target as HTMLSpanElement;

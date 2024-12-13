@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 import { z } from "zod";
 import { db } from "./db";
 import { v4 } from "uuid";
-import { Agency, Plan, SubAccount, User } from "@prisma/client";
+import { Agency, FunnelPage, Media, SubAccount, User } from "@prisma/client";
 
 //============================================================
 
@@ -47,25 +47,25 @@ export const saveActivityLogsNotification = async ({ agencyId, description, subA
   const session = await auth();
   if (!session) redirect("/agency/sign-in");
 
-  let userData;
+  // let userData;
 
-  if (session?.user) {
-    const response = await db.user.findFirst({
-      where: {
-        Agency: {
-          SubAccount: {
-            some: { id: subAccountId },
-          },
-        },
-      },
-    });
-    if (response) {
-      userData = response;
-    }
-  } else {
-    console.log("User not find");
-    return;
-  }
+  // if (session?.user) {
+  //   const response = await db.user.findFirst({
+  //     where: {
+  //       Agency: {
+  //         SubAccount: {
+  //           some: { id: subAccountId },
+  //         },
+  //       },
+  //     },
+  //   });
+  //   if (response) {
+  //     userData = response;
+  //   }
+  // } else {
+  //   console.log("User not find");
+  //   return;
+  // }
 
   let foundAgencyId = agencyId;
   if (!foundAgencyId) {
@@ -153,7 +153,7 @@ export const verifyAndAcceptInvitation = async () => {
     if (userDetails) {
       const session = await getSession();
       if (session && session.user) {
-        // @ts-ignore: Ignore type error for role
+        //@ts-expect-error xyz
         session.user.role = userDetails.role || "SUBACCOUNT_USER";
       }
 
@@ -192,7 +192,7 @@ export const deleteAgency = async (agencyId: string) => {
 
 //============================================================================
 
-export const upsertAgency = async (agency: Agency, price?: Plan) => {
+export const upsertAgency = async (agency: Agency) => {
   if (!agency.companyEmail) return null;
   try {
     const agencyDetails = await db.agency.upsert({
@@ -440,7 +440,7 @@ export const upsertFunnel = async (subaccountId: string, funnel: z.infer<typeof 
 
 //==============================================================================
 
-export const upsertFunnelPage = async (subaccountId: string, funnelPage: any, funnelId: string) => {
+export const upsertFunnelPage = async (subaccountId: string, funnelPage: FunnelPage, funnelId: string) => {
   if (!subaccountId || !funnelId) return;
   const response = await db.funnelPage.upsert({
     where: { id: funnelPage.id || "" },
@@ -454,7 +454,7 @@ export const upsertFunnelPage = async (subaccountId: string, funnelPage: any, fu
               content: [],
               id: "__body",
               name: "Body",
-              styles: { backgroundColor: "" },
+              styles: { backgroundColor: "#212121" },
               type: "__body",
             },
           ]),
@@ -503,7 +503,7 @@ export const deleteMedia = async (mediaId: string) => {
 
 //=============================================================================
 
-export const createMedia = async (subaccountId: string, mediaFile: any) => {
+export const createMedia = async (subaccountId: string, mediaFile: Media) => {
   const response = await db.media.create({
     data: {
       link: mediaFile.link,

@@ -59,6 +59,11 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
                 size={16}
                 className="text-muted-foreground"
               />
+            ) : props.element.type === "section" ? (
+              <BoxSelect
+                size={16}
+                className="text-muted-foreground"
+              />
             ) : props.element.type === "paymentForm" ? (
               <CreditCardIcon
                 size={16}
