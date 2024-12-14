@@ -120,6 +120,53 @@ const deleteAnElement = (editorArray: EditorElement[], action: EditorAction): Ed
   });
 };
 
+// const moveAnElement = (editorArray: EditorElement[], action: EditorAction): EditorElement[] => {
+//   if (action.type !== "MOVE_ELEMENT") {
+//     throw new Error("You sent the wrong action type to the Move Element editor State");
+//   }
+
+//   const { sourceId, targetId } = action.payload;
+//   let elementToMove: EditorElement | null = null;
+
+//   // Remove the element from the source container
+//   const updatedSourceArray = editorArray.map((item) => {
+//     if (item.id === sourceId && Array.isArray(item.content)) {
+//       const updatedContent = item.content.filter((child) => {
+//         if (child.id === targetId) {
+//           elementToMove = child; // Extract the element to move
+//           return false; // Remove it from the source
+//         }
+//         return true;
+//       });
+//       return { ...item, content: updatedContent };
+//     } else if (Array.isArray(item.content)) {
+//       // Recurse into nested content arrays
+//       return { ...item, content: moveAnElement(item.content, action) };
+//     }
+//     return item;
+//   });
+
+//   // If no element was found to move, return the original array
+//   if (!elementToMove) {
+//     return updatedSourceArray;
+//   }
+
+//   // Add the element to the target container
+//   const updatedTargetArray = updatedSourceArray.map((item) => {
+//     if (item.id === targetId && Array.isArray(item.content)) {
+//       return { ...item, content: [...item.content, elementToMove] };
+//     } else if (Array.isArray(item.content)) {
+//       // Recurse into nested content arrays
+//       return { ...item, content: moveAnElement(item.content, action) };
+//     }
+//     return item;
+//   });
+
+//   return updatedTargetArray;
+// };
+
+
+
 const editorReducer = (state: EditorState = initialState, action: EditorAction): EditorState => {
   switch (action.type) {
     case "ADD_ELEMENT":
@@ -320,6 +367,28 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
         },
       };
       return funnelPageIdState;
+
+    // case "MOVE_ELEMENT": {
+    //   const updatedElements = moveAnElement(state.editor.elements, action);
+    //   const updatedEditorState = {
+    //     ...state.editor,
+    //     elements: updatedElements,
+    //   };
+    //   const updatedHistory = [
+    //     ...state.history.history.slice(0, state.history.currentIndex + 1),
+    //     { ...updatedEditorState }, // Save a copy of the updated state
+    //   ];
+
+    //   return {
+    //     ...state,
+    //     editor: updatedEditorState,
+    //     history: {
+    //       ...state.history,
+    //       history: updatedHistory,
+    //       currentIndex: updatedHistory.length - 1,
+    //     },
+    //   };
+    // }
 
     default:
       return state;

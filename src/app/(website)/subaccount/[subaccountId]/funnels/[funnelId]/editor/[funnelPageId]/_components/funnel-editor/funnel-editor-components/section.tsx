@@ -120,12 +120,12 @@ const Section = (props: Props) => {
         marginLeft: styles?.marginLeft,
         marginRight: styles?.marginRight,
       }}
-      className={clsx("relative transition-all z-[1004] box inset-0", {
+      className={clsx("relative transition-all z-[1004] group box inset-0", {
         "h-fit": type === "container",
         "h-full": type === "__body",
         "m-4": type === "container",
-        "!shadow-inner-border-blue-500 outline-[1px] outline-dotted outline-blue-400": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
-        "shadow-inner-border-slate-500  hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode,
+        "outline-[1px] outline-dotted outline-blue-400": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
+        "hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode,
       })}
       id="innerContainer"
       onDrop={(e) => handleOnDrop(e, id)}
@@ -147,8 +147,12 @@ const Section = (props: Props) => {
             />
           ))}
       </div>
+      <div className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500" , {
+        "hidden": state.editor.liveMode,
+        "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id 
+      })} ></div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute  z-[1006] -top-[15px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md">{state.editor.selectedElement.name}</Badge>
+        <Badge className="absolute   z-[1006] -top-[17px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md">{state.editor.selectedElement.name}</Badge>
       )}
     </div>
   );

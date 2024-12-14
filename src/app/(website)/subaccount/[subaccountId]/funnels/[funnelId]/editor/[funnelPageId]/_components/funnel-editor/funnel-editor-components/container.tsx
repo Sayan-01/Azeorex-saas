@@ -5,7 +5,6 @@ import clsx from "clsx";
 import React, { useEffect } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
-import { Trash } from "lucide-react";
 import { defaultStyles, EditorBtns } from "@/types/types";
 
 type Props = { element: EditorElement };
@@ -178,8 +177,6 @@ const Container = ({ element }: Props) => {
   };
 
   const handleOnClickBody = (e: React.MouseEvent) => {
-    console.log(id, styles, "fff");
-
     e.stopPropagation();
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
@@ -221,6 +218,7 @@ const Container = ({ element }: Props) => {
 
   return (
     <div
+      id={id}
       style={{
         width: styles?.width,
         height: styles?.height,
@@ -241,11 +239,11 @@ const Container = ({ element }: Props) => {
         "h-full": type === "__body",
         "overflow-scroll bg-[#212121]  overflow-x-hidden": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
-        "shadow-inner-border-blue-500 outline-[1px] outline-dotted outline-blue-400":
+        "outline-[1px] outline-dotted outline-blue-400":
           state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "!shadow-inner-border-blue-500-500 outline-[1px] !outline-dotted !outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode,
-        "shadow-inner-border-slate-500  hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
+        "outline-[1px] !outline-dotted !outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        "hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
         // "!shadow-inner-border-empty":
         //   state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
       })}
@@ -256,7 +254,6 @@ const Container = ({ element }: Props) => {
       onDragStart={(e) => handleDragStart(e, "container")}
     >
       <div
-        id={id}
         style={{
           ...styles,
         }}
@@ -272,8 +269,14 @@ const Container = ({ element }: Props) => {
             />
           ))}
       </div>
+      <div
+        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500", {
+          "hidden": state.editor.liveMode,
+          "!shadow-inner-border-blue-500": state.editor.selectedElement.id === element.id,
+        })}
+      ></div>
       <Badge
-        className={clsx("absolute  z-[1006] -top-[15px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
+        className={clsx("absolute  z-[1006] -top-[17px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
           flex: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
         })}
       >

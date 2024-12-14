@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
 import { Trash } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 type Props = {
   element: EditorElement;
@@ -30,12 +30,33 @@ const TextComponent = (props: Props) => {
     });
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Check if the currently focused element is an editable field
+      const activeElement = document.activeElement as HTMLElement;
+      const isEditable = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.isContentEditable;
+
+      // Prevent deletion if an input or editable field is focused
+      if (e.key === "Backspace" && !isEditable) {
+        if (state.editor.selectedElement.id === props.element.id && props.element.type !== "__body") {
+          e.preventDefault(); // Prevent default browser behavior
+          handleDeleteElement();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleDeleteElement, props.element.id, state.editor.selectedElement.id]);
+
   //WE ARE NOT ADDING DRAG DROP
   return (
     <div
-      className={clsx("p-[2px] w-max relative text-[16px] transition-all ", {
-        "!shadow-inner-border-blue-500 outline-[1px] !outline-dotted !outline-blue-500": state.editor.selectedElement.id === props.element.id,
-        "shadow-inner-border-slate-500 hover:outline hover:outline-[1px] hover:outline-blue-500": !state.editor.liveMode,
+      className={clsx("w-max relative text-[14px] transition-all ", {
+        "outline-[1px] !outline-dotted !outline-blue-500": state.editor.selectedElement.id === props.element.id,
+        "hover:outline hover:outline-[1px] hover:outline-blue-500": !state.editor.liveMode,
       })}
       onClick={handleOnClickBody}
     >
@@ -64,17 +85,14 @@ const TextComponent = (props: Props) => {
           {!Array.isArray(props.element.content) && props.element.content.innerText}
         </span>
       </div>
+      <div
+        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500", {
+          hidden: state.editor.liveMode,
+          "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id,
+        })}
+      ></div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute -top-[15px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">{state.editor.selectedElement.name}</Badge>
-      )}
-      {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <div className="absolute bg-blue-500 px-2.5 py-1 text-xs font-bold -top-[20px] -right-[1px] rounded-none rounded-t-lg !text-white">
-          <Trash
-            className="cursor-pointer"
-            size={12}
-            onClick={handleDeleteElement}
-          />
-        </div>
+        <Badge className="absolute -top-[17px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">T</Badge>
       )}
     </div>
   );
