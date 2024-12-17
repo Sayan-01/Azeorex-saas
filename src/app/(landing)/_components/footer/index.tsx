@@ -1,3 +1,4 @@
+import { Separator } from "@/components/ui/separator";
 import { GitHubLogoIcon, InstagramLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { MdOutlineArrowOutward } from "react-icons/md";
@@ -6,6 +7,7 @@ const Footer = () => {
   return (
     <div className="pt-1 bg-gradient-to-t from-[#1c247c] ">
       <div className="w-[88%] mx-auto bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 mb-12 h-[1px]" />
+      <Separator className="relative z-10 top-5 my-10" />
 
       <div className=" flex flex-col w-full py-1 max-w-7xl sm:px-8 px-5 mx-auto">
         <div>
@@ -13,9 +15,7 @@ const Footer = () => {
           <div className="flex-col md:flex-row flex gap-20">
             {/* left */}
             <div className="flex flex-col md:w-[45%] w-full">
-              <div className="font-bold text-xl w-full mb-6">
-                Sayan.
-              </div>
+              <div className="font-bold text-xl w-full mb-6">Sayan.</div>
               <p className=" text-white/60">
                 Azeorex is a software company which provide many tech solution. Azeorex has a huge collection of premium templates and components. We also create complete mern stack & nextjs website.
               </p>
@@ -86,7 +86,7 @@ const Footer = () => {
                 {
                   id: "0",
                   title: "LinkedIn",
-                  iconUrl: <LinkedInLogoIcon color="white"/>,
+                  iconUrl: <LinkedInLogoIcon color="white" />,
                   url: "https://www.linkedin.com/in/sayandas-s1",
                 },
                 {
@@ -98,10 +98,9 @@ const Footer = () => {
                 {
                   id: "2",
                   title: "Github",
-                  iconUrl: <GitHubLogoIcon/>,
+                  iconUrl: <GitHubLogoIcon />,
                   url: "https://github.com/Sayan-01",
                 },
-                
               ].map((item) => (
                 <a
                   key={item.id}
@@ -110,7 +109,6 @@ const Footer = () => {
                   className="flex items-center justify-center w-10 h-10 bg-n-7 rounded-full transition-colors hover:bg-n-6"
                 >
                   {item.iconUrl}
-                  
                 </a>
               ))}
             </div>

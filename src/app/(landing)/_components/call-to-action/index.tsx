@@ -12,7 +12,7 @@ const CallToAction = async () => {
     <div className="flex flex-col items-center gap-y-5 md:gap-y-0">
       <AnimatedBtn />
       <GradientText
-        className="text-[35px] cursor-default md:mt-4 md:mb-2 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[65px] md:leading-[1.1] leading-[1.2] font-semibold"
+        className="text-[35px] cursor-default md:mt-4 md:mb-2 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[70px] md:leading-[1.1] leading-[1.2] font-semibold"
         element="H1"
       >
         Next-gen SaaS <br className="block md:hidden" />For <br className="md:block hidden" /> Your Online Presence. {/* Revolutionize <br/>Your Presence  Our Powerful Saas */}

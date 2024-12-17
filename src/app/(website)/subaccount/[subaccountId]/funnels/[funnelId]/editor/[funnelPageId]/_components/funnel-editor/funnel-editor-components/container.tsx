@@ -247,6 +247,7 @@ const Container = ({ element }: Props) => {
         "h-fit max-w-[80rem] mx-auto w-full": type === "container" || type === "2Col",
         "min-h-screen": type === "__body",
         "overflow-scroll bg-[#212121]  overflow-x-hidden": type === "__body",
+        "scale-[0.98]": type === "__body" && !state.editor.liveMode,
         "flex flex-col md:!flex-row": type === "2Col",
         "outline-[1px] outline-dotted outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",

@@ -36,7 +36,7 @@ export const PricingSection = () => {
       <div className="flex xl:flex-row flex-col gap-2">
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
-          border="border-white/5  bg-[#0C0E13] md:scale-90"
+          border="border-white/5  bg-[#0C0E13] xl:scale-90"
           title="Free Plane"
           tag="$0 /"
           color="text-[#b4b0a3]"
@@ -50,7 +50,7 @@ export const PricingSection = () => {
         />
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
-          border="border-white/5 bg-[#0C0E13] md:scale-90"
+          border="border-white/5 bg-[#0C0E13] xl:scale-90"
           title="Premium Plane"
           tag="$45 /"
           color="text-[#b4b0a3]"
@@ -62,7 +62,7 @@ export const PricingSection = () => {
 
 const PriceCard = ({ border, title, tag, color, features }: Props) => {
   return (
-    <Card className={clsx("p-8 mt-10 md:w-[20rem] w-[18rem] rounded-[40px] border-2", border)}>
+    <Card className={clsx("p-8 mt-10 xl:w-[20rem] sm:w-[30rem] w-[18rem] rounded-[40px] border-2", border)}>
       <div className="flex flex-col gap-2 mb-8">
         <CardTitle className={clsx(color)}>{title}</CardTitle>
         <CardDescription className="my-5">

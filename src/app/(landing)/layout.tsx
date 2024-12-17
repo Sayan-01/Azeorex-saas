@@ -1,4 +1,3 @@
-import { Separator } from "@/components/ui/separator";
 import Footer from "./_components/footer";
 import Smart from "./_components/footer/smart-section";
 import LandingPageNavbar from "./_components/navbar";
@@ -11,7 +10,6 @@ const LandingPageLayout = ({ children }: { children: React.ReactNode }) => {
       <div className="flex flex-col container relative">
         {children}
         <Smart />
-        <Separator className="relative z-10 top-5 my-10" />
         <Footer />
       </div>
     </div>
