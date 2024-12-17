@@ -169,7 +169,7 @@ const CreateFunnelPage: React.FC<CreateFunnelPageProps> = ({ defaultData, subacc
                   type="button"
                   onClick={async () => {
                     const response = await getFunnels(subaccountId);
-                    const lastFunnelPage = response.find((funnel: any) => funnel.id === funnelId)?.FunnelPages.length;
+                    const lastFunnelPage = response.find((funnel) => funnel.id === funnelId)?.FunnelPages.length;
 
                     await upsertFunnelPage(
                       subaccountId,

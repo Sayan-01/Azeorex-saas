@@ -11,9 +11,10 @@ import {
 } from '../ui/command'
 import MediaCard from './media-card'
 import { FolderSearch } from 'lucide-react'
+import { GetMediaFiles } from '@/types/types'
 
 type Props = {
-  data: any
+  data: GetMediaFiles
   subaccountId: string
 }
 
@@ -30,7 +31,7 @@ const MediaComponent = ({ data, subaccountId }: Props) => {
           <CommandEmpty>No Media Files</CommandEmpty>
           <CommandGroup heading="Media Files">
             <div className="flex flex-wrap gap-4 pt-4">
-              {data?.Media.map((file: any) => (
+              {data?.Media.map((file) => (
                 <CommandItem
                   key={file.id}
                   className="p-0 max-w-[300px] w-full rounded-lg !bg-transparent !font-medium !text-white"

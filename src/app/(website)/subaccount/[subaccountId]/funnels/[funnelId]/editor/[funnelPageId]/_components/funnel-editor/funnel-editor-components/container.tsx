@@ -10,10 +10,10 @@ import { defaultStyles, EditorBtns } from "@/types/types";
 type Props = { element: EditorElement };
 
 const Container = ({ element }: Props) => {
-  const { id, content, name, styles, type } = element;
+  const { id, content, styles, type } = element;
   const { dispatch, state } = useEditor();
 
-  const handleOnDrop = (e: React.DragEvent, type: string) => {
+  const handleOnDrop = (e: React.DragEvent) => {
     e.stopPropagation();
     const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
 
@@ -83,7 +83,7 @@ const Container = ({ element }: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...defaultStyles },
+              styles: { ...styles },
               type: "container",
             },
           },
@@ -168,16 +168,25 @@ const Container = ({ element }: Props) => {
   };
 
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // etar jonno drop somvob hocche
+    // (e.target as HTMLElement).classList.add("opacity-40");
   };
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type);
+    // e.dataTransfer.setData("content", JSON.stringify(content));
   };
+
+  //more events are dragenter, dragleave, dragend, drop
+  //for moveble container dragstart, gragend
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
+
+    // setClickedContent(content);
+    // console.log("sayan",content, clickedContent);
+
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
       payload: {
@@ -214,7 +223,7 @@ const Container = ({ element }: Props) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleDeleteElement, id, state.editor.selectedElement.id]);
+  }, [handleDeleteElement, id, state.editor.selectedElement.id, type]);
 
   return (
     <div
@@ -236,18 +245,17 @@ const Container = ({ element }: Props) => {
       className={clsx("relative transition-all z-[1004] box inset-0", {
         "w-full": type === "section",
         "h-fit max-w-[80rem] mx-auto w-full": type === "container" || type === "2Col",
-        "h-full": type === "__body",
+        "min-h-screen": type === "__body",
         "overflow-scroll bg-[#212121]  overflow-x-hidden": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
-        "outline-[1px] outline-dotted outline-blue-400":
-          state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
+        "outline-[1px] outline-dotted outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "outline-[1px] !outline-dotted !outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode,
         "hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
         // "!shadow-inner-border-empty":
         //   state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
       })}
-      onDrop={(e) => handleOnDrop(e, id)}
+      onDrop={(e) => handleOnDrop(e)}
       onDragOver={handleDragOver}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
@@ -257,8 +265,10 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
         }}
-        className={clsx("transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full !m-0", {
+        className={clsx("transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0", {
           "p-4": type !== "__body",
+          "pt-0 min-h-screen": type === "__body",
+          "!p-9 !shadow-inner-border-empty": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode,
         })}
       >
         {Array.isArray(content) &&
@@ -271,7 +281,7 @@ const Container = ({ element }: Props) => {
       </div>
       <div
         className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500", {
-          "hidden": state.editor.liveMode,
+          hidden: state.editor.liveMode,
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === element.id,
         })}
       ></div>

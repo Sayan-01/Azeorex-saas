@@ -1,8 +1,8 @@
 import React from "react";
 
 
-const page = (props: any) => {
-  return <div>{props}</div>;
+const page = () => {
+  return <div>page</div>;
 };
 
 export default page;

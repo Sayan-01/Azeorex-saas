@@ -1,6 +1,6 @@
 "use client";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
-import React from "react";
+import React, { useEffect } from "react";
 import RecursiveElement from "./recursive";
 
 import { v4 } from "uuid";
@@ -16,7 +16,7 @@ const Section = (props: Props) => {
   const { id, content, styles, type } = props.element;
   const { dispatch, state } = useEditor();
 
-  const handleOnDrop = (e: React.DragEvent, type: string) => {
+  const handleOnDrop = (e: React.DragEvent) => {
     e.stopPropagation();
     const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
     switch (componentType) {
@@ -104,6 +104,36 @@ const Section = (props: Props) => {
     });
   };
 
+  const handleDeleteElement = () => {
+    dispatch({
+      type: "DELETE_ELEMENT",
+      payload: {
+        elementDetails: props.element,
+      },
+    });
+  };
+
+  useEffect(() => {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        // Check if the currently focused element is an editable field
+        const activeElement = document.activeElement as HTMLElement;
+        const isEditable = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.isContentEditable;
+  
+        // Prevent deletion if an input or editable field is focused
+        if (e.key === "Backspace" && !isEditable) {
+          if (state.editor.selectedElement.id === id && type !== "__body") {
+            e.preventDefault(); // Prevent default browser behavior
+            handleDeleteElement();
+          }
+        }
+      };
+  
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [handleDeleteElement, id, state.editor.selectedElement.id]);
+
   return (
     <div
       style={{
@@ -128,7 +158,7 @@ const Section = (props: Props) => {
         "hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode,
       })}
       id="innerContainer"
-      onDrop={(e) => handleOnDrop(e, id)}
+      onDrop={(e) => handleOnDrop(e)}
       onDragOver={handleDragOver}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
@@ -137,7 +167,9 @@ const Section = (props: Props) => {
       <div
         id={id}
         style={props.element.styles}
-        className={clsx("p-4 transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full !m-0", {})}
+        className={clsx("p-4 transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full !m-0", {
+          "!p-9 !shadow-inner-border-empty": Array.isArray(props.element.content) && !props.element.content.length && !state.editor.liveMode,
+        })}
       >
         {Array.isArray(content) &&
           content.map((childElement) => (
@@ -147,10 +179,12 @@ const Section = (props: Props) => {
             />
           ))}
       </div>
-      <div className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500" , {
-        "hidden": state.editor.liveMode,
-        "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id 
-      })} ></div>
+      <div
+        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500", {
+          hidden: state.editor.liveMode,
+          "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id,
+        })}
+      ></div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
         <Badge className="absolute   z-[1006] -top-[17px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md">{state.editor.selectedElement.name}</Badge>
       )}

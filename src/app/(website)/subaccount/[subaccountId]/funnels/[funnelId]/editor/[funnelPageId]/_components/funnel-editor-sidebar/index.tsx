@@ -1,5 +1,5 @@
 "use client";
-import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription,  SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import clsx from "clsx";
 import React from "react";
@@ -9,14 +9,13 @@ import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-tab";
 import { useEditor } from "../../../../../../../../../../../providers/editor/editor-provider";
 import LayersTab from "./tabs/layers-tab";
-import Sidebar from "./tabs/m_ali";
 
 type Props = {
   subaccountId: string;
 };
 
 const FunnelEditorSidebar = ({ subaccountId }: Props) => {
-  const { state, dispatch } = useEditor();
+  const { state } = useEditor();
 
   return (
     <Sheet

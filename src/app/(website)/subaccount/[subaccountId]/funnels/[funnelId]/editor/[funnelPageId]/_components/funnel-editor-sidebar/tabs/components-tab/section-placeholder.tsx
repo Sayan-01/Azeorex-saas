@@ -1,9 +1,8 @@
 import { EditorBtns } from "@/types/types";
 import React from "react";
 
-type Props = {};
 
-const SectionPlaceholder = (props: Props) => {
+const SectionPlaceholder = () => {
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
     if (type === null) return;
     e.dataTransfer.setData("componentType", type);

@@ -20,15 +20,17 @@ type Props = { funnel: Funnel; subaccountId: string; pages: FunnelPage[]; funnel
 
 const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
   const [clickedPage, setClickedPage] = useState<FunnelPage | undefined>(pages[0]);
-  const [pagesState, setPagesState] = useState<any | undefined>(pages);
+  const [pagesState, setPagesState] = useState(pages);
   const { toast } = useToast();
   const { setOpen } = useModal();
 
-  const onDragStart = (event: DragStart) => {
-    //current chosen page
-    const { draggableId } = event;
-    const value = pagesState.find((page: any) => page.id === draggableId);
-  };
+  const onDragStart = () =>
+    // event: DragStart
+    {
+      //current chosen page
+      // const { draggableId } = event;
+      // const value = pagesState.find((page: any) => page.id === draggableId);
+    };
 
   const onDragEnd = (dropResult: DropResult) => {
     const { destination, source } = dropResult;
@@ -101,7 +103,7 @@ const FunnelSteps = ({ funnel, subaccountId, pages, funnelId }: Props) => {
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                     >
-                      {pagesState.map((page: any, idx: any) => (
+                      {pagesState.map((page: FunnelPage, idx: number) => (
                         <div
                           className="relative"
                           key={page.id}

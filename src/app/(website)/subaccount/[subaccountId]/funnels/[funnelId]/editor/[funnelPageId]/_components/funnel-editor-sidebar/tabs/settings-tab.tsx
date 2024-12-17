@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEventHandler } from "react";
+import React from "react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/custom-input";
 import {
@@ -21,7 +21,6 @@ import {
   CircleOff,
   Eye,
   EyeClosed,
-  Italic,
   LucideImageDown,
   Mouse,
   MoveDown,
@@ -36,12 +35,10 @@ import { useEditor } from "../../../../../../../../../../../../providers/editor/
 import PM from "@/icons/p-m";
 import Position from "@/icons/position";
 
-type Props = {};
-
-const SettingsTab = (props: Props) => {
+const SettingsTab = () => {
   const { state, dispatch } = useEditor();
-
-  const handleOnChanges = (e: any) => {
+  //@ts-expect-error xyz
+  const handleOnChanges = (e) => {
     const styleSettings = e.target.id;
     let value = e.target.value;
     const styleObject = {
@@ -62,26 +59,26 @@ const SettingsTab = (props: Props) => {
     });
   };
 
-  const handleChangeCustomValues = (e: any) => {
-    const settingProperty = e.target.id;
-    let value = e.target.value;
-    const styleObject = {
-      [settingProperty]: value,
-    };
+  // const handleChangeCustomValues = (e: any) => {
+  //   const settingProperty = e.target.id;
+  //   let value = e.target.value;
+  //   const styleObject = {
+  //     [settingProperty]: value,
+  //   };
 
-    dispatch({
-      type: "UPDATE_ELEMENT",
-      payload: {
-        elementDetails: {
-          ...state.editor.selectedElement,
-          content: {
-            ...state.editor.selectedElement.content,
-            ...styleObject,
-          },
-        },
-      },
-    });
-  };
+  //   dispatch({
+  //     type: "UPDATE_ELEMENT",
+  //     payload: {
+  //       elementDetails: {
+  //         ...state.editor.selectedElement,
+  //         content: {
+  //           ...state.editor.selectedElement.content,
+  //           ...styleObject,
+  //         },
+  //       },
+  //     },
+  //   });
+  // };
 
   return (
     <Accordion

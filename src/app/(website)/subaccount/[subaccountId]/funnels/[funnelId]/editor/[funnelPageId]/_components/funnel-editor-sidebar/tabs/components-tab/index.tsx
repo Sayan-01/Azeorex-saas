@@ -15,9 +15,8 @@ import ContactFormComponentPlaceholder from './contact-form-placeholder'
 import CheckoutPlaceholder from './checkout-placeholder'
 import SectionPlaceholder from './section-placeholder';
 
-type Props = {}
 
-const ComponentsTab = (props: Props) => {
+const ComponentsTab = () => {
   const elements: {
     Component: React.ReactNode
     label: string
@@ -91,7 +90,7 @@ const ComponentsTab = (props: Props) => {
             .map((element) => (
               <div
                 key={element.id}
-                className="flex-col items-center justify-center flex"
+                className="flex-col items-center justify-center flex cursor-grab"
               >
                 {element.Component}
                 <span className="text-muted-foreground">{element.label}</span>

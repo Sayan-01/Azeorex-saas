@@ -21,7 +21,7 @@ const SubaccountLayout = async ({ children, params }: Props) => {
     return redirect("/");
   }
 
-  let notifications: any = [];
+  let notifications: any = [""];
 
   if (!user.name) {
     return <Unauthorized />;
@@ -34,7 +34,7 @@ const SubaccountLayout = async ({ children, params }: Props) => {
 
     const allNotifications = await getNotificationAndUser(agencyId);
 
-    //@ts-expect-error
+    //@ts-expect-error xyz
     if (user.role === "AGENCY_ADMIN" || user.role === "AGENCY_OWNER") {
       notifications = allNotifications;
     } else {

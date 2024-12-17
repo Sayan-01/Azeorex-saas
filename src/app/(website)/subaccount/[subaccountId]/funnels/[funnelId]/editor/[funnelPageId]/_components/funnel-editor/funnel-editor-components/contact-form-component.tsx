@@ -1,31 +1,33 @@
 "use client";
 // import ContactForm from '@/components/forms/contact-form'
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
+// import { useToast } from "@/hooks/use-toast";
 import { EditorBtns } from "@/types/types";
-import {
-  getFunnel,
-  // saveActivityLogsNotification,
-  // upsertContact,
-} from "@/lib/queries";
+// import {
+//   // getFunnel,
+//   // saveActivityLogsNotification,
+//   // upsertContact,
+// } from "@/lib/queries";
 
 // import { ContactUserFormSchema } from '@/lib/types'
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
 import { Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 import React from "react";
-import { z } from "zod";
+// import { z } from "zod";
 
 type Props = {
   element: EditorElement;
 };
 
 const ContactFormComponent = (props: Props) => {
-  const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor();
-  const router = useRouter();
-  const { toast } = useToast();
+  const { dispatch, state, 
+    // subaccountId, funnelId, pageDetails 
+  } = useEditor();
+  // const router = useRouter();
+  // const { toast } = useToast();
 
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
     if (type === null) return;
@@ -44,16 +46,16 @@ const ContactFormComponent = (props: Props) => {
 
   const styles = props.element.styles;
 
-  const goToNextPage = async () => {
-    if (!state.editor.liveMode) return;
-    const funnelPages = await getFunnel(funnelId);
-    if (!funnelPages || !pageDetails) return;
-    if (funnelPages.FunnelPages.length > pageDetails.order + 1) {
-      const nextPage = funnelPages.FunnelPages.find((page) => page.order === pageDetails.order + 1);
-      if (!nextPage) return;
-      router.replace(`${process.env.NEXT_PUBLIC_SCHEME}${funnelPages.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`);
-    }
-  };
+  // const goToNextPage = async () => {
+  //   if (!state.editor.liveMode) return;
+  //   const funnelPages = await getFunnel(funnelId);
+  //   if (!funnelPages || !pageDetails) return;
+  //   if (funnelPages.FunnelPages.length > pageDetails.order + 1) {
+  //     const nextPage = funnelPages.FunnelPages.find((page) => page.order === pageDetails.order + 1);
+  //     if (!nextPage) return;
+  //     router.replace(`${process.env.NEXT_PUBLIC_SCHEME}${funnelPages.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`);
+  //   }
+  // };
 
   const handleDeleteElement = () => {
     dispatch({

@@ -2,7 +2,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import { BoxSelect, Contact2, CreditCardIcon, Image, ImageIcon, Link2Icon, TypeIcon, Youtube } from "lucide-react";
+import { BoxSelect, Contact2, CreditCardIcon, ImageIcon, Link2Icon, TypeIcon, Youtube } from "lucide-react";
 import React from "react";
 
 type RecursiveAccordianItemProps = {

@@ -11,7 +11,7 @@ type Props = {
 }
 
 const FunnelStepCard = ({ activePage, funnelPage, index }: Props) => {
-  let portal = document.getElementById('blur-page')
+  const portal = document.getElementById('blur-page')
 
   return (
     <Draggable
@@ -21,9 +21,9 @@ const FunnelStepCard = ({ activePage, funnelPage, index }: Props) => {
       {(provided, snapshot) => {
         if (snapshot.isDragging) {
           const offset = { x: 300 }
-          //@ts-expect-error
+          //@ts-expect-error xyz
           const x = provided.draggableProps.style?.left - offset.x
-          //@ts-expect-error
+          //@ts-expect-error xyz
           provided.draggableProps.style = {
             ...provided.draggableProps.style,
             

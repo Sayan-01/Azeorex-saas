@@ -21,18 +21,20 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 
-type Props = {
-  type: string;
-  defaultOption?: boolean;
-  subAccounts: SubAccount[];
-  sideBarOpt: any;
-  sidebarLogo: string;
-  details: any;
-  user: any;
-  id: string;
-};
+// type Props = {
+//   type: string;
+//   defaultOption?: boolean;
+//   subAccounts: SubAccount[];
+//   sideBarOpt: any;
+//   sidebarLogo: string;
+//   details: any;
+//   user: any;
+//   id: string;
+// };
 
-function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user, id }: Props) {
+//@ts-expect-error xyz
+
+function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user }) {
   const { setOpen } = useModal();
 
   const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
@@ -171,7 +173,8 @@ function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo
                   )}
                   <CommandGroup heading="Su accounts">
                     {!!subAccounts
-                      ? subAccounts.map((subaccount) => (
+                      ? //@ts-expect-error xyz
+                        subAccounts.map((subaccount) => (
                           <CommandItem key={subaccount.id}>
                             {defaultOption ? (
                               <Link

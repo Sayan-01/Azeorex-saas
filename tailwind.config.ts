@@ -100,7 +100,7 @@ module.exports = withUt({
         "inner-border-blue-500-500": "inset 0 0 0 0.5px #ff0130",
         "inner-border-slate-500": "inset 0 0 0 1px #64748b22",
         "inner-border-red-500": "inset 0 0 0 1px #e73927",
-        "inner-border-empty": "inset 0 0 0 6px #64748b52",
+        "inner-border-empty": "inset 0 0 0 4px #64748b52",
       },
     },
   },

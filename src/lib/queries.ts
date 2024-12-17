@@ -2,12 +2,12 @@
 
 import { redirect } from "next/navigation";
 import { auth } from "../../auth";
-import { CreateFunnelFormSchema } from "@/types/types";
+import { CreateFunnelFormSchema, CreateMediaType } from "@/types/types";
 import { getSession } from "next-auth/react";
 import { z } from "zod";
 import { db } from "./db";
 import { v4 } from "uuid";
-import { Agency, FunnelPage, Media, SubAccount, User } from "@prisma/client";
+import { Agency, Media, Prisma, SubAccount, User } from "@prisma/client";
 
 //============================================================
 
@@ -440,7 +440,7 @@ export const upsertFunnel = async (subaccountId: string, funnel: z.infer<typeof 
 
 //==============================================================================
 
-export const upsertFunnelPage = async (subaccountId: string, funnelPage: FunnelPage, funnelId: string) => {
+export const upsertFunnelPage = async (subaccountId: string, funnelPage: Prisma.FunnelPageCreateWithoutFunnelInput, funnelId: string) => {
   if (!subaccountId || !funnelId) return;
   const response = await db.funnelPage.upsert({
     where: { id: funnelPage.id || "" },
@@ -503,7 +503,7 @@ export const deleteMedia = async (mediaId: string) => {
 
 //=============================================================================
 
-export const createMedia = async (subaccountId: string, mediaFile: Media) => {
+export const createMedia = async (subaccountId: string, mediaFile: CreateMediaType) => {
   const response = await db.media.create({
     data: {
       link: mediaFile.link,

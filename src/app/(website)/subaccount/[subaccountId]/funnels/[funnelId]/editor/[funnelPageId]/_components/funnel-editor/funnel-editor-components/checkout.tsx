@@ -8,7 +8,6 @@ import { EditorBtns } from "@/types/types";
 
 import clsx from "clsx";
 import { Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 
 type Props = {
@@ -16,8 +15,7 @@ type Props = {
 };
 
 const Checkout = (props: Props) => {
-  const { dispatch, state, subaccountId, funnelId, pageDetails } = useEditor();
-  const router = useRouter();
+  const { dispatch, state, subaccountId, funnelId } = useEditor();
   const [clientSecret, setClientSecret] = useState("");
   const [livePrices, setLivePrices] = useState([]);
   const [subAccountConnectAccId, setSubAccountConnectAccId] = useState("");
@@ -45,7 +43,7 @@ const Checkout = (props: Props) => {
       };
       fetchData();
     }
-  }, [funnelId]);
+  }, [funnelId, toast]);
 
   useEffect(() => {
     if (livePrices.length && subaccountId && subAccountConnectAccId) {
@@ -76,7 +74,7 @@ const Checkout = (props: Props) => {
             className: "z-[100000]",
             variant: "destructive",
             title: "Oppse!",
-            //@ts-expect-error
+            //@ts-expect-error xyz
             description: error.message,
           });
         }
@@ -100,17 +98,17 @@ const Checkout = (props: Props) => {
     });
   };
 
-  const goToNextPage = async () => {
-    if (!state.editor.liveMode) return;
-    const funnelPages = await getFunnel(funnelId);
-    if (!funnelPages || !pageDetails) return;
-    if (funnelPages.FunnelPages.length > pageDetails.order + 1) {
-      console.log(funnelPages.FunnelPages.length, pageDetails.order + 1);
-      const nextPage = funnelPages.FunnelPages.find((page) => page.order === pageDetails.order + 1);
-      if (!nextPage) return;
-      router.replace(`${process.env.NEXT_PUBLIC_SCHEME}${funnelPages.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`);
-    }
-  };
+  // const goToNextPage = async () => {
+  //   if (!state.editor.liveMode) return;
+  //   const funnelPages = await getFunnel(funnelId);
+  //   if (!funnelPages || !pageDetails) return;
+  //   if (funnelPages.FunnelPages.length > pageDetails.order + 1) {
+  //     console.log(funnelPages.FunnelPages.length, pageDetails.order + 1);
+  //     const nextPage = funnelPages.FunnelPages.find((page) => page.order === pageDetails.order + 1);
+  //     if (!nextPage) return;
+  //     router.replace(`${process.env.NEXT_PUBLIC_SCHEME}${funnelPages.subDomainName}.${process.env.NEXT_PUBLIC_DOMAIN}/${nextPage.pathName}`);
+  //   }
+  // };
 
   const handleDeleteElement = () => {
     dispatch({
