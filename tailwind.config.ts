@@ -1,7 +1,10 @@
-/** @type {import('tailwindcss').Config} */
+const defaultTheme = require("tailwindcss/defaultTheme");
+const { default: flattenColorPalette } = require("tailwindcss/lib/util/flattenColorPalette");
+const colors = require("tailwindcss/colors");
 import { withUt } from "uploadthing/tw";
 import tailwindcssAnimate from "tailwindcss-animate"; // Import the plugin
 
+/** @type {import('tailwindcss').Config} */
 module.exports = withUt({
   darkMode: ["class"],
   content: ["./src/pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
@@ -13,9 +16,9 @@ module.exports = withUt({
         "2xl": "1400px",
       },
     },
-    backgroundImage: {
-      "radial-gradient": "radial-gradient(circle at 50% 40%, white, black)",
-    },
+    // backgroundImage: {
+    //   "radial-gradient": "radial-gradient(circle at 50% 40%, white, black)",
+    // },
     extend: {
       colors: {
         themeBlack: "#09090B",
@@ -88,11 +91,17 @@ module.exports = withUt({
             opacity: "0.7",
           },
         },
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "image-glow": "image-glow 4s ease-out 0.6s forwards",
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
       },
       boxShadow: {
         "inner-border-main": "inset 0 0 0 1px #726FFF66",
@@ -106,3 +115,12 @@ module.exports = withUt({
   },
   plugins: [tailwindcssAnimate],
 });
+
+// function addVariablesForColors({ addBase, theme }) {
+//   let allColors = flattenColorPalette(theme("colors"));
+//   let newVars = Object.fromEntries(Object.entries(allColors).map(([key, val]) => [`--${key}`, val]));
+
+//   addBase({
+//     ":root": newVars,
+//   });
+// }

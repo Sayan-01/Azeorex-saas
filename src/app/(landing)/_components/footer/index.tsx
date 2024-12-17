@@ -5,9 +5,9 @@ import { MdOutlineArrowOutward } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <div className="pt-1 bg-gradient-to-t from-[#1c247c] ">
-      <div className="w-[88%] mx-auto bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 mb-12 h-[1px]" />
-      <Separator className="relative z-10 top-5 my-10" />
+    <div className="pt-1  ">
+      <div className="w-full mx-auto bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 mb-12 h-[1px]" />
+      {/* <Separator className="relative z-10 top-5 my-10" /> */}
 
       <div className=" flex flex-col w-full py-1 max-w-7xl sm:px-8 px-5 mx-auto">
         <div>

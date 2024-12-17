@@ -18,7 +18,7 @@ type Props = {
 export const PricingSection = () => {
   return (
     <div
-      className="w-full pt-20 flex flex-col items-center gap-y-3"
+      className="w-full md:pt-20 flex flex-col items-center gap-y-3"
       id="pricing"
     >
       <BackdropGradient className="w-8/12 h-full opacity-40 flex flex-col items-center">
@@ -85,8 +85,8 @@ const PriceCard = ({ border, title, tag, color, features }: Props) => {
         </Link>
         <p className="text-xs opacity-60 mx-auto">powered by azeorex company</p>
       </div>
-      <Separator className={tag === "$15 / month" ? "bg-white/50" : ""} />
-      <div className={clsx("flex flex-col gap-2 mt-5", tag === "$9 / month" ? "text-white" : "text-[#d3cfcd]")}>
+      <Separator className={tag === "$15 /" ? "bg-white/20" : ""} />
+      <div className={clsx("flex flex-col gap-2 mt-5", tag === "$15 /" ? "text-white" : "text-[#d3cfcd]")}>
         <p>Features</p>
         {features.map((i, idx) => (
           <span className="flex gap-2 mt-2 items-center" key={idx}>
