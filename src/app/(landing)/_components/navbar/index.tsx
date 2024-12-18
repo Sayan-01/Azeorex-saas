@@ -13,7 +13,7 @@ const LandingPageNavbar = async () => {
 
   return (
     <header>
-      <div className="fixed top-0 z-[100] sm:h-[95px] h-[75px] w-full">
+      <div className=" sticky top-0 z-[100] sm:h-[95px] h-[75px] w-full">
         <div className="h-full w-full py-1 max-w-7xl sm:px-8 px-5 mx-auto">
           <div className="mx-auto my-auto max-w-screen-xl h-full">
             <div className="flex h-full items-center justify-between">

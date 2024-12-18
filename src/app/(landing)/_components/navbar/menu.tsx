@@ -36,7 +36,7 @@ const Menu = ({ orientation }: MenuProps) => {
 
     case "mobile":
       return (
-        <div className="flex flex-col mt-10">
+        <div className="flex w-full flex-col mt-10">
           {GROUPLE_CONSTANTS.landingPageMenu.map((menuItem) => (
             <Link
               href={menuItem.path}

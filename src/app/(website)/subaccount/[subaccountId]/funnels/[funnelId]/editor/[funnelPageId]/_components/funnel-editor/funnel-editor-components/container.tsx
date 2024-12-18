@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { defaultStyles, EditorBtns } from "@/types/types";
@@ -12,6 +12,7 @@ type Props = { element: EditorElement };
 const Container = ({ element }: Props) => {
   const { id, content, styles, type } = element;
   const { dispatch, state } = useEditor();
+  const [data, setData] = useState<any>(null)
 
   const handleOnDrop = (e: React.DragEvent) => {
     e.stopPropagation();
@@ -19,6 +20,8 @@ const Container = ({ element }: Props) => {
 
     switch (componentType) {
       case "text":
+        console.log("text");
+        
         dispatch({
           type: "ADD_ELEMENT",
           payload: {
@@ -75,12 +78,14 @@ const Container = ({ element }: Props) => {
         });
         break;
       case "container":
+        console.log("containe");
+        
         dispatch({
           type: "ADD_ELEMENT",
           payload: {
             containerId: id,
             elementDetails: {
-              content: [],
+              content: data,
               id: v4(),
               name: "Container",
               styles: { ...styles },
@@ -164,6 +169,8 @@ const Container = ({ element }: Props) => {
           },
         });
         break;
+        default : console.log("noooo");
+        
     }
   };
 
@@ -184,8 +191,8 @@ const Container = ({ element }: Props) => {
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    // setClickedContent(content);
-    // console.log("sayan",content, clickedContent);
+    setData(content);
+    console.log("sayan",content, data);
 
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
