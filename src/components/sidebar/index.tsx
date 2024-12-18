@@ -9,7 +9,6 @@ type Props = {
 };
 
 const Sidebar = async ({ id, type }: Props) => {
-  
   const user = await getUserDetails();
   if (!user) return null;
 
@@ -40,14 +39,14 @@ const Sidebar = async ({ id, type }: Props) => {
         user={user}
         // id={id}
       />
-      {/* <MenuOptions
-        subAccounts={subaccounts}
-        sideBarOptJson={JSON.stringify(sideBarOpt)}
+      <MenuOptions
+      type={type}
+        details={details}
         sidebarLogo={sidebarLogo}
-        detailsJson={JSON.stringify(details)}
-        userJson={JSON.stringify(user)}
-        id={id}
-      /> */}
+        sideBarOpt={sideBarOpt}
+        subAccounts={subaccounts}
+        user={user}
+      />
     </>
   );
 };

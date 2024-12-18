@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { ChevronsUpDown, Menu, PlusCircleIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Fa500Px } from "react-icons/fa";
 import { useModal } from "../../../providers/model-provider";
 import SubAccountDetails from "../forms/Subaccount_form";
@@ -21,23 +21,27 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Separator } from "../ui/separator";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "../ui/sheet";
 
-// type Props = {
-//   type: string;
-//   defaultOption?: boolean;
-//   subAccounts: SubAccount[];
-//   sideBarOpt: any;
-//   sidebarLogo: string;
-//   details: any;
-//   user: any;
-//   id: string;
-// };
+type Props = {
+  type: string;
+  defaultOption?: boolean;
+  subAccounts: SubAccount[];
+  sideBarOpt: any;
+  sidebarLogo: string;
+  details: any;
+  user: any;
+};
 
-//@ts-expect-error xyz
-
-function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user }) {
+function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo, details, user }: Props) {
   const { setOpen } = useModal();
+  const [isMounted, setIsMounted] = useState(false);
 
   const openState = useMemo(() => (defaultOption ? { open: true } : {}), [defaultOption]);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return;
 
   const iconMapping: { [key: string]: JSX.Element } = {
     category: <Dashboard />,
@@ -69,6 +73,7 @@ function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo
         </Button>
       </SheetTrigger>
       <SheetContent
+        showX
         side="left"
         className={clsx(" bg-background/80 backdrop-blur-xl fixed borde-r-[1px] p-6 pt-7", {
           "hidden md:inline-block z-0 w-[300px]": defaultOption,
@@ -173,8 +178,7 @@ function MenuOptions({ type, defaultOption, subAccounts, sideBarOpt, sidebarLogo
                   )}
                   <CommandGroup heading="Su accounts">
                     {!!subAccounts
-                      ? //@ts-expect-error xyz
-                        subAccounts.map((subaccount) => (
+                      ? subAccounts.map((subaccount) => (
                           <CommandItem key={subaccount.id}>
                             {defaultOption ? (
                               <Link

@@ -8,7 +8,7 @@ import { auth } from "../../../auth";
 const InfoBar = async() => {
   const session = await auth();
   return (
-    <div className="h-[68px] z-[100] w-full flex items-center justify-between px-4 border-b">
+    <div className="h-[68px] z-[100000] w-full flex items-center justify-between  bg-black top-0 px-4 border-b">
       <Link
         href="/"
         className="md:ml-0 ml-12"
@@ -16,7 +16,7 @@ const InfoBar = async() => {
         <p className="font-bold w-[100px] text-2xl">Sayan.</p>
       </Link>
       <div className="flex items-center gap-5">
-        <div className=" md:flex gap-4 hidden">
+        <div className=" md:flex  gap-4 hidden">
           <Bell />
           <Settings />
           <Message />

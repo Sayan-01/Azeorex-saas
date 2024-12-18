@@ -25,7 +25,7 @@ const layout = async ({ children, params }: Props) => {
   //=>TODO: notification
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-x-hidden box ">
       <Sidebar
         id={params.agencyId}
         type="agency"
