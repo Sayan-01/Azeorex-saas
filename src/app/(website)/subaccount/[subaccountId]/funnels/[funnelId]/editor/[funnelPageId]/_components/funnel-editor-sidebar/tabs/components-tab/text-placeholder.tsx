@@ -1,5 +1,5 @@
 import { EditorBtns } from "@/types/types";
-import { TypeIcon } from "lucide-react";
+import { Type } from "lucide-react";
 import React from "react";
 
 
@@ -17,7 +17,8 @@ const TextPlaceholder = () => {
       }}
       className=" h-14 w-14 bg-muted rounded-lg flex items-center justify-center"
     >
-      <TypeIcon
+      <Type
+      strokeWidth={1.1}
         size={40}
         className="text-muted-foreground"
       />

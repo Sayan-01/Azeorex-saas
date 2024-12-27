@@ -215,12 +215,25 @@ html {
 }
 
 .btn-shadow {
-  -webkit-box-shadow: 0px 0px 27px 0px rgba(255, 255, 255, 0.50);
--moz-box-shadow: 0px 0px 27px 0px rgba(255, 255, 255, 0.50);
-box-shadow: 0px 0px 27px 0px rgba(255, 255, 255, 0.50);
+  -webkit-box-shadow: 0px 0px 27px 0px rgba(255, 255, 255, 0.5);
+  -moz-box-shadow: 0px 0px 27px 0px rgba(255, 255, 255, 0.5);
+  box-shadow: 0px 0px 27px 0px rgba(255, 255, 255, 0.5);
 }
 .pricing-shadow {
   -webkit-box-shadow: 0px 0px 90px 0px #716fffae;
--moz-box-shadow: 0px 0px 90px 0px #726fffae;
-box-shadow: 0px 0px 90px 0px #726fffae;
+  -moz-box-shadow: 0px 0px 90px 0px #726fffae;
+  box-shadow: 0px 0px 90px 0px #726fffae;
+}
+
+
+
+.parent {
+  /* padding: 20px; */
+  position: relative;
+  /* outlinw: 1px solid transparent; */
+}
+
+.parent:hover:not(:has(*:hover)) {
+  outline: 1px solid rgb(1, 157, 208);
+  background: rgba(0, 0, 255, 0.1);
 }

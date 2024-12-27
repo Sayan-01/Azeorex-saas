@@ -76,24 +76,24 @@ const ComponentsTab = () => {
   return (
     <Accordion
       type="multiple"
-      className="w-full select-none"
-      defaultValue={['Layout', 'Elements']}
+      className="w-full select-none "
+      defaultValue={["Layout", "Elements"]}
     >
       <AccordionItem
         value="Layout"
         className="px-3 py-0 border-y-[1px]"
       >
         <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
-        <AccordionContent className="flex flex-wrap gap-2 ">
+        <AccordionContent className="grid grid-cols-3 ">
           {elements
-            .filter((element) => element.group === 'layout')
+            .filter((element) => element.group === "layout")
             .map((element) => (
               <div
                 key={element.id}
                 className="flex-col items-center justify-center flex cursor-grab"
               >
                 {element.Component}
-                <span className="text-muted-foreground">{element.label}</span>
+                <span className="text-muted-foreground text-xs mb-4 mt-1">{element.label}</span>
               </div>
             ))}
         </AccordionContent>
@@ -103,22 +103,22 @@ const ComponentsTab = () => {
         className="px-3 py-0 "
       >
         <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
-        <AccordionContent className="flex flex-wrap gap-2 ">
+        <AccordionContent className="grid grid-cols-3">
           {elements
-            .filter((element) => element.group === 'elements')
+            .filter((element) => element.group === "elements")
             .map((element) => (
               <div
                 key={element.id}
                 className="flex-col items-center justify-center flex"
               >
                 {element.Component}
-                <span className="text-muted-foreground">{element.label}</span>
+                <span className="text-muted-foreground text-xs mb-4 mt-1">{element.label}</span>
               </div>
             ))}
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  )
+  );
 }
 
 export default ComponentsTab

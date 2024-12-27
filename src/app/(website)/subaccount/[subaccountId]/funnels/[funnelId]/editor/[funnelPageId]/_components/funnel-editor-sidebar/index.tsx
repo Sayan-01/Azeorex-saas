@@ -1,5 +1,5 @@
 "use client";
-import { Sheet, SheetContent, SheetDescription,  SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import clsx from "clsx";
 import React from "react";
@@ -18,42 +18,64 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
   const { state } = useEditor();
 
   return (
-    <Sheet
-      open={true}
-      modal={false}
-    >
-      <Tabs
-        className="w-full"
-        defaultValue="Settings"
+    <>
+      <Sheet
+        open={true}
+        modal={false}
       >
-        <TabList className={clsx({ hidden: state.editor.previewMode })} />
-        <SheetContent
-          showX={false}
-          side="right"
-          className={clsx("mt-[48px] mr-[1px] w-[249px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", { hidden: state.editor.previewMode })}
+        <Tabs
+          className="w-full"
+          defaultValue="Components"
         >
-          <div className="grid gap-4 h-full w-[249px] pb-12 overflow-auto overflow-x-hidden box">
-            <TabsContent value="Settings">
-              <SettingsTab />
-              {/* <Sidebar /> */}
-            </TabsContent>
-            <TabsContent value="Media">
-              <MediaBucketTab subaccountId={subaccountId} />
-            </TabsContent>
-            <TabsContent value="Components">
-              <SheetHeader className="text-left p-3 ">
-                <SheetTitle>Components</SheetTitle>
-                <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
-              </SheetHeader>
-              <ComponentsTab />
-            </TabsContent>
-            <TabsContent value="Layers">
-              <LayersTab />
-            </TabsContent>
-          </div>
-        </SheetContent>
-      </Tabs>
-    </Sheet>
+          <TabList className={clsx({ hidden: state.editor.previewMode })} />
+          <SheetContent
+            showX={false}
+            side="left"
+            className={clsx("mt-[49px]  ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", {
+              hidden: state.editor.previewMode,
+            })}
+          >
+            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box bg-[#151515] border-r border-main-black">
+              <TabsContent value="Media">
+                <MediaBucketTab subaccountId={subaccountId} />
+              </TabsContent>
+              <TabsContent value="Components">
+                <SheetHeader className="text-left p-3 ">
+                  <SheetTitle>Components</SheetTitle>
+                  <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
+                </SheetHeader>
+                <ComponentsTab />
+              </TabsContent>
+              <TabsContent value="Layers">
+                <LayersTab />
+              </TabsContent>
+            </div>
+          </SheetContent>
+        </Tabs>
+      </Sheet>
+      <Sheet
+        open={true}
+        modal={false}
+      >
+        <Tabs
+          className="w-full"
+          defaultValue="Settings"
+        >
+          <SheetContent
+            showX={false}
+            side="right"
+            className={clsx("mt-[49px] mr-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", { hidden: state.editor.previewMode })}
+          >
+            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box border-l border-main-black">
+              <TabsContent value="Settings">
+                <SettingsTab />
+                {/* <Sidebar /> */}
+              </TabsContent>
+            </div>
+          </SheetContent>
+        </Tabs>
+      </Sheet>
+    </>
   );
 };
 

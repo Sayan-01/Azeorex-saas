@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { defaultStyles, EditorBtns } from "@/types/types";
@@ -12,7 +12,6 @@ type Props = { element: EditorElement };
 const Container = ({ element }: Props) => {
   const { id, content, styles, type } = element;
   const { dispatch, state } = useEditor();
-  const [data, setData] = useState<any>(null)
 
   const handleOnDrop = (e: React.DragEvent) => {
     e.stopPropagation();
@@ -21,7 +20,7 @@ const Container = ({ element }: Props) => {
     switch (componentType) {
       case "text":
         console.log("text");
-        
+
         dispatch({
           type: "ADD_ELEMENT",
           payload: {
@@ -85,7 +84,7 @@ const Container = ({ element }: Props) => {
           payload: {
             containerId: id,
             elementDetails: {
-              content: data,
+              content: [],
               id: v4(),
               name: "Container",
               styles: { ...styles },
@@ -173,7 +172,7 @@ const Container = ({ element }: Props) => {
         
     }
   };
-
+  
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault(); // etar jonno drop somvob hocche
     // (e.target as HTMLElement).classList.add("opacity-40");
@@ -184,15 +183,12 @@ const Container = ({ element }: Props) => {
     e.dataTransfer.setData("componentType", type);
     // e.dataTransfer.setData("content", JSON.stringify(content));
   };
-
+  
   //more events are dragenter, dragleave, dragend, drop
   //for moveble container dragstart, gragend
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
-
-    setData(content);
-    console.log("sayan",content, data);
 
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
@@ -213,11 +209,9 @@ const Container = ({ element }: Props) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Check if the currently focused element is an editable field
       const activeElement = document.activeElement as HTMLElement;
       const isEditable = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA" || activeElement.isContentEditable;
 
-      // Prevent deletion if an input or editable field is focused
       if (e.key === "Backspace" && !isEditable) {
         if (state.editor.selectedElement.id === id && type !== "__body") {
           e.preventDefault(); // Prevent default browser behavior
@@ -254,14 +248,10 @@ const Container = ({ element }: Props) => {
         "h-fit max-w-[80rem] mx-auto w-full": type === "container" || type === "2Col",
         "min-h-screen": type === "__body",
         "overflow-scroll bg-[#212121]  overflow-x-hidden": type === "__body",
-        "scale-[0.98]": type === "__body" && !state.editor.liveMode,
         "flex flex-col md:!flex-row": type === "2Col",
-        "outline-[1px] outline-dotted outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
+        "outline-[1px] outline-dotted outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "outline-[1px] !outline-dotted !outline-blue-400": state.editor.selectedElement.id === id && !state.editor.liveMode,
-        "hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
-        // "!shadow-inner-border-empty":
-        //   state.editor.selectedElement.id === id && Array.isArray(state.editor.selectedElement.content) && !state.editor.selectedElement.content.length && !state.editor.liveMode,
+        "outline-[1px] !outline-dotted !outline-blue-500 cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode,
       })}
       onDrop={(e) => handleOnDrop(e)}
       onDragOver={handleDragOver}
@@ -273,10 +263,11 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
         }}
-        className={clsx("transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0", {
+        className={clsx(" transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0", {
           "p-4": type !== "__body",
           "pt-0 min-h-screen": type === "__body",
           "!p-9 !shadow-inner-border-empty": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode,
+          parent: !state.editor.liveMode && type !== "__body",
         })}
       >
         {Array.isArray(content) &&
@@ -288,13 +279,13 @@ const Container = ({ element }: Props) => {
           ))}
       </div>
       <div
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500", {
+        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
           hidden: state.editor.liveMode,
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === element.id,
         })}
       ></div>
       <Badge
-        className={clsx("absolute  z-[1006] -top-[17px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
+        className={clsx("absolute  z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
           flex: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
         })}
       >

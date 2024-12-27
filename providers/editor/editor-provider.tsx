@@ -6,7 +6,7 @@ import { EditorAction } from "./editor-actions";
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
-export type EditorElement = { 
+export type EditorElement = {
   //=> Eta holo seta jeta amra actual show korbo orthat element gulu
   id: string;
   styles: React.CSSProperties;
@@ -90,6 +90,31 @@ const addAnElement = (editorArray: EditorElement[], action: EditorAction): Edito
     return item;
   });
 };
+const updateElementPosition = (editorArray: EditorElement[], action: EditorAction): EditorElement[] => {
+  if (action.type !== "UPDATE_ELEMENT_POSITION") {
+    throw new Error("Invalid action type for UPDATE_ELEMENT_POSITION");
+  }
+  return editorArray.map((item) => {
+    if (item.id === action.payload.elementId) {
+      return {
+        ...item,
+        styles: {
+          ...item.styles,
+          top: action.payload.newPosition.top,
+          left: action.payload.newPosition.left,
+        },
+      };
+    } else if (item.content && Array.isArray(item.content)) {
+      return {
+        ...item,
+        content: updateElementPosition(item.content, action),
+      };
+    }
+    return item;
+  });
+};
+
+
 
 const updateAnElement = (editorArray: EditorElement[], action: EditorAction): EditorElement[] => {
   if (action.type !== "UPDATE_ELEMENT") {
@@ -119,52 +144,6 @@ const deleteAnElement = (editorArray: EditorElement[], action: EditorAction): Ed
     return true;
   });
 };
-
-// const moveAnElement = (editorArray: EditorElement[], action: EditorAction): EditorElement[] => {
-//   if (action.type !== "MOVE_ELEMENT") {
-//     throw new Error("You sent the wrong action type to the Move Element editor State");
-//   }
-
-//   const { sourceId, targetId } = action.payload;
-//   let elementToMove: EditorElement | null = null;
-
-//   // Remove the element from the source container
-//   const updatedSourceArray = editorArray.map((item) => {
-//     if (item.id === sourceId && Array.isArray(item.content)) {
-//       const updatedContent = item.content.filter((child) => {
-//         if (child.id === targetId) {
-//           elementToMove = child; // Extract the element to move
-//           return false; // Remove it from the source
-//         }
-//         return true;
-//       });
-//       return { ...item, content: updatedContent };
-//     } else if (Array.isArray(item.content)) {
-//       // Recurse into nested content arrays
-//       return { ...item, content: moveAnElement(item.content, action) };
-//     }
-//     return item;
-//   });
-
-//   // If no element was found to move, return the original array
-//   if (!elementToMove) {
-//     return updatedSourceArray;
-//   }
-
-//   // Add the element to the target container
-//   const updatedTargetArray = updatedSourceArray.map((item) => {
-//     if (item.id === targetId && Array.isArray(item.content)) {
-//       return { ...item, content: [...item.content, elementToMove] };
-//     } else if (Array.isArray(item.content)) {
-//       // Recurse into nested content arrays
-//       return { ...item, content: moveAnElement(item.content, action) };
-//     }
-//     return item;
-//   });
-
-//   return updatedTargetArray;
-// };
-
 
 
 const editorReducer = (state: EditorState = initialState, action: EditorAction): EditorState => {
@@ -249,6 +228,15 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
         },
       };
       return deletedState;
+
+    case "UPDATE_ELEMENT_POSITION":
+      return {
+        ...state,
+        editor: {
+          ...state.editor,
+          elements: updateElementPosition(state.editor.elements, action),
+        },
+      };
 
     case "CHANGE_CLICKED_ELEMENT":
       const clickedState = {
@@ -367,28 +355,6 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
         },
       };
       return funnelPageIdState;
-
-    // case "MOVE_ELEMENT": {
-    //   const updatedElements = moveAnElement(state.editor.elements, action);
-    //   const updatedEditorState = {
-    //     ...state.editor,
-    //     elements: updatedElements,
-    //   };
-    //   const updatedHistory = [
-    //     ...state.history.history.slice(0, state.history.currentIndex + 1),
-    //     { ...updatedEditorState }, // Save a copy of the updated state
-    //   ];
-
-    //   return {
-    //     ...state,
-    //     editor: updatedEditorState,
-    //     history: {
-    //       ...state.history,
-    //       history: updatedHistory,
-    //       currentIndex: updatedHistory.length - 1,
-    //     },
-    //   };
-    // }
 
     default:
       return state;

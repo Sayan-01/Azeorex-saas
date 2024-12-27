@@ -154,8 +154,7 @@ const Section = (props: Props) => {
         "h-fit": type === "container",
         "h-full": type === "__body",
         "m-4": type === "container",
-        "outline-[1px] outline-dotted outline-blue-400": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
-        "hover:outline hover:outline-[1px] hover:outline-blue-400": !state.editor.liveMode,
+        "outline-[1px] outline-dotted outline-blue-500": state.editor.selectedElement.id === props.element.id && !state.editor.liveMode,
       })}
       id="innerContainer"
       onDrop={(e) => handleOnDrop(e)}
@@ -169,6 +168,7 @@ const Section = (props: Props) => {
         style={props.element.styles}
         className={clsx("p-4 transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full !m-0", {
           "!p-9 !shadow-inner-border-empty": Array.isArray(props.element.content) && !props.element.content.length && !state.editor.liveMode,
+          "parent": !state.editor.liveMode && type !== "__body",
         })}
       >
         {Array.isArray(content) &&
@@ -180,7 +180,7 @@ const Section = (props: Props) => {
           ))}
       </div>
       <div
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500", {
+        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0", {
           hidden: state.editor.liveMode,
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id,
         })}

@@ -61,7 +61,7 @@ const TextComponent = (props: Props) => {
     >
       <div
         style={styles}
-        className="p-[2px] transition-all text-white"
+        className={clsx("p-[2px] transition-all text-white", { parent: !state.editor.liveMode })}
       >
         <span
           className=" border-none outline-none "
@@ -85,7 +85,7 @@ const TextComponent = (props: Props) => {
         </span>
       </div>
       <div
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 shadow-inner-border-slate-500", {
+        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
           hidden: state.editor.liveMode,
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === props.element.id,
         })}

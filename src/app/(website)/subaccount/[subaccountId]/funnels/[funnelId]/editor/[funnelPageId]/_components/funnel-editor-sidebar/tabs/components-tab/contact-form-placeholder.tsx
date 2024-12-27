@@ -1,5 +1,5 @@
 import { EditorBtns } from "@/types/types";
-import { Contact2Icon } from "lucide-react";
+import { Contact } from "lucide-react";
 import React from "react";
 
 const ContactFormComponentPlaceholder = () => {
@@ -13,7 +13,8 @@ const ContactFormComponentPlaceholder = () => {
       onDragStart={(e) => handleDragStart(e, "contactForm")}
       className=" h-14 w-14 bg-muted rounded-lg flex items-center justify-center"
     >
-      <Contact2Icon
+      <Contact
+      strokeWidth={1.1}
         size={40}
         className="text-muted-foreground"
       />

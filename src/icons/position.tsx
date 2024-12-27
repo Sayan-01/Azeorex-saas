@@ -2,7 +2,7 @@ import React from "react";
 
 const Position = () => {
   return (
-    <svg
+    <svg className="w-full"
       width="225"
       height="75"
       viewBox="0 0 225 75"

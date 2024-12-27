@@ -14,8 +14,9 @@ const LinkPlaceholder = () => {
       className=" h-14 w-14 bg-muted rounded-lg flex items-center justify-center"
     >
       <Link2Icon
+      strokeWidth={1.1}
         size={40}
-        className="text-muted-foreground"
+        className="text-muted-foreground rotate-45"
       />
     </div>
   );

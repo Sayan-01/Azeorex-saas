@@ -12,7 +12,7 @@ const InputIcon: React.FC<Props> = ({ children }) => {
     >
       <div className="icons flex justify-between gap-3">
         {children}
-        {/* <i className="text-[#fff] w-6 h-6" style={{ padding: '4px' }} /> */}
+        <i className="text-[#fff] w-6 h-6" style={{ padding: '4px' }} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import React from "react";
 
 const PM = () => {
   return (
-    <svg
+    <svg className="w-full"
       width="225"
       height="114"
       viewBox="0 0 225 114"

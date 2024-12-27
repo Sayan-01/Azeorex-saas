@@ -13,8 +13,8 @@ const SectionPlaceholder = () => {
       onDragStart={(e) => handleDragStart(e, "section")}
       className=" h-14 w-14 bg-muted/70 rounded-lg p-2 flex flex-col gap-[4px]"
     >
-      <div className="border-dashed border-[1px] h-full rounded-sm bg-muted border-muted-foreground/50 w-full" />
-      <div className="border-dashed border-[1px] h-full rounded-sm bg-muted border-muted-foreground/50 w-full" />
+      <div className="border-dotted border-[2px] h-full rounded-sm border-muted-foreground/50 bg-muted-foreground/20 w-full" />
+      <div className="border-dotted border-[2px] h-full rounded-sm border-muted-foreground/50 bg-muted-foreground/20 w-full" />
     </div>
   );
 };
