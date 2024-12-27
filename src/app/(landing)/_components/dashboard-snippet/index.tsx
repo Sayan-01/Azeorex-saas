@@ -22,8 +22,8 @@ const DashboardSnippet = () => {
       // delay={0.2}
       className="relative md:py-[88px] py-16 md:px-2 bg-transparent w-full"
     >
-      <div className="w-full h-3/6 absolute rounded-[50%] radial--blur md:opacity-40 opacity-50 mx-auto" />
-      {/* <div className="absolute md:top-[15%] left-1/2 gradient w-3/4 -translate-x-1/2 h-1/4 md:h-1/3 inset-0 blur-[5rem] md:opacity-80"></div> */}
+      {/* <div className="w-full h-3/6 absolute rounded-[50%] radial--blur md:opacity-40 opacity-50 mx-auto" /> */}
+      <div className="absolute md:top-[15%] left-1/2 gradient w-3/4 -translate-x-1/2 h-1/4 md:h-1/3 inset-0 blur-[5rem] md:opacity-80"></div>
       <div className="rounded-xl p-2 ring-1 ring-inset ring-foreground/20 md:m-12 lg:rounded-[24px] bg-opacity-50 backdrop-blur-3xl">
         <BorderBeam
           size={250}
