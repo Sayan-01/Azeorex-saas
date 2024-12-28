@@ -58,6 +58,7 @@ const TextComponent = (props: Props) => {
         "hover:outline hover:outline-[1px] hover:outline-blue-500": !state.editor.liveMode,
       })}
       onClick={handleOnClickBody}
+      
     >
       <div
         style={styles}

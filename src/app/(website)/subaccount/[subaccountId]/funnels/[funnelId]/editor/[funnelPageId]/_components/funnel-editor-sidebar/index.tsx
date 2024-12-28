@@ -31,7 +31,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <SheetContent
             showX={false}
             side="left"
-            className={clsx("mt-[49px]  ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", {
+            className={clsx("mt-[40.8px]  ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", {
               hidden: state.editor.previewMode,
             })}
           >
@@ -64,7 +64,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <SheetContent
             showX={false}
             side="right"
-            className={clsx("mt-[49px] mr-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", { hidden: state.editor.previewMode })}
+            className={clsx("mt-[40.8px] mr-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", { hidden: state.editor.previewMode })}
           >
             <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box border-l border-main-black">
               <TabsContent value="Settings">

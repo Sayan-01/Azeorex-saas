@@ -614,7 +614,7 @@ const SettingsTab = () => {
               <p className=" text-muted-foreground text-xs">Background Color</p>
               <div
                 className={
-                  "flex w-[120px] h-8 mt-2 rounded border-2 group hover:border-[#6A6A6A] bg-[#272727] pr-2 items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:border-[#726FFF]  disabled:cursor-not-allowed disabled:opacity-50 "
+                  "flex w-[120px] h-[30px] mt-2 rounded border-2 group hover:border-[#6A6A6A] bg-[#272727] pr-2 items-center text-xs shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none  focus-visible:border-[#726FFF]  disabled:cursor-not-allowed disabled:opacity-50 "
                 }
               >
                 <div className=" overflow-hidden h-full rounded-l-[3px] w-[39px] mr-2">
@@ -633,8 +633,8 @@ const SettingsTab = () => {
             {/* opacity */}
             <div className="w-full">
               <p className="text-muted-foreground text-xs">Opacity</p>
-              <div className="flex items-center justify-end">
-                <small className="pb-[14px] pt-[9px] -mt-[22px] text-xs">
+              <div className="flex items-center justify-end mb-[7px]">
+                <small className="pb-[14px] pt-[6px] -mt-[22px] text-xs">
                   {typeof state.editor.selectedElement.styles?.opacity === "number"
                     ? state.editor.selectedElement.styles?.opacity
                     : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 100}

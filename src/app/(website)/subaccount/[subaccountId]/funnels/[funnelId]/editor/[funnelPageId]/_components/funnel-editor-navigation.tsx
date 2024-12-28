@@ -1,20 +1,20 @@
 "use client";
+import { Loader } from "@/components/global/Loader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/custom-input";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useToast } from "@/hooks/use-toast";
 import { saveActivityLogsNotification, upsertFunnelPage } from "@/lib/queries";
 import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
-import { EyeIcon, Laptop, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
+import { DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { FocusEventHandler, useEffect, useState } from "react";
+import { FocusEventHandler, useEffect, useState } from "react";
 import { DeviceTypes, useEditor } from "../../../../../../../../../../providers/editor/editor-provider";
-import { useToast } from "@/hooks/use-toast";
-import Image from "next/image";
-import { Loader } from "@/components/global/Loader";
 
 type Props = {
   funnelId: string;
@@ -104,14 +104,14 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
 
   return (
     <TooltipProvider>
-      <nav className={clsx("border-b border-main-black flex items-center justify-between px-3 py-1 gap-2 transition-all bg-[#151515] ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
+      <nav className={clsx("border-b border-main-black flex items-center justify-between px-3 py-0 gap-2 transition-all bg-[#151515] ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
           <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
             <Image
               src={"/azeorex.png"}
               alt="logo"
-              width={30}
-              height={30}
+              width={26}
+              height={26}
               className="rounded"
             />
           </Link>
@@ -136,14 +136,14 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
               });
             }}
           >
-            <TabsList className="grid w-full grid-cols-3 bg-transparent gap-4 h-fit">
+            <TabsList className="grid w-full grid-cols-3 bg-transparent gap-0 h-fit">
               <Tooltip>
                 <TooltipTrigger>
                   <TabsTrigger
                     value="Desktop"
                     className="data-[state=active]:bg-muted w-8 h-8 p-0"
                   >
-                    <Laptop size={18} />
+                    <Monitor size={18} strokeWidth={1.3}/>
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -156,7 +156,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                     value="Tablet"
                     className="w-8 h-8 p-0 data-[state=active]:bg-muted"
                   >
-                    <Tablet size={18} />
+                    <Tablet size={18} strokeWidth={1.3}/>
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -169,7 +169,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                     value="Mobile"
                     className="w-8 h-8 p-0 data-[state=active]:bg-muted"
                   >
-                    <Smartphone size={18} />
+                    <Smartphone size={18} strokeWidth={1.3}/>
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -186,7 +186,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             className="hover:bg-slate-800"
             onClick={handlePreviewClick}
           >
-            <EyeIcon size={18} />
+            <EyeIcon size={18} strokeWidth={1.3}/>
           </Button>
           <Button
             disabled={!(state.history.currentIndex > 0)}
@@ -195,7 +195,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             size={"icon"}
             className="hover:bg-slate-800"
           >
-            <Undo2 size={18} />
+            <Undo2 size={18} strokeWidth={1.3}/>
           </Button>
           <Button
             disabled={!(state.history.currentIndex < state.history.history.length - 1)}
@@ -204,7 +204,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             size={"icon"}
             className="hover:bg-slate-800 mr-4"
           >
-            <Redo2 size={18} />
+            <Redo2 size={18} strokeWidth={1.3}/>
           </Button>
           <div className="flex flex-col item-center mr-4">
             <div className="flex flex-row text-sm items-center gap-4">
@@ -217,8 +217,8 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             </div>
             {/* <span className="text-muted-foreground text-sm">Last updated {funnelPageDetails.updatedAt.toLocaleDateString()}</span> */}
           </div>
-          <Button
-            size={"sm"}
+          <button
+            className="text-sm border-l-2 border-main-black pl-3"
             onClick={handleOnSave}
           >
             {load ? (
@@ -226,9 +226,9 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                 <Loader loading={load} />
               </>
             ) : (
-              <p>Save</p>
+              <DownloadIcon size={16} />
             )}
-          </Button>
+          </button>
         </aside>
       </nav>
     </TooltipProvider>

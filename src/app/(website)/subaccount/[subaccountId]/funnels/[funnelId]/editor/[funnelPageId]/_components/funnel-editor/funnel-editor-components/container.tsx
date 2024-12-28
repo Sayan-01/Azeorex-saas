@@ -6,6 +6,7 @@ import React, { useEffect } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { defaultStyles, EditorBtns } from "@/types/types";
+import DropArea from "./drop-area";
 
 type Props = { element: EditorElement };
 
@@ -78,7 +79,7 @@ const Container = ({ element }: Props) => {
         break;
       case "container":
         console.log("containe");
-        
+
         dispatch({
           type: "ADD_ELEMENT",
           payload: {
@@ -168,24 +169,45 @@ const Container = ({ element }: Props) => {
           },
         });
         break;
-        default : console.log("noooo");
-        
+      default:
+        console.log("noooo");
     }
   };
-  
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "2px solid #726fff"; // Add outline
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "none"; // Remove outline
+  };
+
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault(); // etar jonno drop somvob hocche
-    // (e.target as HTMLElement).classList.add("opacity-40");
+    e.preventDefault(); // Allow drop
+    e.stopPropagation();
   };
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type);
+    const target = e.target as HTMLElement;
+    target.style.opacity = "0.3";
     // e.dataTransfer.setData("content", JSON.stringify(content));
   };
-  
-  //more events are dragenter, dragleave, dragend, drop
-  //for moveble container dragstart, gragend
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    const target = e.target as HTMLElement;
+    target.style.opacity = "1"; // Reset the opacity
+  };
+
+  //more events are dragenter, dragleave, drop
+  //for moveble container dragstart, dragend
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -253,11 +275,14 @@ const Container = ({ element }: Props) => {
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
         "outline-[1px] !outline-dotted !outline-blue-500 cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode,
       })}
-      onDrop={(e) => handleOnDrop(e)}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
+      onDrop={(e) => handleOnDrop(e)}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
       onDragStart={(e) => handleDragStart(e, "container")}
+      onDragEnd={handleDragEnd}
     >
       <div
         style={{
@@ -284,6 +309,7 @@ const Container = ({ element }: Props) => {
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === element.id,
         })}
       ></div>
+      {/* <DropArea/> */}
       <Badge
         className={clsx("absolute  z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
           flex: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
