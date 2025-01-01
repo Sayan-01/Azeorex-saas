@@ -1,7 +1,7 @@
 "use client";
 import { EditorBtns } from "@/types/types";
 import { FunnelPage } from "@prisma/client";
-import { Dispatch, createContext, useContext, useReducer } from "react";
+import { Dispatch, createContext, useContext, useReducer, useState } from "react";
 import { EditorAction } from "./editor-actions";
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
@@ -20,6 +20,7 @@ export type Editor = {
   liveMode: boolean;
   elements: EditorElement[];
   selectedElement: EditorElement;
+
   device: DeviceTypes;
   previewMode: boolean;
   funnelPageId: string;
@@ -90,30 +91,6 @@ const addAnElement = (editorArray: EditorElement[], action: EditorAction): Edito
     return item;
   });
 };
-const updateElementPosition = (editorArray: EditorElement[], action: EditorAction): EditorElement[] => {
-  if (action.type !== "UPDATE_ELEMENT_POSITION") {
-    throw new Error("Invalid action type for UPDATE_ELEMENT_POSITION");
-  }
-  return editorArray.map((item) => {
-    if (item.id === action.payload.elementId) {
-      return {
-        ...item,
-        styles: {
-          ...item.styles,
-          top: action.payload.newPosition.top,
-          left: action.payload.newPosition.left,
-        },
-      };
-    } else if (item.content && Array.isArray(item.content)) {
-      return {
-        ...item,
-        content: updateElementPosition(item.content, action),
-      };
-    }
-    return item;
-  });
-};
-
 
 
 const updateAnElement = (editorArray: EditorElement[], action: EditorAction): EditorElement[] => {
@@ -144,7 +121,6 @@ const deleteAnElement = (editorArray: EditorElement[], action: EditorAction): Ed
     return true;
   });
 };
-
 
 const editorReducer = (state: EditorState = initialState, action: EditorAction): EditorState => {
   switch (action.type) {
@@ -228,15 +204,6 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
         },
       };
       return deletedState;
-
-    case "UPDATE_ELEMENT_POSITION":
-      return {
-        ...state,
-        editor: {
-          ...state.editor,
-          elements: updateElementPosition(state.editor.elements, action),
-        },
-      };
 
     case "CHANGE_CLICKED_ELEMENT":
       const clickedState = {
@@ -355,7 +322,7 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
         },
       };
       return funnelPageIdState;
-
+    case "MOVE_ELEMENT":
     default:
       return state;
   }
@@ -371,12 +338,16 @@ export type EditorContextData = {
 export const EditorContext = createContext<{
   state: EditorState;
   dispatch: Dispatch<EditorAction>;
+  activeContainer: string | null;
+  setActiveContainer: (activeContainer: string | null) => void;
   subaccountId: string;
   funnelId: string;
   pageDetails: FunnelPage | null;
 }>({
   state: initialState,
   dispatch: () => undefined,
+  activeContainer: null,
+  setActiveContainer: () => undefined,
   subaccountId: "",
   funnelId: "",
   pageDetails: null,
@@ -391,12 +362,15 @@ type EditorProps = {
 
 const EditorProvider = (props: EditorProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);
+  const [activeContainer, setActiveContainer] = useState<string | null>(null);
 
   return (
     <EditorContext.Provider
       value={{
         state,
         dispatch,
+        activeContainer,
+        setActiveContainer,
         subaccountId: props.subaccountId,
         funnelId: props.funnelId,
         pageDetails: props.pageDetails,

@@ -64,4 +64,4 @@ export type EditorAction =
         funnelPageId: string;
       };
     }
-  | { type: "UPDATE_ELEMENT_POSITION"; payload: { elementId: string; newPosition: { top: number; left: number } } };
+  | { type: "MOVE_ELEMENT"; payload: { elementId: string; newPosition: { top: number; left: number } } };

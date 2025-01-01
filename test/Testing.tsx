@@ -1,32 +1,6 @@
 [
-  {
-    content: [
       {
         content: [
-          {
-            content: [
-              {
-                content: { innerText: "Azeorex" },
-                id: "052637de-68f7-49e0-ab4c-db5311f9e9e2",
-                name: "Text",
-                styles: {
-                  color: "white",
-                  backgroundPosition: "center",
-                  objectFit: "cover",
-                  backgroundRepeat: "no-repeat",
-                  textAlign: "left",
-                  opacity: "100%",
-                  "font-weight": "bold",
-                  fontSize: "30px",
-                },
-                type: "text",
-              },
-            ],
-            id: "196e535c-d52f-4519-a344-318fa569dc4a",
-            name: "Container",
-            styles: { backgroundPosition: "center", objectFit: "cover", backgroundRepeat: "no-repeat", textAlign: "left", opacity: "100%" },
-            type: "container",
-          },
           {
             content: [
               {
@@ -165,7 +139,32 @@
       {
         content: [
           {
-            content: { innerText: "Elevate Your Presence with Us" },
+            content: [
+              {
+                content: [
+                  {
+                    content: { innerText: "Azeorex" },
+                    id: "052637de-68f7-49e0-ab4c-db5311f9e9e2",
+                    name: "Text",
+                    styles: {
+                      color: "white",
+                      backgroundPosition: "center",
+                      objectFit: "cover",
+                      backgroundRepeat: "no-repeat",
+                      textAlign: "left",
+                      opacity: "100%",
+                      "font-weight": "bold",
+                      fontSize: "30px",
+                    },
+                    type: "text",
+                  },
+                ],
+                id: "196e535c-d52f-4519-a344-318fa569dc4a",
+                name: "Container",
+                styles: { backgroundPosition: "center", objectFit: "cover", backgroundRepeat: "no-repeat", textAlign: "left", opacity: "100%" },
+                type: "container",
+              },
+            ],
             id: "c902afce-3d78-4b71-b5ed-641e4d7ce2bc",
             name: "Text",
             styles: { color: "#73ff00", backgroundPosition: "center", objectFit: "cover", backgroundRepeat: "no-repeat", textAlign: "left", opacity: "100%" },
@@ -208,30 +207,4 @@
         },
         type: "container",
       },
-      {
-        content: [],
-        id: "f949e405-557e-4454-8464-8f76b5081264",
-        name: "Container",
-        styles: {
-          backgroundPosition: "center",
-          objectFit: "cover",
-          backgroundRepeat: "no-repeat",
-          textAlign: "left",
-          opacity: "100%",
-          backgroundImage: "url(https://utfs.io/f/yYTfcV3kOFma5mFzM7pimldPMzSGg8CVJT2xQ9fyKIhAwEok)",
-          height: "600px",
-          backgroundSize: "cover",
-          "z-index": "1",
-          zIndex: "10",
-          borderRadius: "45px",
-          width: "1200px",
-        },
-        type: "container",
-      },
-    ],
-    id: "__body",
-    name: "Body",
-    styles: { backgroundColor: "#141414", color: "", height: "", backgroundImage: "linear-gradient(to bottom, #8e2de2, #4a00e0)" },
-    type: "__body",
-  },
-];
+    ]

@@ -12,166 +12,170 @@ type Props = { element: EditorElement };
 
 const Container = ({ element }: Props) => {
   const { id, content, styles, type } = element;
-  const { dispatch, state } = useEditor();
+  const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
   const handleOnDrop = (e: React.DragEvent) => {
     e.stopPropagation();
-    const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
+    // const target = e.currentTarget as HTMLElement;
 
-    switch (componentType) {
-      case "text":
-        console.log("text");
+    
 
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: { innerText: "Element" },
-              id: v4(),
-              name: "Text",
-              styles: {
-                color: "#ffffff",
-                ...defaultStyles,
-              },
-              type: "text",
-            },
-          },
-        });
-        break;
-      case "link":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: {
-                innerText: "Link Element",
-                href: "#",
-              },
-              id: v4(),
-              name: "Link",
-              styles: {
-                color: "#ffffff",
-                ...defaultStyles,
-              },
-              type: "link",
-            },
-          },
-        });
-        break;
-      case "video":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: {
-                src: "https://www.youtube.com/embed/A3l6YYkXzzg?si=zbcCeWcpq7Cwf8W1",
-              },
-              id: v4(),
-              name: "Video",
-              styles: {},
-              type: "video",
-            },
-          },
-        });
-        break;
-      case "container":
-        console.log("containe");
+    // const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
 
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: v4(),
-              name: "Container",
-              styles: { ...styles },
-              type: "container",
-            },
-          },
-        });
-        break;
-      case "section":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: v4(),
-              name: "Section",
-              styles: { ...defaultStyles },
-              type: "section",
-            },
-          },
-        });
-        break;
-      case "contactForm":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: v4(),
-              name: "Contact Form",
-              styles: {},
-              type: "contactForm",
-            },
-          },
-        });
-        break;
-      case "paymentForm":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [],
-              id: v4(),
-              name: "Payment Form",
-              styles: {},
-              type: "paymentForm",
-            },
-          },
-        });
-        break;
-      case "2Col":
-        dispatch({
-          type: "ADD_ELEMENT",
-          payload: {
-            containerId: id,
-            elementDetails: {
-              content: [
-                {
-                  content: [],
-                  id: v4(),
-                  name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
-                  type: "container",
-                },
-                {
-                  content: [],
-                  id: v4(),
-                  name: "Container",
-                  styles: { ...defaultStyles, width: "100%" },
-                  type: "container",
-                },
-              ],
-              id: v4(),
-              name: "Two Columns",
-              styles: { ...defaultStyles, display: "flex" },
-              type: "2Col",
-            },
-          },
-        });
-        break;
-      default:
-        console.log("noooo");
-    }
+    // switch (componentType) {
+    //   case "text":
+    //     console.log("text");
+
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: { innerText: "Element" },
+    //           id: v4(),
+    //           name: "Text",
+    //           styles: {
+    //             color: "#ffffff",
+    //             ...defaultStyles,
+    //           },
+    //           type: "text",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   case "link":
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: {
+    //             innerText: "Link Element",
+    //             href: "#",
+    //           },
+    //           id: v4(),
+    //           name: "Link",
+    //           styles: {
+    //             color: "#ffffff",
+    //             ...defaultStyles,
+    //           },
+    //           type: "link",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   case "video":
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: {
+    //             src: "https://www.youtube.com/embed/A3l6YYkXzzg?si=zbcCeWcpq7Cwf8W1",
+    //           },
+    //           id: v4(),
+    //           name: "Video",
+    //           styles: {},
+    //           type: "video",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   case "container":
+    //     console.log("containe");
+
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: [],
+    //           id: v4(),
+    //           name: "Container",
+    //           styles: { ...styles },
+    //           type: "container",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   case "section":
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: [],
+    //           id: v4(),
+    //           name: "Section",
+    //           styles: { ...defaultStyles },
+    //           type: "section",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   case "contactForm":
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: [],
+    //           id: v4(),
+    //           name: "Contact Form",
+    //           styles: {},
+    //           type: "contactForm",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   case "paymentForm":
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: [],
+    //           id: v4(),
+    //           name: "Payment Form",
+    //           styles: {},
+    //           type: "paymentForm",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   case "2Col":
+    //     dispatch({
+    //       type: "ADD_ELEMENT",
+    //       payload: {
+    //         containerId: id,
+    //         elementDetails: {
+    //           content: [
+    //             {
+    //               content: [],
+    //               id: v4(),
+    //               name: "Container",
+    //               styles: { ...defaultStyles, width: "100%" },
+    //               type: "container",
+    //             },
+    //             {
+    //               content: [],
+    //               id: v4(),
+    //               name: "Container",
+    //               styles: { ...defaultStyles, width: "100%" },
+    //               type: "container",
+    //             },
+    //           ],
+    //           id: v4(),
+    //           name: "Two Columns",
+    //           styles: { ...defaultStyles, display: "flex" },
+    //           type: "2Col",
+    //         },
+    //       },
+    //     });
+    //     break;
+    //   default:
+    //     console.log("noooo");
+    // }
   };
 
   const handleDragEnter = (e: React.DragEvent) => {
@@ -193,17 +197,20 @@ const Container = ({ element }: Props) => {
     e.stopPropagation();
   };
 
-  const handleDragStart = (e: React.DragEvent, type: string) => {
+  const handleDragStart = (e: React.DragEvent, type: string, idx: string) => {
     if (type === "__body") return;
-    e.dataTransfer.setData("componentType", type);
+    e.dataTransfer.setData("componentType", type); //=> 14:18
     const target = e.target as HTMLElement;
     target.style.opacity = "0.3";
+    setActiveContainer(idx);
+
     // e.dataTransfer.setData("content", JSON.stringify(content));
   };
 
   const handleDragEnd = (e: React.DragEvent) => {
     const target = e.target as HTMLElement;
     target.style.opacity = "1"; // Reset the opacity
+    setActiveContainer(null);
   };
 
   //more events are dragenter, dragleave, drop
@@ -278,10 +285,10 @@ const Container = ({ element }: Props) => {
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
-      onDrop={(e) => handleOnDrop(e)}
+      onDrop={(e) => handleOnDrop(e,)}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
-      onDragStart={(e) => handleDragStart(e, "container")}
+      onDragStart={(e) => handleDragStart(e, "container", id)}
       onDragEnd={handleDragEnd}
     >
       <div
