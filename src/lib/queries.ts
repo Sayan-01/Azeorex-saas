@@ -8,6 +8,7 @@ import { z } from "zod";
 import { db } from "./db";
 import { v4 } from "uuid";
 import { Agency, Media, Prisma, SubAccount, User } from "@prisma/client";
+import { EditorElement } from "../../providers/editor/editor-provider";
 
 //============================================================
 
@@ -526,3 +527,7 @@ export const getMedia = async (subaccountId: string) => {
   });
   return mediafiles;
 };
+
+//=============================================================================
+
+

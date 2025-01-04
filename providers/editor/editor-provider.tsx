@@ -323,6 +323,7 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
       };
       return funnelPageIdState;
     case "MOVE_ELEMENT":
+      
     default:
       return state;
   }

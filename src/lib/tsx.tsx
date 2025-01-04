@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { moveObject } from "@/lib/moveElement";
-import { defaultStyles, EditorBtns } from "@/types/types";
 
 type Props = { element: EditorElement };
 
@@ -28,8 +27,8 @@ const Container = ({ element }: Props) => {
 
     //===========================================
 
-    // const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
-    const componentType = "";
+const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
+
     switch (componentType) {
       case "text":
         console.log("text");
@@ -184,6 +183,7 @@ const Container = ({ element }: Props) => {
       default:
         console.log("noooo");
     }
+
   };
 
   const handleDragEnter = (e: React.DragEvent) => {
@@ -205,10 +205,10 @@ const Container = ({ element }: Props) => {
     e.stopPropagation();
   };
 
-  const handleDragStart = (e: React.DragEvent, type: string) => {
+  const handleDragStart = (e: React.DragEvent) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type); //=> 14:18
-    // target.style.opacity = "0.3";
+    target.style.opacity = "0.3";
     const target = e.target as HTMLElement;
 
     // Check if the target has an id property
@@ -302,7 +302,7 @@ const Container = ({ element }: Props) => {
       onDrop={(e) => handleOnDrop(e, id)}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
-      onDragStart={(e) => handleDragStart(e, "container")}
+      onDragStart={(e) => handleDragStart(e)}
       onDragEnd={handleDragEnd}
     >
       <div
