@@ -104,7 +104,9 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
 
   return (
     <TooltipProvider>
-      <nav className={clsx("border-b border-main-black flex items-center justify-between px-3 py-0 gap-2 transition-all bg-[#151515] ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
+      <nav
+        className={clsx("border-b border-main-az flex items-center justify-between px-3 py-0 gap-2 transition-all bg-[#151515] ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}
+      >
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
           <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
             <Image
@@ -143,7 +145,10 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                     value="Desktop"
                     className="data-[state=active]:bg-muted w-8 h-8 p-0"
                   >
-                    <Monitor size={18} strokeWidth={1.3}/>
+                    <Monitor
+                      size={18}
+                      strokeWidth={1.3}
+                    />
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -156,7 +161,10 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                     value="Tablet"
                     className="w-8 h-8 p-0 data-[state=active]:bg-muted"
                   >
-                    <Tablet size={18} strokeWidth={1.3}/>
+                    <Tablet
+                      size={18}
+                      strokeWidth={1.3}
+                    />
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -169,7 +177,10 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                     value="Mobile"
                     className="w-8 h-8 p-0 data-[state=active]:bg-muted"
                   >
-                    <Smartphone size={18} strokeWidth={1.3}/>
+                    <Smartphone
+                      size={18}
+                      strokeWidth={1.3}
+                    />
                   </TabsTrigger>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -186,7 +197,10 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             className="hover:bg-slate-800"
             onClick={handlePreviewClick}
           >
-            <EyeIcon size={18} strokeWidth={1.3}/>
+            <EyeIcon
+              size={18}
+              strokeWidth={1.3}
+            />
           </Button>
           <Button
             disabled={!(state.history.currentIndex > 0)}
@@ -195,7 +209,10 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             size={"icon"}
             className="hover:bg-slate-800"
           >
-            <Undo2 size={18} strokeWidth={1.3}/>
+            <Undo2
+              size={18}
+              strokeWidth={1.3}
+            />
           </Button>
           <Button
             disabled={!(state.history.currentIndex < state.history.history.length - 1)}
@@ -204,7 +221,10 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             size={"icon"}
             className="hover:bg-slate-800 mr-4"
           >
-            <Redo2 size={18} strokeWidth={1.3}/>
+            <Redo2
+              size={18}
+              strokeWidth={1.3}
+            />
           </Button>
           <div className="flex flex-col item-center mr-4">
             <div className="flex flex-row text-sm items-center gap-4">

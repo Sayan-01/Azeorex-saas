@@ -25,15 +25,15 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
     !!props.element.content.length ? (
       <AccordionItem
         value={props.element.id}
-        className="pl-4  transition-all border-y-[1px] border-b-0 border-r-0 border-l-none border-main-black select-none hover:pb-0"
+        className={clsx("transition-all border-b-0 border-r-0 border-l-none border-main-black select-none hover:pb-0", { " pl-4 ": props.element.type !== "__body" })}
         onClick={(e) => handleSelectElement(e, props.element)}
       >
         <AccordionTrigger
-          className={clsx("!no-underline p-2 text-sm", {
+          className={clsx("!no-underline p-2 pl-0 text-sm border-b-[1px]", {
             "bg-muted-foreground/30": state.editor.selectedElement.id === props.element.id,
           })}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pl-4  text-xs">
             {props.element.type === "container" ? (
               <BoxSelect
                 size={16}
@@ -85,7 +85,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
                 className="text-muted-foreground"
               />
             ) : null}
-            {props.element.name}
+            <p className=" opacity-80">{props.element.name}</p>
           </div>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col pb-0">
@@ -100,7 +100,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
       </AccordionItem>
     ) : (
       <div
-        className="flex items-center gap-2 pl-4  py-2 cursor-pointer"
+        className="flex items-center gap-2 pl-8  py-2 cursor-pointer text-xs"
         onClick={(e) => handleSelectElement(e, props.element)}
       >
         {props.element.type === "container" ? (
@@ -149,12 +149,12 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
             className="text-muted-foreground"
           />
         ) : null}
-        {props.element.name}
+        <p className=" opacity-80">{props.element.name}</p>
       </div>
     )
   ) : (
     <div
-      className="flex items-center gap-2 pl-6 py-2 cursor-pointer"
+      className="flex items-center gap-2 pl-4 py-2 cursor-pointer text-xs"
       onClick={(e) => handleSelectElement(e, props.element)}
     >
       {props.element.type === "container" ? (
@@ -203,7 +203,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
           className="text-muted-foreground"
         />
       ) : null}
-      {props.element.name}
+      <p className=" opacity-80">{props.element.name}</p>
     </div>
   );
 };
@@ -212,17 +212,20 @@ const LayersTab = () => {
   const { state } = useEditor();
 
   return (
-    <Accordion
-      type="multiple"
-      className="w-full "
-    >
-      {state.editor.elements.map((childElement) => (
-        <RecursiveAccordianItem
-          key={childElement.id}
-          element={childElement}
-        />
-      ))}
-    </Accordion>
+    <div>
+      <Accordion
+        type="multiple"
+        className="w-full "
+        defaultValue={["__body"]}
+      >
+        {state.editor.elements.map((childElement) => (
+          <RecursiveAccordianItem
+            key={childElement.id}
+            element={childElement}
+          />
+        ))}
+      </Accordion>
+    </div>
   );
 };
 

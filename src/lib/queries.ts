@@ -454,7 +454,7 @@ export const upsertFunnelPage = async (subaccountId: string, funnelPage: Prisma.
               content: [],
               id: "__body",
               name: "Body",
-              styles: { backgroundColor: "#212121" },
+              styles: {},
               type: "__body",
             },
           ]),

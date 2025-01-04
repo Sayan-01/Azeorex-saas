@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { defaultStyles, EditorBtns } from "@/types/types";
@@ -13,183 +13,182 @@ type Props = { element: EditorElement };
 const Container = ({ element }: Props) => {
   const { id, content, styles, type } = element;
   const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
+  const [isHover, setIsHover] = useState(false);
 
   const handleOnDrop = (e: React.DragEvent) => {
     e.stopPropagation();
-    // const target = e.currentTarget as HTMLElement;
+    const target = e.currentTarget as HTMLElement;
 
-    
+    const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
 
-    // const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
+    switch (componentType) {
+      case "text":
+        console.log("text");
 
-    // switch (componentType) {
-    //   case "text":
-    //     console.log("text");
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: { innerText: "Element" },
+              id: v4(),
+              name: "Text",
+              styles: {
+                color: "#ffffff",
+                ...defaultStyles,
+              },
+              type: "text",
+            },
+          },
+        });
+        break;
+      case "link":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: {
+                innerText: "Link Element",
+                href: "#",
+              },
+              id: v4(),
+              name: "Link",
+              styles: {
+                color: "#ffffff",
+                ...defaultStyles,
+              },
+              type: "link",
+            },
+          },
+        });
+        break;
+      case "video":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: {
+                src: "https://www.youtube.com/embed/A3l6YYkXzzg?si=zbcCeWcpq7Cwf8W1",
+              },
+              id: v4(),
+              name: "Video",
+              styles: {},
+              type: "video",
+            },
+          },
+        });
+        break;
+      case "container":
+        console.log("containe");
 
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: { innerText: "Element" },
-    //           id: v4(),
-    //           name: "Text",
-    //           styles: {
-    //             color: "#ffffff",
-    //             ...defaultStyles,
-    //           },
-    //           type: "text",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   case "link":
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: {
-    //             innerText: "Link Element",
-    //             href: "#",
-    //           },
-    //           id: v4(),
-    //           name: "Link",
-    //           styles: {
-    //             color: "#ffffff",
-    //             ...defaultStyles,
-    //           },
-    //           type: "link",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   case "video":
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: {
-    //             src: "https://www.youtube.com/embed/A3l6YYkXzzg?si=zbcCeWcpq7Cwf8W1",
-    //           },
-    //           id: v4(),
-    //           name: "Video",
-    //           styles: {},
-    //           type: "video",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   case "container":
-    //     console.log("containe");
-
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: [],
-    //           id: v4(),
-    //           name: "Container",
-    //           styles: { ...styles },
-    //           type: "container",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   case "section":
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: [],
-    //           id: v4(),
-    //           name: "Section",
-    //           styles: { ...defaultStyles },
-    //           type: "section",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   case "contactForm":
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: [],
-    //           id: v4(),
-    //           name: "Contact Form",
-    //           styles: {},
-    //           type: "contactForm",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   case "paymentForm":
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: [],
-    //           id: v4(),
-    //           name: "Payment Form",
-    //           styles: {},
-    //           type: "paymentForm",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   case "2Col":
-    //     dispatch({
-    //       type: "ADD_ELEMENT",
-    //       payload: {
-    //         containerId: id,
-    //         elementDetails: {
-    //           content: [
-    //             {
-    //               content: [],
-    //               id: v4(),
-    //               name: "Container",
-    //               styles: { ...defaultStyles, width: "100%" },
-    //               type: "container",
-    //             },
-    //             {
-    //               content: [],
-    //               id: v4(),
-    //               name: "Container",
-    //               styles: { ...defaultStyles, width: "100%" },
-    //               type: "container",
-    //             },
-    //           ],
-    //           id: v4(),
-    //           name: "Two Columns",
-    //           styles: { ...defaultStyles, display: "flex" },
-    //           type: "2Col",
-    //         },
-    //       },
-    //     });
-    //     break;
-    //   default:
-    //     console.log("noooo");
-    // }
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: [],
+              id: v4(),
+              name: "Container",
+              styles: { ...styles, maxWidth: "940px" },
+              type: "container",
+            },
+          },
+        });
+        break;
+      case "section":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: [],
+              id: v4(),
+              name: "Section",
+              styles: { ...defaultStyles },
+              type: "section",
+            },
+          },
+        });
+        break;
+      case "contactForm":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: [],
+              id: v4(),
+              name: "Contact Form",
+              styles: {},
+              type: "contactForm",
+            },
+          },
+        });
+        break;
+      case "paymentForm":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: [],
+              id: v4(),
+              name: "Payment Form",
+              styles: {},
+              type: "paymentForm",
+            },
+          },
+        });
+        break;
+      case "2Col":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: [
+                {
+                  content: [],
+                  id: v4(),
+                  name: "Container",
+                  styles: { ...defaultStyles, width: "100%" },
+                  type: "container",
+                },
+                {
+                  content: [],
+                  id: v4(),
+                  name: "Container",
+                  styles: { ...defaultStyles, width: "100%" },
+                  type: "container",
+                },
+              ],
+              id: v4(),
+              name: "Two Columns",
+              styles: { ...defaultStyles, display: "flex" },
+              type: "2Col",
+            },
+          },
+        });
+        break;
+      default:
+        console.log("noooo");
+    }
   };
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const target = e.currentTarget as HTMLElement;
-    target.style.outline = "2px solid #726fff"; // Add outline
+    // target.style.outline = "2px solid #726fff"; // Add outline
   };
 
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const target = e.currentTarget as HTMLElement;
-    target.style.outline = "none"; // Remove outline
+    // target.style.outline = "none"; // Remove outline
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -271,21 +270,23 @@ const Container = ({ element }: Props) => {
         marginBottom: styles?.marginBottom,
         marginLeft: styles?.marginLeft,
         marginRight: styles?.marginRight,
+        maxWidth: styles?.maxWidth,
+        maxHeight: styles?.maxHeight,
       }}
-      className={clsx("relative transition-all z-[1004] box inset-0", {
+      className={clsx("relative z-[1004] box inset-0", {
         "w-full": type === "section",
-        "h-fit max-w-[80rem] mx-auto w-full": type === "container" || type === "2Col",
-        "min-h-screen": type === "__body",
-        "overflow-scroll bg-[#212121]  overflow-x-hidden": type === "__body",
+        "h-fit mx-auto w-full": type === "container" || type === "2Col",
+        "": type === "__body",
+        "overflow-scroll  overflow-x-hidden ": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
-        "outline-[1px] outline-dotted outline-blue-500": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "outline-[1px] !outline-dotted !outline-blue-500 cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        "cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        // "hover:outline hover:outline-[1px] hover:outline-offset-[-1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
       })}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
-      onDrop={(e) => handleOnDrop(e,)}
+      onDrop={(e) => handleOnDrop(e)}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
       onDragStart={(e) => handleDragStart(e, "container", id)}
@@ -295,11 +296,11 @@ const Container = ({ element }: Props) => {
         style={{
           ...styles,
         }}
-        className={clsx(" transition-all !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0", {
-          "p-4": type !== "__body",
+        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0", {
+          "px-4": type !== "__body",
           "pt-0 min-h-screen": type === "__body",
-          "!p-9 !shadow-inner-border-empty": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode,
-          parent: !state.editor.liveMode && type !== "__body",
+          "!p-9 empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
+          abc: !state.editor.liveMode && type !== "__body",
         })}
       >
         {Array.isArray(content) &&

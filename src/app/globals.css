@@ -199,6 +199,22 @@ html {
   border-radius: 50px;
 }
 
+.az-bar::-webkit-scrollbar {
+  width: 6px;
+  position: absolute; /* Ensures the scrollbar behaves like an absolute element */
+}
+.az-bar::-webkit-scrollbar-track {
+  background: #272727;
+  position: absolute;
+  /* border-radius: 50px; */
+}
+.az-bar::-webkit-scrollbar-thumb {
+  background: #515151;
+  position: absolute;
+  height: 20px;
+  border-radius: 50px;
+}
+
 .gradient {
   background: conic-gradient(from 230.29deg at 51.63% 52.16%, #2400ff 0deg, #0087ff 67.5deg, #6c279d 198.75deg, #1826a3 251.25deg, #3667c4 301.88deg, #691eff 1turn);
 }
@@ -225,15 +241,39 @@ html {
   box-shadow: 0px 0px 90px 0px #726fffae;
 }
 
-
-
 .parent {
   /* padding: 20px; */
   position: relative;
-  /* outlinw: 1px solid transparent; */
+  /* outline: 1px solid transparent; */
 }
 
 .parent:hover:not(:has(*:hover)) {
   outline: 1px solid rgb(1, 157, 208);
+  outline-offset: -1px !important;
   background: rgba(0, 0, 255, 0.1);
+}
+
+.empty-outline {
+  outline: 1px dashed #555555bb !important;
+  outline-offset: -1px !important;
+  box-shadow: inset 0 0 0 4px rgba(0, 0, 0, 0.1), inset 0 0 0 4px rgba(255, 255, 255, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.abc::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: 0;
+  outline: 1px solid #726fff;
+  outline-offset: -1px;
+  /* background: rgba(0, 0, 255, 0.051); */
+  opacity: 0;
+}
+
+.abc:hover:not(:has(*:hover))::before {
+  opacity: 100;
 }

@@ -62,6 +62,7 @@ module.exports = withUt({
         main: {
           DEFAULT: "#726fff",
           black: "#272727",
+          az: "#363636"
         },
       },
       borderRadius: {
@@ -105,11 +106,11 @@ module.exports = withUt({
       },
       boxShadow: {
         "inner-border-main": "inset 0 0 0 1px #726FFF66",
-        "inner-border-blue-500": "inset 0 0 0 1px #ff0130",
+        "inner-border-blue-500": "inset 0 0 0 1px #726fff",
         "inner-border-blue-500-500": "inset 0 0 0 1px #ff0130",
         "inner-border-slate-500": "inset 0 0 0 1px #64748b22",
         "inner-border-red-500": "inset 0 0 0 1px #e73927",
-        "inner-border-empty": "inset 0 0 0 4px #64748b52",
+        "inner-border-empty": "inset 0 0 0 4px #ffffff33",
       },
     },
   },

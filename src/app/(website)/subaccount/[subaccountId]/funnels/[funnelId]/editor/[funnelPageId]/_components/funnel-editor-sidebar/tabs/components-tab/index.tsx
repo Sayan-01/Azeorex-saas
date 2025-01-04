@@ -81,7 +81,7 @@ const ComponentsTab = () => {
     >
       <AccordionItem
         value="Layout"
-        className="px-3 py-0 border-y-[1px]"
+        className="px-3 py-0 border-y-[1px] border-main-az"
       >
         <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
         <AccordionContent className="grid grid-cols-3 ">
@@ -100,7 +100,7 @@ const ComponentsTab = () => {
       </AccordionItem>
       <AccordionItem
         value="Elements"
-        className="px-3 py-0 "
+        className="px-3 py-0 border-main-az"
       >
         <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
         <AccordionContent className="grid grid-cols-3">

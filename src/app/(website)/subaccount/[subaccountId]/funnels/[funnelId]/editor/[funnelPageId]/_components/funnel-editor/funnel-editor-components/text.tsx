@@ -54,15 +54,14 @@ const TextComponent = (props: Props) => {
   return (
     <div
       className={clsx("w-max relative text-[14px] transition-all ", {
-        "outline-[1px] !outline-dotted !outline-blue-500": state.editor.selectedElement.id === props.element.id,
-        "hover:outline hover:outline-[1px] hover:outline-blue-500": !state.editor.liveMode,
+        // "outline-[1px] !outline-dotted !outline-blue-500": state.editor.selectedElement.id === props.element.id,
       })}
       onClick={handleOnClickBody}
       
     >
       <div
         style={styles}
-        className={clsx("p-[2px] transition-all text-white", { parent: !state.editor.liveMode })}
+        className={clsx("p-[2px] transition-all text-white abc")}
       >
         <span
           className=" border-none outline-none "

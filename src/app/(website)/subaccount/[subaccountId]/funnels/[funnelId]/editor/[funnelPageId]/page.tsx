@@ -24,7 +24,7 @@ const page = async ({ params }: Props) => {
   }
 
   return (
-    <div className="fixed top-0 bottom-0 border-x left-0 right-0 z-20 bg-zinc-950 overflow-hidden">
+    <div className="fixed top-0 bottom-0 border-x border-main-az left-0 right-0 z-20 bg-zinc-950 overflow-hidden">
       {/* starts from 16:39 */}
       <EditorProvider
         subaccountId={params.subaccountId}
@@ -37,10 +37,9 @@ const page = async ({ params }: Props) => {
           subaccountId={params.subaccountId}
         />
         <div className="h-full flex justify-center ">
-            <FunnelEditor funnelPageId={params.funnelPageId} />
+          <FunnelEditor funnelPageId={params.funnelPageId} />
         </div>
         <FunnelEditorSidebar subaccountId={params.subaccountId} />
-
       </EditorProvider>
     </div>
   );

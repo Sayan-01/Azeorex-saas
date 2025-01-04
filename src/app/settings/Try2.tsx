@@ -303,7 +303,7 @@ const Try1 = () => {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation()
-  };c
+  };
 
   const renderContent = (content: Content[]) => {
     return content.map((item) => (

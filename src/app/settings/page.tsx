@@ -1,8 +1,8 @@
 import React from "react";
-import Try2 from "./Try2";
+import Try1 from "./Try1";
 
 const page = () => {
-  return <Try2/>;
+  return <Try1/>;
 };
 
 export default page;
