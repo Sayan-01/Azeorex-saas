@@ -1,5 +1,7 @@
 "use client"
 
+import { EditorElement } from "../../providers/editor/editor-provider";
+
 const findAndRemoveObjectById = (objArray: EditorElement[], targetId: string): EditorElement | null => {
   for (let i = 0; i < objArray.length; i++) {
     const obj = objArray[i];

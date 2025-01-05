@@ -70,7 +70,7 @@ export const FunnelPageSchema = z.object({
   pathName: z.string().optional(),
 });
 
-export type EditorBtns = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col";
+export type EditorBtns = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col" | "element";
 
 export const defaultStyles: React.CSSProperties = {
   backgroundPosition: "center",

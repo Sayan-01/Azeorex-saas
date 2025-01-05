@@ -241,18 +241,6 @@ html {
   box-shadow: 0px 0px 90px 0px #726fffae;
 }
 
-.parent {
-  /* padding: 20px; */
-  position: relative;
-  /* outline: 1px solid transparent; */
-}
-
-.parent:hover:not(:has(*:hover)) {
-  outline: 1px solid rgb(1, 157, 208);
-  outline-offset: -1px !important;
-  background: rgba(0, 0, 255, 0.1);
-}
-
 .empty-outline {
   outline: 1px dashed #555555bb !important;
   outline-offset: -1px !important;
@@ -272,8 +260,12 @@ html {
   outline-offset: -1px;
   /* background: rgba(0, 0, 255, 0.051); */
   opacity: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 1002;
 }
 
 .abc:hover:not(:has(*:hover))::before {
   opacity: 100;
 }
+

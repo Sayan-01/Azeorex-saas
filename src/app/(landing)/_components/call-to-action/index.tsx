@@ -28,7 +28,7 @@ const CallToAction = async () => {
         >
           Demo
         </Button>
-        <Link href={session?.user ? "/subaccount/test/funnels/test/editor/test" : "agency/sign-in"}>
+        <Link href={session?.user ? "/demo" : "agency/sign-in"}>
           <Button className="rounded-lg bg-main/70 element-main text-base text-white hover:bg-main flex gap-2 w-full">
             <BadgePlusIcon size={18} /> Get Started your journey
           </Button>

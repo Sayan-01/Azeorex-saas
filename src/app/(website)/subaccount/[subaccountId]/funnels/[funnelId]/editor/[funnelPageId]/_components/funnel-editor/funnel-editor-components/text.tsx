@@ -53,37 +53,32 @@ const TextComponent = (props: Props) => {
   //WE ARE NOT ADDING DRAG DROP
   return (
     <div
-      className={clsx("w-max relative text-[14px] transition-all ", {
-        // "outline-[1px] !outline-dotted !outline-blue-500": state.editor.selectedElement.id === props.element.id,
-      })}
+      draggable
+      className={clsx("w-max relative text-[14px] transition-all ")}
       onClick={handleOnClickBody}
-      
     >
-      <div
+      <p
         style={styles}
-        className={clsx("p-[2px] transition-all text-white abc")}
-      >
-        <span
-          className=" border-none outline-none "
-          contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
-          onBlur={(e) => {
-            const spanElement = e.target as HTMLSpanElement;
-            dispatch({
-              type: "UPDATE_ELEMENT",
-              payload: {
-                elementDetails: {
-                  ...props.element,
-                  content: {
-                    innerText: spanElement.innerText,
-                  },
+        className={clsx("text-white border-none outline-none ", { abc: !state.editor.liveMode })}
+        contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
+        onBlur={(e) => {
+          const spanElement = e.target as HTMLSpanElement;
+          dispatch({
+            type: "UPDATE_ELEMENT",
+            payload: {
+              elementDetails: {
+                ...props.element,
+                content: {
+                  innerText: spanElement.innerText,
                 },
               },
-            });
-          }}
-        >
-          {!Array.isArray(props.element.content) && props.element.content.innerText}
-        </span>
-      </div>
+            },
+          });
+        }}
+      >
+        {!Array.isArray(props.element.content) && props.element.content.innerText}
+      </p>
+      {/* </div> */}
       <div
         className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
           hidden: state.editor.liveMode,
@@ -91,7 +86,7 @@ const TextComponent = (props: Props) => {
         })}
       ></div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute -top-[17px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">T</Badge>
+        <Badge className="absolute bg-main -top-[16px] left-0 h-4 text-xs rounded-none rounded-t-md flex items-center">T</Badge>
       )}
     </div>
   );

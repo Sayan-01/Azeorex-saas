@@ -19,17 +19,9 @@ const Container = ({ element }: Props) => {
     e.preventDefault();
     console.log("first", id);
 
-    if (activeContainer) {
-      if (id !== activeContainer) {
-        moveObject(state.editor.elements, activeContainer, id);
-        setActiveContainer(null);
-      }
-    }
-
     //===========================================
 
-    // const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
-    const componentType = "";
+    const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
     switch (componentType) {
       case "text":
         console.log("text");
@@ -181,23 +173,31 @@ const Container = ({ element }: Props) => {
           },
         });
         break;
-      default:
-        console.log("noooo");
+      case "element":
+        if (activeContainer) {
+          if (id !== activeContainer) {
+            moveObject(state.editor.elements, activeContainer, id);
+            setActiveContainer(null);
+          }
+        }
     }
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "none"; // Remove outline
   };
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const target = e.currentTarget as HTMLElement;
-    // target.style.outline = "2px solid #726fff"; // Add outline
+    target.style.outline = "1px solid #fcbd0f"; // Add outline
+    // target.style.outlineOffset = "-1px"
   };
 
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const target = e.currentTarget as HTMLElement;
-    // target.style.outline = "none"; // Remove outline
+    target.style.outline = "none"; // Remove outline
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -208,8 +208,9 @@ const Container = ({ element }: Props) => {
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type); //=> 14:18
-    // target.style.opacity = "0.3";
     const target = e.target as HTMLElement;
+    target.style.opacity = "0.3";
+    target.style.cursor = "grbbing";
 
     // Check if the target has an id property
     if (target.id) {
@@ -290,10 +291,10 @@ const Container = ({ element }: Props) => {
         "w-full": type === "section",
         "h-fit mx-auto w-full": type === "container" || type === "2Col",
         "": type === "__body",
-        "overflow-scroll  overflow-x-hidden ": type === "__body",
+        // "overflow-scroll  overflow-x-hidden ": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "cursor-move": state.editor.selectedElement.id === id && !state.editor.liveMode,
+        "cursor-grab": state.editor.selectedElement.id === id && !state.editor.liveMode,
         // "hover:outline hover:outline-[1px] hover:outline-offset-[-1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
       })}
       onDragEnter={handleDragEnter}
@@ -302,18 +303,19 @@ const Container = ({ element }: Props) => {
       onDrop={(e) => handleOnDrop(e, id)}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
-      onDragStart={(e) => handleDragStart(e, "container")}
+      onDragStart={(e) => handleDragStart(e, "element")}
       onDragEnd={handleDragEnd}
     >
       <div
         style={{
           ...styles,
         }}
-        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0", {
+        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0 group", {
           "px-4": type !== "__body",
           "pt-0 min-h-screen": type === "__body",
-          "!p-9 empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
-          abc: !state.editor.liveMode && type !== "__body",
+          "empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
+          "!p-9": Array.isArray(element.content) && !element.content.length,
+          abc: !state.editor.liveMode,
         })}
       >
         {Array.isArray(content) &&
@@ -332,12 +334,14 @@ const Container = ({ element }: Props) => {
       ></div>
       {/* <DropArea/> */}
       <Badge
-        className={clsx("absolute  z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
+        className={clsx("absolute bg-main z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
           flex: state.editor.selectedElement.id === element.id && !state.editor.liveMode,
+          "bg-transparent text-main border border-main hover:bg-transparent": type === "__body",
         })}
       >
         {element.name}
       </Badge>
+      
     </div>
   );
 };

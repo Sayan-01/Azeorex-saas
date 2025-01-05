@@ -17,7 +17,7 @@ const Section = (props: Props) => {
   const { id, content, styles, type } = props.element;
   const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
-  const handleOnDrop = (e: React.DragEvent ,id: string) => {
+  const handleOnDrop = (e: React.DragEvent, id: string) => {
     e.stopPropagation();
     e.preventDefault();
     console.log("first", id);
@@ -29,8 +29,7 @@ const Section = (props: Props) => {
       }
     }
 
-    const componentType = ""
-    // e.dataTransfer.getData("componentType") as EditorBtns;
+    const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
     switch (componentType) {
       case "text":
         dispatch({
@@ -95,6 +94,13 @@ const Section = (props: Props) => {
           },
         });
         break;
+      case "element":
+        if (activeContainer) {
+          if (id !== activeContainer) {
+            moveObject(state.editor.elements, activeContainer, id);
+            setActiveContainer(null);
+          }
+        }
     }
   };
 
@@ -115,11 +121,11 @@ const Section = (props: Props) => {
     }
   };
 
-   const handleDragEnd = (e: React.DragEvent) => {
-      const target = e.target as HTMLElement;
-      target.style.opacity = "1"; // Reset the opacity
-      setActiveContainer(null);
-    };
+  const handleDragEnd = (e: React.DragEvent) => {
+    const target = e.target as HTMLElement;
+    target.style.opacity = "1"; // Reset the opacity
+    setActiveContainer(null);
+  };
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -162,7 +168,7 @@ const Section = (props: Props) => {
   }, [handleDeleteElement, id, state.editor.selectedElement.id]);
 
   return (
-    <div
+    <section
       style={{
         width: styles?.width,
         height: styles?.height,
@@ -187,7 +193,7 @@ const Section = (props: Props) => {
       onDragOver={handleDragOver}
       draggable={type !== "__body"}
       onClick={handleOnClickBody}
-      onDragStart={(e) => handleDragStart(e, "section")}
+      onDragStart={(e) => handleDragStart(e, "element")}
       onDragEnd={handleDragEnd}
     >
       <div
@@ -213,9 +219,9 @@ const Section = (props: Props) => {
         })}
       ></div>
       {state.editor.selectedElement.id === props.element.id && !state.editor.liveMode && (
-        <Badge className="absolute   z-[1006] -top-[17px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md">{state.editor.selectedElement.name}</Badge>
+        <Badge className="absolute bg-main  z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md">{state.editor.selectedElement.name}</Badge>
       )}
-    </div>
+    </section>
   );
 };
 

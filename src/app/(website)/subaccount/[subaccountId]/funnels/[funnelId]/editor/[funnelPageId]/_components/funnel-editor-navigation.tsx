@@ -12,7 +12,7 @@ import clsx from "clsx";
 import { DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect, useState } from "react";
 import { DeviceTypes, useEditor } from "../../../../../../../../../../providers/editor/editor-provider";
 
@@ -25,8 +25,9 @@ type Props = {
 const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: Props) => {
   const router = useRouter();
   const { state, dispatch } = useEditor();
-  const [ load, setLoade] = useState(false)
+  const [load, setLoade] = useState(false);
   const { toast } = useToast();
+  const pathName = usePathname();
 
   useEffect(() => {
     dispatch({
@@ -74,7 +75,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
   };
 
   const handleOnSave = async () => {
-    setLoade(true)
+    setLoade(true);
     const content = JSON.stringify(state.editor.elements);
     try {
       const response = await upsertFunnelPage(
@@ -90,12 +91,11 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
         description: `Updated a funnel page | ${response?.name}`,
         subAccountId: subaccountId,
       });
-      setLoade(false)
+      setLoade(false);
       toast({
         description: "✨Saved Editor",
       });
     } catch {
-
       toast({
         description: "😫Could not save editor",
       });
@@ -104,9 +104,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
 
   return (
     <TooltipProvider>
-      <nav
-        className={clsx("border-b border-main-az flex items-center justify-between px-3 py-0 gap-2 transition-all bg-[#151515] ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}
-      >
+      <nav className={clsx("border-b border-main-az flex items-center justify-between px-3 py-0 gap-2 transition-all bg-[#151515] ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
           <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
             <Image
@@ -237,18 +235,37 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             </div>
             {/* <span className="text-muted-foreground text-sm">Last updated {funnelPageDetails.updatedAt.toLocaleDateString()}</span> */}
           </div>
-          <button
-            className="text-sm border-l-2 border-main-black pl-3"
-            onClick={handleOnSave}
-          >
-            {load ? (
-              <>
-                <Loader loading={load} />
-              </>
-            ) : (
-              <DownloadIcon size={16} />
-            )}
-          </button>
+          {pathName === "/demo" ? (
+            <button
+              className="text-sm border-l-2 border-main-black pl-3"
+              onClick={() => {
+                toast({
+                  description: "😫 It is just a demo",
+                });
+              }}
+            >
+              {load ? (
+                <>
+                  <Loader loading={load} />
+                </>
+              ) : (
+                <DownloadIcon size={16} />
+              )}
+            </button>
+          ) : (
+            <button
+              className="text-sm border-l-2 border-main-black pl-3"
+              onClick={handleOnSave}
+            >
+              {load ? (
+                <>
+                  <Loader loading={load} />
+                </>
+              ) : (
+                <DownloadIcon size={16} />
+              )}
+            </button>
+          )}
         </aside>
       </nav>
     </TooltipProvider>
