@@ -1,5 +1,4 @@
-import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
+
 import EditorProvider from "../../../../providers/editor/editor-provider";
 import FunnelEditorNavigation from "../subaccount/[subaccountId]/funnels/[funnelId]/editor/[funnelPageId]/_components/funnel-editor-navigation";
 import FunnelEditor from "../subaccount/[subaccountId]/funnels/[funnelId]/editor/[funnelPageId]/_components/funnel-editor";
@@ -25,7 +24,7 @@ const page = async ({ params }: Props) => {
     order: 2,
     previewImage: null,
     funnelId: "8dc050a4-6062-4163-83ce-deeafa4a1282",
-  };
+  } as any;
 
   return (
     <div className="fixed top-0 bottom-0 border-x border-main-az left-0 right-0 z-20 bg-zinc-950 overflow-hidden">
