@@ -3,6 +3,7 @@ import { EditorBtns } from "@/types/types";
 import { FunnelPage } from "@prisma/client";
 import { Dispatch, createContext, useContext, useReducer, useState } from "react";
 import { EditorAction } from "./editor-actions";
+import { object } from "zod";
 
 export type DeviceTypes = "Desktop" | "Mobile" | "Tablet";
 
@@ -91,7 +92,6 @@ const addAnElement = (editorArray: EditorElement[], action: EditorAction): Edito
     return item;
   });
 };
-
 
 const updateAnElement = (editorArray: EditorElement[], action: EditorAction): EditorElement[] => {
   if (action.type !== "UPDATE_ELEMENT") {
@@ -323,7 +323,7 @@ const editorReducer = (state: EditorState = initialState, action: EditorAction):
       };
       return funnelPageIdState;
     case "MOVE_ELEMENT":
-      
+
     default:
       return state;
   }
@@ -341,6 +341,8 @@ export const EditorContext = createContext<{
   dispatch: Dispatch<EditorAction>;
   activeContainer: string | null;
   setActiveContainer: (activeContainer: string | null) => void;
+  position: any;
+  setPosition: (position: any) => void;
   subaccountId: string;
   funnelId: string;
   pageDetails: FunnelPage | null;
@@ -349,6 +351,8 @@ export const EditorContext = createContext<{
   dispatch: () => undefined,
   activeContainer: null,
   setActiveContainer: () => undefined,
+  position: {},
+  setPosition: () => undefined,
   subaccountId: "",
   funnelId: "",
   pageDetails: null,
@@ -364,6 +368,7 @@ type EditorProps = {
 const EditorProvider = (props: EditorProps) => {
   const [state, dispatch] = useReducer(editorReducer, initialState);
   const [activeContainer, setActiveContainer] = useState<string | null>(null);
+  const [position, setPosition] = useState({});
 
   return (
     <EditorContext.Provider
@@ -372,6 +377,8 @@ const EditorProvider = (props: EditorProps) => {
         dispatch,
         activeContainer,
         setActiveContainer,
+        position,
+        setPosition,
         subaccountId: props.subaccountId,
         funnelId: props.funnelId,
         pageDetails: props.pageDetails,

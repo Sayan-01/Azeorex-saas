@@ -14,6 +14,7 @@ import {
   AlignRight,
   AlignVerticalJustifyCenter,
   AlignVerticalJustifyEnd,
+  AlignVerticalJustifyStart,
   AlignVerticalSpaceBetween,
   ArrowRightLeft,
   Blinds,
@@ -110,6 +111,27 @@ const SettingsTab = () => {
                 placeholder="Auto"
                 onChange={handleOnChanges}
                 value={state.editor.selectedElement.styles.height || ""}
+              />
+            </div>
+          </div>
+          {/** max W and H */}
+          <div className="flex gap-2 mb-3">
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs">Max-width</p>
+              <Input
+                placeholder="Auto"
+                id="maxWidth"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.maxWidth || ""}
+              />
+            </div>
+            <div className="flex flex-col">
+              <p className="text-muted-foreground text-xs">Max-height</p>
+              <Input
+                id="maxHeight"
+                placeholder="Auto"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.maxHeight || ""}
               />
             </div>
           </div>
@@ -733,7 +755,7 @@ const SettingsTab = () => {
       >
         <AccordionTrigger className="!no-underline font-semibold">Auto Layoutx</AccordionTrigger>
         <AccordionContent>
-          <div className="flex items-center gap-2 py-3">
+          <div className="flex items-center gap-2 pt-3">
             <div className="w-full">
               <p className=" text-muted-foreground text-xs mb-2">Display</p>
 
@@ -806,90 +828,92 @@ const SettingsTab = () => {
               </Tabs>
             </div>
           </div>
-          <p className="text-muted-foreground text-xs mb-2">Justify Content</p>
-          <Tabs
-            onValueChange={(e) =>
-              handleOnChanges({
-                target: {
-                  id: "justifyContent",
-                  value: e,
-                },
-              })
-            }
-            value={state.editor.selectedElement.styles.justifyContent || "center"}
-          >
-            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
-              <TabsTrigger
-                value="space-between"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-              >
-                <AlignHorizontalSpaceBetween size={15} />
-              </TabsTrigger>
-              <TabsTrigger
-                value="space-evenly"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-              >
-                <AlignHorizontalSpaceAround size={15} />
-              </TabsTrigger>
-              <TabsTrigger
-                value="center"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-              >
-                <AlignHorizontalJustifyCenterIcon size={15} />
-              </TabsTrigger>
-              <TabsTrigger
-                value="start"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
-              >
-                <AlignHorizontalJustifyStart size={15} />
-              </TabsTrigger>
-              <TabsTrigger
-                value="end"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
-              >
-                <AlignHorizontalJustifyEndIcon size={15} />
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
-          <p className="text-muted-foreground text-xs mb-2 mt-3">Align Items</p>
-          <Tabs
-            onValueChange={(e) =>
-              handleOnChanges({
-                target: {
-                  id: "alignItems",
-                  value: e,
-                },
-              })
-            }
-            value={state.editor.selectedElement.styles.alignItems || "normal"}
-          >
-            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
-              <TabsTrigger
-                value="center"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-              >
-                <AlignVerticalJustifyCenter size={15} />
-              </TabsTrigger>
-              <TabsTrigger
-                value="normal"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-              >
-                <AlignVerticalJustifyCenter size={15} />
-              </TabsTrigger>
-              <TabsTrigger
-                value="end"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-              >
-                <AlignVerticalJustifyEnd size={15} />
-              </TabsTrigger>
-              <TabsTrigger
-                value="stretch"
-                className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
-              >
-                <AlignVerticalSpaceBetween size={15} />
-              </TabsTrigger>
-            </TabsList>
-          </Tabs>
+          <div className={`${state.editor.selectedElement.styles.display === "flex" ? "block" : "hidden"} mt-3`}>
+            <p className="text-muted-foreground text-xs mb-2">Justify Content</p>
+            <Tabs
+              onValueChange={(e) =>
+                handleOnChanges({
+                  target: {
+                    id: "justifyContent",
+                    value: e,
+                  },
+                })
+              }
+              value={state.editor.selectedElement.styles.justifyContent || "center"}
+            >
+              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
+                <TabsTrigger
+                  value="space-between"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <AlignHorizontalSpaceBetween size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="space-evenly"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <AlignHorizontalSpaceAround size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="center"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <AlignHorizontalJustifyCenterIcon size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="start"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
+                >
+                  <AlignHorizontalJustifyStart size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="end"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
+                >
+                  <AlignHorizontalJustifyEndIcon size={15} />
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+            <p className="text-muted-foreground text-xs mb-2 mt-3">Align Items</p>
+            <Tabs
+              onValueChange={(e) =>
+                handleOnChanges({
+                  target: {
+                    id: "alignItems",
+                    value: e,
+                  },
+                })
+              }
+              value={state.editor.selectedElement.styles.alignItems || "normal"}
+            >
+              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
+                <TabsTrigger
+                  value="center"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <AlignVerticalJustifyStart size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="normal"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <AlignVerticalJustifyCenter size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="end"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                >
+                  <AlignVerticalJustifyEnd size={15} />
+                </TabsTrigger>
+                <TabsTrigger
+                  value="stretch"
+                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950 "
+                >
+                  <AlignVerticalSpaceBetween size={15} />
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
         </AccordionContent>
       </AccordionItem>
     </Accordion>

@@ -68,10 +68,9 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               hidden: state.editor.previewMode,
             })}
           >
-            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box border-l border-main-az">
+            <div className="grid gap-4 h-full w-[240px] pb-4 overflow-auto overflow-x-hidden box border-l border-main-az">
               <TabsContent value="Settings">
                 <SettingsTab />
-                {/* <Sidebar /> */}
               </TabsContent>
             </div>
           </SheetContent>

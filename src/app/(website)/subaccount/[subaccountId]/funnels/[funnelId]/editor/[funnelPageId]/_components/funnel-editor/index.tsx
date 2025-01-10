@@ -11,7 +11,7 @@ import { Loader } from "@/components/global/Loader";
 type Props = { funnelPageId: string; liveMode?: boolean };
 
 const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
-  const { dispatch, state } = useEditor();
+  const { dispatch, state, position } = useEditor();
   const [load, setLoade] = useState(true);
 
   useEffect(() => {
@@ -75,6 +75,7 @@ const FunnelEditor = ({ funnelPageId, liveMode }: Props) => {
           <EyeOff />
         </Button>
       )}
+      {/* <div className="border-6 border-red-500 bg-blue-500/20" style={{height: position.height, width: position.width, position: "absolute", top: position.top, left: position.left ,zIndex: 1002, overflow: "visible", pointerEvents: "none",}}>s</div> */}
       {Array.isArray(state.editor.elements) &&
         state.editor.elements.map((childElement) => (
           <Recursive

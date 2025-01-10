@@ -12,7 +12,7 @@ type Props = { element: EditorElement };
 
 const Container = ({ element }: Props) => {
   const { id, content, styles, type } = element;
-  const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
+  const { dispatch, state, activeContainer, setActiveContainer, position, setPosition } = useEditor();
 
   const handleOnDrop = (e: React.DragEvent, id: string) => {
     e.stopPropagation();
@@ -92,7 +92,7 @@ const Container = ({ element }: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...styles, maxWidth: "940px" },
+              styles: { ...styles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
               type: "container",
             },
           },
@@ -231,7 +231,12 @@ const Container = ({ element }: Props) => {
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
+    // const targetElement = e.target as HTMLElement; // Ensure the target is an HTML element
 
+    // const boundingRect = targetElement.getBoundingClientRect();
+    // console.log(boundingRect.width);
+    // setPosition(boundingRect)
+    
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
       payload: {
@@ -267,6 +272,15 @@ const Container = ({ element }: Props) => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleDeleteElement, id, state.editor.selectedElement.id, type]);
+
+
+  // useEffect((e) => {
+  //   const targetElement = e.target as HTMLElement; // Ensure the target is an HTML element
+
+  //   const boundingRect = targetElement.getBoundingClientRect();
+  //   setPosition(boundingRect);
+
+  // }, [element])
 
   return (
     <div
@@ -315,7 +329,7 @@ const Container = ({ element }: Props) => {
           "pt-0 min-h-screen": type === "__body",
           "empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
           "!p-9": Array.isArray(element.content) && !element.content.length,
-          abc: !state.editor.liveMode,
+          "abc": !state.editor.liveMode,
         })}
       >
         {Array.isArray(content) &&
@@ -326,12 +340,12 @@ const Container = ({ element }: Props) => {
             />
           ))}
       </div>
-      <div
+      {/* <div
         className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
           hidden: state.editor.liveMode,
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === element.id,
         })}
-      ></div>
+      ></div> */}
       {/* <DropArea/> */}
       <Badge
         className={clsx("absolute bg-main z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
