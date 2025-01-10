@@ -20,14 +20,6 @@ const Section = (props: Props) => {
   const handleOnDrop = (e: React.DragEvent, id: string) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log("first", id);
-
-    if (activeContainer) {
-      if (id !== activeContainer) {
-        moveObject(state.editor.elements, activeContainer, id);
-        setActiveContainer(null);
-      }
-    }
 
     const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
     switch (componentType) {
@@ -102,16 +94,31 @@ const Section = (props: Props) => {
           }
         }
     }
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "none"; // Remove outline
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
+  const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
+    e.stopPropagation();
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "1px solid #fcbd0f"; // Add outline
+    // target.style.outlineOffset = "-1px"
   };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "none"; // Remove outline
+  };
+
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type); //=> 14:18
-    // target.style.opacity = "0.3";
     const target = e.target as HTMLElement;
+    target.style.opacity = "0.3";
+    target.style.cursor = "grbbing";
 
     // Check if the target has an id property
     if (target.id) {
@@ -119,6 +126,11 @@ const Section = (props: Props) => {
       setActiveContainer(targetId);
       console.log(targetId);
     }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
   };
 
   const handleDragEnd = (e: React.DragEvent) => {
@@ -188,7 +200,9 @@ const Section = (props: Props) => {
         "h-full": type === "__body",
         "m-4": type === "container",
       })}
-      id="innerContainer"
+      id={id}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
       draggable={type !== "__body"}

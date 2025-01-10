@@ -17,9 +17,6 @@ const Container = ({ element }: Props) => {
   const handleOnDrop = (e: React.DragEvent, id: string) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log("first", id);
-
-    //===========================================
 
     const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
     switch (componentType) {
@@ -200,11 +197,6 @@ const Container = ({ element }: Props) => {
     target.style.outline = "none"; // Remove outline
   };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault(); // Allow drop
-    e.stopPropagation();
-  };
-
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type); //=> 14:18
@@ -218,6 +210,11 @@ const Container = ({ element }: Props) => {
       setActiveContainer(targetId);
       console.log(targetId);
     }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault(); // Allow drop
+    e.stopPropagation();
   };
 
   const handleDragEnd = (e: React.DragEvent) => {
@@ -340,12 +337,12 @@ const Container = ({ element }: Props) => {
             />
           ))}
       </div>
-      {/* <div
+      <div
         className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
           hidden: state.editor.liveMode,
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === element.id,
         })}
-      ></div> */}
+      ></div>
       {/* <DropArea/> */}
       <Badge
         className={clsx("absolute bg-main z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {

@@ -3,13 +3,67 @@ import { Badge } from "@/components/ui/badge";
 import clsx from "clsx";
 import React, { useEffect } from "react";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
+import { moveObject } from "@/lib/moveElement";
 
 type Props = {
   element: EditorElement;
 };
 
 const TextComponent = (props: Props) => {
-  const { dispatch, state } = useEditor();
+  const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
+
+  const handleOnDrop = (e: React.DragEvent, id: string) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log("first", id);
+
+    if (activeContainer) {
+      if (id !== activeContainer) {
+        moveObject(state.editor.elements, activeContainer, id);
+        setActiveContainer(null);
+      }
+    }
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const target = e.currentTarget as HTMLElement;
+      target.style.outline = "1px solid #fcbd0f"; // Add outline
+      // target.style.outlineOffset = "-1px"
+    };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const target = e.currentTarget as HTMLElement;
+      target.style.outline = "none"; // Remove outline
+    };
+  
+    const handleDragOver = (e: React.DragEvent) => {
+      e.preventDefault(); // Allow drop
+      e.stopPropagation();
+    };
+
+  const handleDragStart = (e: React.DragEvent, type: string) => {
+    if (type === "__body") return;
+    e.dataTransfer.setData("componentType", type); //=> 14:18
+    // target.style.opacity = "0.3";
+    const target = e.target as HTMLElement;
+
+    // Check if the target has an id property
+    if (target.id) {
+      const targetId = target.id;
+      setActiveContainer(targetId);
+      console.log(targetId);
+    }
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    const target = e.target as HTMLElement;
+    target.style.opacity = "1"; // Reset the opacity
+    setActiveContainer(null);
+  };
 
   const handleDeleteElement = () => {
     dispatch({
@@ -55,7 +109,13 @@ const TextComponent = (props: Props) => {
     <div
       draggable
       className={clsx("w-max relative text-[14px] transition-all ")}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={(e) => handleOnDrop(e, props.element.id)}
       onClick={handleOnClickBody}
+      onDragStart={(e) => handleDragStart(e, "element")}
+      onDragEnd={handleDragEnd}
     >
       <p
         style={styles}
