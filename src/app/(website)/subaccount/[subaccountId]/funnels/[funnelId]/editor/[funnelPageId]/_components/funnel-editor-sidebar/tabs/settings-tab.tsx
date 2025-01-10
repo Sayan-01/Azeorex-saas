@@ -891,13 +891,13 @@ const SettingsTab = () => {
                   value="center"
                   className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
-                  <AlignVerticalJustifyStart size={15} />
+                  <AlignVerticalJustifyCenter size={15} />
                 </TabsTrigger>
                 <TabsTrigger
                   value="normal"
                   className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
-                  <AlignVerticalJustifyCenter size={15} />
+                  <AlignVerticalJustifyStart size={15} />
                 </TabsTrigger>
                 <TabsTrigger
                   value="end"
