@@ -26,24 +26,24 @@ const TextComponent = (props: Props) => {
   };
 
   const handleDragEnter = (e: React.DragEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const target = e.currentTarget as HTMLElement;
-      target.style.outline = "1px solid #fcbd0f"; // Add outline
-      // target.style.outlineOffset = "-1px"
-    };
+    e.preventDefault();
+    e.stopPropagation();
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "1px solid #fcbd0f"; // Add outline
+    // target.style.outlineOffset = "-1px"
+  };
 
   const handleDragLeave = (e: React.DragEvent) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const target = e.currentTarget as HTMLElement;
-      target.style.outline = "none"; // Remove outline
-    };
-  
-    const handleDragOver = (e: React.DragEvent) => {
-      e.preventDefault(); // Allow drop
-      e.stopPropagation();
-    };
+    e.preventDefault();
+    e.stopPropagation();
+    const target = e.currentTarget as HTMLElement;
+    target.style.outline = "none"; // Remove outline
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault(); // Allow drop
+    e.stopPropagation();
+  };
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
@@ -107,6 +107,7 @@ const TextComponent = (props: Props) => {
   //WE ARE NOT ADDING DRAG DROP
   return (
     <div
+      id={props.element.id}
       draggable
       className={clsx("w-max relative text-[14px] transition-all ")}
       onDragEnter={handleDragEnter}
