@@ -196,7 +196,7 @@ const Section = (props: Props) => {
         marginRight: styles?.marginRight,
       }}
       className={clsx("relative transition-all z-[1004] group box inset-0", {
-        "h-fit": type === "container",
+        "h-fit": type === "section",
         "h-full": type === "__body",
         "m-4": type === "container",
       })}

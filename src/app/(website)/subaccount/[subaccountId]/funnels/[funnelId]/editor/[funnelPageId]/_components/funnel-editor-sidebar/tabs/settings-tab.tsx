@@ -202,7 +202,7 @@ const SettingsTab = () => {
                 <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
                   {typeof state.editor.selectedElement.styles?.opacity === "number"
                     ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "0").replace("%", "")) || 0}
+                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 0}
                   %
                 </small>
               </div>
@@ -218,7 +218,7 @@ const SettingsTab = () => {
                 value={[
                   typeof state.editor.selectedElement.styles?.opacity === "number"
                     ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "0").replace("%", "")) || 0,
+                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 0,
                 ]}
                 max={100}
                 step={1}
@@ -548,29 +548,29 @@ const SettingsTab = () => {
             }
             value={state.editor.selectedElement.styles.position || "relative"}
           >
-            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
-              <TabsTrigger
+            <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-2">
+              {/* <TabsTrigger
                 value="static"
                 className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
-                disabled
+                // disabled
               >
                 <X size={15} />
-              </TabsTrigger>
+              </TabsTrigger> */}
               <TabsTrigger
                 value="relative"
-                className="w-10 h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
+                className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
               >
                 R
               </TabsTrigger>
               <TabsTrigger
                 value="absolute"
-                className="w-10 h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
+                className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950"
               >
                 A
               </TabsTrigger>
               <TabsTrigger
                 value="fixed"
-                className="w-10 h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950 "
+                className="w-full h-[24.4px] text-xs p-0 data-[state=active]:bg-zinc-950 "
               >
                 F
               </TabsTrigger>
@@ -725,22 +725,22 @@ const SettingsTab = () => {
               }
               value={state.editor.selectedElement.styles.backgroundSize?.toString() || "cover"}
             >
-              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-4">
+              <TabsList className="p-[2px] flex items-center flex-row justify-between border-[1px] rounded-md bg-[#272727] h-fit gap-2">
                 <TabsTrigger
                   value="cover"
-                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
                   <ChevronsLeftRightIcon size={18} />
                 </TabsTrigger>
                 <TabsTrigger
                   value="contain"
-                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
                   <AlignVerticalJustifyCenter size={15} />
                 </TabsTrigger>
                 <TabsTrigger
                   value="auto"
-                  className="w-10 h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
+                  className="w-full h-[24.4px] p-0 data-[state=active]:bg-zinc-950"
                 >
                   <LucideImageDown size={15} />
                 </TabsTrigger>

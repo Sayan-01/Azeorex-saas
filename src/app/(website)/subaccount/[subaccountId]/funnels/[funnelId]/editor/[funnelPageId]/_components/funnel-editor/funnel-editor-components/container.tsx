@@ -299,9 +299,8 @@ const Container = ({ element }: Props) => {
         maxHeight: styles?.maxHeight,
       }}
       className={clsx("relative z-[1004] box inset-0", {
-        "w-full": type === "section",
         "h-fit mx-auto w-full": type === "container" || type === "2Col",
-        "": type === "__body",
+        "!relative": type === "__body",
         // "overflow-scroll  overflow-x-hidden ": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
