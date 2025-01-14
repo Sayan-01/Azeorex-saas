@@ -18,19 +18,18 @@ type Props = {
 export const PricingSection = () => {
   return (
     <div
-      className="w-full md:pt-20 flex flex-col items-center gap-y-3"
+      className="w-full md:pt-5 flex flex-col items-center gap-y-3"
       id="pricing"
     >
       <BackdropGradient className="w-8/12 h-full opacity-40 flex flex-col items-center">
-        <GradientText
-          className="text-4xl font-semibold text-center"
-          element="H2"
+        <h2
+          className="text-4xl md:text-[4rem] font-semibold text-center mb-4"
         >
-          Pricing Plans That Fit Your Right
-        </GradientText>
-        <p className="text-sm md:text-center text-left mt-4 mb-10 text-muted-foreground">
-          Grouple is a vibrant online community platform that empowers people to connect, <br className="hidden md:block" />
-          collaborate, and cultivate meaningful relationships
+          Pricing Plans That Fit You
+        </h2>
+        <p className="text-lg md:text-center text-left mt-4 mb-10 text-muted-foreground">
+          Discover innovative tools designed to optimize your workflows
+          <br /> and drive success.
         </p>
       </BackdropGradient>
       <div className="flex xl:flex-row flex-col gap-2">
@@ -62,7 +61,7 @@ export const PricingSection = () => {
 
 const PriceCard = ({ border, title, tag, color, features }: Props) => {
   return (
-    <Card className={clsx("p-8 mt-10 xl:w-[20rem] sm:w-[30rem] w-[18rem] rounded-[40px] border-2", border)}>
+    <Card className={clsx("p-8 mt-10 xl:w-[22rem] sm:w-[30rem] w-[18rem] rounded-[40px] border-2", border)}>
       <div className="flex flex-col gap-2 mb-8">
         <CardTitle className={clsx(color)}>{title}</CardTitle>
         <CardDescription className="my-5">
@@ -89,7 +88,10 @@ const PriceCard = ({ border, title, tag, color, features }: Props) => {
       <div className={clsx("flex flex-col gap-2 mt-5", tag === "$15 /" ? "text-white" : "text-[#d3cfcd]")}>
         <p>Features</p>
         {features.map((i, idx) => (
-          <span className="flex gap-2 mt-2 items-center" key={idx}>
+          <span
+            className="flex gap-2 mt-2 items-center"
+            key={idx}
+          >
             <Check />
             {i}
           </span>
