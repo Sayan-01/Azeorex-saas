@@ -31,7 +31,7 @@ const DashboardSnippet = () => {
           delay={9}
         />
         <Image
-          src="/dashboard-snippet.png"
+          src="/image.png"
           alt="Dashboard"
           width={1200}
           height={1200}

@@ -7,7 +7,7 @@ import { v4 } from "uuid";
 import clsx from "clsx";
 import { Badge } from "@/components/ui/badge";
 import { defaultStyles, EditorBtns } from "@/types/types";
-import { moveObject } from "@/lib/moveElement";
+import { moveObject, updateId } from "@/lib/moveElement";
 
 type Props = {
   element: EditorElement;
@@ -50,7 +50,7 @@ const Section = (props: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...defaultStyles, maxWidth: "940px" },
+              styles: { ...styles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
               type: "container",
             },
           },
@@ -92,6 +92,29 @@ const Section = (props: Props) => {
             moveObject(state.editor.elements, activeContainer, id);
             setActiveContainer(null);
           }
+        }
+        break;
+      default:
+        if (componentType === null) return;
+        // else setComponent(state.editor.elements, JSON.parse(componentType));
+        else {
+          const oldData = JSON.parse(componentType) as EditorElement;
+          const newData = updateId(oldData);
+          console.log(newData);
+
+          dispatch({
+            type: "ADD_ELEMENT",
+            payload: {
+              containerId: id,
+              elementDetails: {
+                id: newData.id,
+                name: newData.name,
+                styles: newData.styles,
+                type: newData.type,
+                content: newData.content,
+              },
+            },
+          });
         }
     }
     const target = e.currentTarget as HTMLElement;

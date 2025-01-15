@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { EditorElement } from "../../providers/editor/editor-provider";
+import { v4 } from "uuid";
 
 const findAndRemoveObjectById = (objArray: EditorElement[], targetId: string): EditorElement | null => {
   for (let i = 0; i < objArray.length; i++) {
@@ -41,3 +42,20 @@ export const moveObject = (data: EditorElement[], draggableId: string, perentId:
     findAndAddObjectById(data, perentId, objToMove);
   }
 };
+
+export function updateId(data: EditorElement) {
+  // Create a deep copy of the data to avoid mutating the original object
+  const newData = { ...data };
+
+  // If the object contains an "id" key, replace it with a new UUID
+  if (newData.id) {
+    newData.id = v4();
+  }
+
+  // If the object contains a "content" key that is an array, recursively process its elements
+  if (Array.isArray(newData.content)) {
+    newData.content = newData.content.map(updateId);
+  }
+
+  return newData;
+}

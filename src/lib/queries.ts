@@ -463,9 +463,14 @@ export const upsertFunnelPage = async (subaccountId: string, funnelPage: Prisma.
     },
   });
 
-  // revalidatePath(`/subaccount/${subaccountId}/funnels/${funnelId}`, "page");
   return response;
 };
+
+//==============================================================================
+
+// export const createComponents = async (component:EditorElement) => {
+//   const response = await db.component
+// }
 
 //===============================================================================
 

@@ -47,7 +47,7 @@ const TwoColumns = (props: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...defaultStyles },
+              styles: { ...defaultStyles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
               type: "container",
             },
           },
@@ -89,6 +89,7 @@ const TwoColumns = (props: Props) => {
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
+
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
     e.dataTransfer.setData("componentType", type);

@@ -828,7 +828,7 @@ const SettingsTab = () => {
               </Tabs>
             </div>
           </div>
-          <div className={`${state.editor.selectedElement.styles.display === "flex" ? "block" : "hidden"} mt-3`}>
+          <div className={`${state.editor.selectedElement.styles.display !== "flex" ? "block" : "hidden"} mt-3`}>
             <p className="text-muted-foreground text-xs mb-2">Justify Content</p>
             <Tabs
               onValueChange={(e) =>
@@ -913,6 +913,15 @@ const SettingsTab = () => {
                 </TabsTrigger>
               </TabsList>
             </Tabs>
+            <div className="w-full mt-3">
+              <p className=" text-muted-foreground text-xs mb-2">Gap</p>
+              <Input
+                placeholder="0"
+                id="gap"
+                onChange={handleOnChanges}
+                value={state.editor.selectedElement.styles.gap || ""}
+              />
+            </div>
           </div>
         </AccordionContent>
       </AccordionItem>

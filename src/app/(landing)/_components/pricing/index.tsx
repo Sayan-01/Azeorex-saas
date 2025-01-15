@@ -22,11 +22,7 @@ export const PricingSection = () => {
       id="pricing"
     >
       <BackdropGradient className="w-8/12 h-full opacity-40 flex flex-col items-center">
-        <h2
-          className="text-4xl md:text-[4rem] font-semibold text-center mb-4"
-        >
-          Pricing Plans That Fit You
-        </h2>
+        <h2 className="text-4xl md:text-[4rem] font-semibold text-center mb-4">Pricing Plans That Fit You</h2>
         <p className="text-lg md:text-center text-left mt-4 mb-10 text-muted-foreground">
           Discover innovative tools designed to optimize your workflows
           <br /> and drive success.
@@ -42,7 +38,7 @@ export const PricingSection = () => {
         />
         <PriceCard
           features={["Collaborate with up to 3 teammates", "Core task management features", "Unlimited projects and tasks", "Board and list views", "Basic integrations"]}
-          border="relative border-white/10 z-10  bg-main/40 pricing-shadow"
+          border="relative border-white/10 z-10  bg-[#402fb5]/40 pricing-shadow"
           title="Pro Plane"
           tag="$15 /"
           color="text-[#b4b0a3]"

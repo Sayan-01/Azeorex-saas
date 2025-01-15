@@ -236,9 +236,9 @@ html {
   box-shadow: 0px 0px 27px 0px rgba(255, 255, 255, 0.5);
 }
 .pricing-shadow {
-  -webkit-box-shadow: 0px 0px 90px 0px #716fffae;
-  -moz-box-shadow: 0px 0px 90px 0px #726fffae;
-  box-shadow: 0px 0px 90px 0px #726fffae;
+  -webkit-box-shadow: 0px 0px 90px 0px #402fb5ae;
+  -moz-box-shadow: 0px 0px 90px 0px #402fb5ae;
+  box-shadow: 0px 0px 90px 0px #402fb5ae;
 }
 
 .empty-outline {

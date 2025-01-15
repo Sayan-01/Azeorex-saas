@@ -5,7 +5,7 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
-import { moveObject } from "@/lib/moveElement";
+import { moveObject, updateId } from "@/lib/moveElement";
 import { defaultStyles, EditorBtns } from "@/types/types";
 
 type Props = { element: EditorElement };
@@ -79,8 +79,6 @@ const Container = ({ element }: Props) => {
         });
         break;
       case "container":
-        console.log("containe");
-
         dispatch({
           type: "ADD_ELEMENT",
           payload: {
@@ -169,13 +167,40 @@ const Container = ({ element }: Props) => {
             },
           },
         });
-        break;
+
       case "element":
         if (activeContainer) {
           if (id !== activeContainer) {
+            console.log(componentType, "ddd");
+
             moveObject(state.editor.elements, activeContainer, id);
             setActiveContainer(null);
           }
+        }
+        break;
+      default:
+        console.log("sayan das");
+
+        if (componentType === null) return;
+        // else setComponent(state.editor.elements, JSON.parse(componentType));
+        else {
+          const oldData = JSON.parse(componentType) as EditorElement;
+          const newData = updateId(oldData);
+          console.log(newData);
+
+          dispatch({
+            type: "ADD_ELEMENT",
+            payload: {
+              containerId: id,
+              elementDetails: {
+                id: newData.id,
+                name: newData.name,
+                styles: newData.styles,
+                type: newData.type,
+                content: newData.content,
+              },
+            },
+          });
         }
     }
     const target = e.currentTarget as HTMLElement;
@@ -228,12 +253,6 @@ const Container = ({ element }: Props) => {
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // const targetElement = e.target as HTMLElement; // Ensure the target is an HTML element
-
-    // const boundingRect = targetElement.getBoundingClientRect();
-    // console.log(boundingRect.width);
-    // setPosition(boundingRect)
-    
     dispatch({
       type: "CHANGE_CLICKED_ELEMENT",
       payload: {
@@ -269,7 +288,6 @@ const Container = ({ element }: Props) => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleDeleteElement, id, state.editor.selectedElement.id, type]);
-
 
   // useEffect((e) => {
   //   const targetElement = e.target as HTMLElement; // Ensure the target is an HTML element
@@ -325,7 +343,7 @@ const Container = ({ element }: Props) => {
           "pt-0 min-h-screen": type === "__body",
           "empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
           "!p-9": Array.isArray(element.content) && !element.content.length,
-          "abc": !state.editor.liveMode,
+          abc: !state.editor.liveMode,
         })}
       >
         {Array.isArray(content) &&
@@ -351,7 +369,6 @@ const Container = ({ element }: Props) => {
       >
         {element.name}
       </Badge>
-      
     </div>
   );
 };
