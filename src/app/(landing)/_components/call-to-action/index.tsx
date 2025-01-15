@@ -16,20 +16,27 @@ const CallToAction = async () => {
     <div className="flex flex-col items-center gap-y-5 md:gap-y-0">
       <AnimatedBtn />
       <GradientText
-        className={`text-[35px] cursor-default md:mt-4 md:mb-4 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[72px] leading-[1.1] font-semibold`}
+        className={`text-[37px] cursor-default md:mt-4 md:mb-4 text-center md:text-[40px] lg:text-[40px] xl:text-[70px] 2xl:text-[72px] md:leading-[1.1] leading-[1.2] font-semibold`}
         element="H1"
       >
-        Revolutionize Your Goal <br/>Experience with Powerful Tools
+        Next-gen <br className="block md:hidden" />
+        SaaS Solution <br className="hidden md:block" />
+        For Your Powerfull Presence{" "}
       </GradientText>
       <p className=" text-center cursor-default md:my-2  mb-2 md:text-lg text-sm text-muted-foreground">
-        Empower your business with Bester’s AI-driven solutions designed to streamline flow<br className="hidden md:block" />
+        Empower your business with Bester’s
+        <br className="block md:hidden" /> AI-driven solutions designed to streamline flow
+        <br className="hidden md:block" />
         operations and enhance customer relationships with us.
       </p>
       <div className="flex md:flex-row flex-col text-lg md:justify-center gap-5 md:mt-6 w-full">
-        <Link href={session?.user ? "/demo" : "agency/sign-in"}>
+        <Link
+          href={session?.user ? "/demo" : "agency/sign-in"}
+          className="w-full md:w-fit"
+        >
           <Button
             variant="outline"
-            className="rounded-lg bg-zinc-950 py-4 element text-base"
+            className="rounded-lg bg-zinc-950 py-4 element text-base w-full"
           >
             Demo
           </Button>
