@@ -1,6 +1,6 @@
 "use client";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import clsx from "clsx";
 import React from "react";
 import TabList from "./tabs";
@@ -9,6 +9,7 @@ import MediaBucketTab from "./tabs/media-bucket-tab";
 import ComponentsTab from "./tabs/components-tab";
 import { useEditor } from "../../../../../../../../../../../providers/editor/editor-provider";
 import LayersTab from "./tabs/layers-tab";
+import WarframeTab from "./tabs/warframe-tab";
 
 type Props = {
   subaccountId: string;
@@ -40,11 +41,36 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
                 <MediaBucketTab subaccountId={subaccountId} />
               </TabsContent>
               <TabsContent value="Components">
-                <SheetHeader className="text-left p-3 ">
-                  <SheetTitle>Components</SheetTitle>
-                  <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
-                </SheetHeader>
-                <ComponentsTab />
+                <Tabs defaultValue="Components">
+                  <TabsList className="w-full rounded-none justify-between gap-2">
+                    <TabsTrigger
+                      value="Components"
+                      className="w-full"
+                    >
+                      Components
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="Warframe"
+                      className="w-full"
+                    >
+                      Warframe
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="Components">
+                    <SheetHeader className="text-left p-3 ">
+                      <SheetTitle>Components</SheetTitle>
+                      <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
+                    </SheetHeader>
+                    <ComponentsTab />
+                  </TabsContent>
+                  <TabsContent value="Warframe">
+                    <SheetHeader className="text-left p-3 ">
+                      <SheetTitle>Warframe</SheetTitle>
+                      <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
+                    </SheetHeader>
+                    <WarframeTab />
+                  </TabsContent>
+                </Tabs>
               </TabsContent>
               <TabsContent value="Layers">
                 <LayersTab />

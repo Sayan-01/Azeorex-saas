@@ -16,6 +16,7 @@ const ComponentsTab = () => {
   const { state } = useEditor();
   const [components, setComponents] = useState<any>([]);
 
+
   const elements: {
     Component: React.ReactNode;
     label: string;
@@ -141,7 +142,9 @@ const ComponentsTab = () => {
             <Button
               className="w-full h-8 mb-4"
               onClick={() => {
-                setComponents([...components, state.editor.selectedElement]);
+                setComponents([...components, state.editor.selectedElement])
+                console.log(components);
+                ;
               }}
             >
               Create components

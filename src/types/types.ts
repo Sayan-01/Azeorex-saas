@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { Document } from "mongoose";
 import { Types } from "mongoose";
 import { z } from "zod";
+import { EditorElement } from "../../providers/editor/editor-provider";
 
 export enum Role {
   AGENCY_OWNER = "AGENCY_OWNER",
@@ -71,6 +72,13 @@ export const FunnelPageSchema = z.object({
 });
 
 export type EditorBtns = "text" | "container" | "section" | "contactForm" | "paymentForm" | "link" | "2Col" | "video" | "__body" | "image" | null | "3Col" | "element";
+
+export type Warframe = {
+  id: string;
+  warframe_name: string;
+  warframe_image: string;
+  warframe: EditorElement | { href?: string; innerText?: string; src?: string };
+};
 
 export const defaultStyles: React.CSSProperties = {
   backgroundPosition: "center",
