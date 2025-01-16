@@ -77,7 +77,7 @@ export type Warframe = {
   id: string;
   warframe_name: string;
   warframe_image: string;
-  warframe: EditorElement | { href?: string; innerText?: string; src?: string };
+  warframe: string
 };
 
 export const defaultStyles: React.CSSProperties = {

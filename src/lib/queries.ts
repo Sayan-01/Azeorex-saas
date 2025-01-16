@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { auth } from "../../auth";
-import { CreateFunnelFormSchema, CreateMediaType } from "@/types/types";
+import { CreateFunnelFormSchema, CreateMediaType, Warframe } from "@/types/types";
 import { getSession } from "next-auth/react";
 import { z } from "zod";
 import { db } from "./db";
@@ -472,7 +472,33 @@ export const upsertFunnelPage = async (subaccountId: string, funnelPage: Prisma.
 //   const response = await db.component
 // }
 
-//===============================================================================
+//==============================================================================
+
+export const createWarframe = async (warframe: Warframe) => {
+  const response = await db.warframeObj.create({
+    data: {
+      id: warframe.id,
+      warframe_name: warframe.warframe_name,
+      warframe_image: warframe.warframe_image,
+      warframe: warframe.warframe,
+    },
+  });
+
+  return response;
+};
+
+//==============================================================================
+
+export const findWarframe = async () => {
+  const response = await db.warframeObj.findMany({
+    orderBy: {
+      warframe_name: "asc",
+    },
+  });
+  return response;
+};
+
+//==============================================================================
 
 export const getFunnelPageDetails = async (funnelPageId: string) => {
   const response = await db.funnelPage.findUnique({
@@ -534,5 +560,3 @@ export const getMedia = async (subaccountId: string) => {
 };
 
 //=============================================================================
-
-

@@ -334,10 +334,11 @@ model FunnelPage {
   @@index([funnelId])
 }
 
-model component {
-  id      String  @id @default(uuid())
-  content String?
-  name         String
+model warframeObj {
+  id             String @id @default(uuid())
+  warframe_name  String
+  warframe_image String
+  warframe       String
 }
 
 model AgencySidebarOption {
