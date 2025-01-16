@@ -47,24 +47,24 @@ const ComponentsTab = () => {
       id: "section",
       group: "layout",
     },
-    {
-      Component: <VideoPlaceholder />,
-      label: "Video",
-      id: "video",
-      group: "elements",
-    },
-    {
-      Component: <ContactFormComponentPlaceholder />,
-      label: "Contact",
-      id: "contactForm",
-      group: "elements",
-    },
-    {
-      Component: <CheckoutPlaceholder />,
-      label: "Checkout",
-      id: "paymentForm",
-      group: "elements",
-    },
+    // {
+    //   Component: <VideoPlaceholder />,
+    //   label: "Video",
+    //   id: "video",
+    //   group: "elements",
+    // },
+    // {
+    //   Component: <ContactFormComponentPlaceholder />,
+    //   label: "Contact",
+    //   id: "contactForm",
+    //   group: "elements",
+    // },
+    // {
+    //   Component: <CheckoutPlaceholder />,
+    //   label: "Checkout",
+    //   id: "paymentForm",
+    //   group: "elements",
+    // },
     {
       Component: <LinkPlaceholder />,
       label: "Link",

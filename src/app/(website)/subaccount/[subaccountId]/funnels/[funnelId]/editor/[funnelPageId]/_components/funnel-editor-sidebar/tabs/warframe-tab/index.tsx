@@ -34,19 +34,20 @@ const WarframeTab = () => {
       {components.map((item: Warframe) => {
         return (
           <div
+            key={item.id}
             id={item.id}
             onDragStart={(e) => {
-              e.dataTransfer.setData("componentType", item.warframe);
+              e.dataTransfer.setData("componentType", item.warframe); //item.warframe 1 ta string 
             }}
             draggable
-            className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 flex items-center justify-between"
+            className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
           >
             <p>{item?.warframe_name}</p>
-            <div>
+            <div className="absolute top-2 right-2 opacity-60">
               <div
                 className="flex gap-2"
                 onClick={() => {
-                  navigator.clipboard.writeText(JSON.stringify(item));
+                  navigator.clipboard.writeText(item.warframe);
                   toast({ title: "Copied Successfully" });
                 }}
               >
@@ -61,7 +62,7 @@ const WarframeTab = () => {
         className="mb-3"
       />
       <Button
-        className="w-full h-8 mb-4"
+        className="w-full h-8 my-4"
         onClick={async () => {
           await createWarframe({
             id: v4(),

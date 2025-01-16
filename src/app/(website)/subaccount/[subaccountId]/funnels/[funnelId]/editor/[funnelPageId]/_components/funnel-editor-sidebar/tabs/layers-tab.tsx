@@ -100,7 +100,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
       </AccordionItem>
     ) : (
       <div
-        className="flex items-center gap-2 pl-8  py-2 cursor-pointer text-xs"
+        className={clsx("flex items-center gap-2 pl-8  py-2 cursor-pointer text-xs", { "!pl-4": props.element.type === "__body" })}
         onClick={(e) => handleSelectElement(e, props.element)}
       >
         {props.element.type === "container" ? (
@@ -215,7 +215,7 @@ const LayersTab = () => {
     <div>
       <Accordion
         type="multiple"
-        className="w-full "
+        className="w-full"
         defaultValue={["__body"]}
       >
         {state.editor.elements.map((childElement) => (

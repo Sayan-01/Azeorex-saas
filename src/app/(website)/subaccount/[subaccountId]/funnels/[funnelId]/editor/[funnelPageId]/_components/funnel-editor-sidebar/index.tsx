@@ -32,7 +32,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <SheetContent
             showX={false}
             side="left"
-            className={clsx("mt-[81.8px] h-full border-b border-main-az ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all overflow-hidden border-none  rounded-none", {
+            className={clsx("mt-[81.8px] h-full border-b border-main-az ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all overflow-x-hidden border-none  rounded-none", {
               hidden: state.editor.previewMode,
             })}
           >

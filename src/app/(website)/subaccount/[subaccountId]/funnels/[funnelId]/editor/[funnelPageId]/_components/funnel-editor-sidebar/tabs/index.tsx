@@ -31,7 +31,7 @@ const TabList = (props: Props) => {
           value="Media"
           className="h-6 px-2 data-[state=active]:bg-main-black   data-[state=active] data-[state=active]:rounded"
         >
-          Media
+          Storage
         </TabsTrigger>
       </TabsList>
   );
