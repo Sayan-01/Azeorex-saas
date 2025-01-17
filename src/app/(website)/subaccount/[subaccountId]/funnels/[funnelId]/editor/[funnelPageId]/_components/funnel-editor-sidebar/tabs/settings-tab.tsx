@@ -828,7 +828,7 @@ const SettingsTab = () => {
               </Tabs>
             </div>
           </div>
-          <div className={`${state.editor.selectedElement.styles.display !== "flex" ? "block" : "hidden"} mt-3`}>
+          <div className={`${state.editor.selectedElement.styles.display === "flex" ? "block" : "hidden"} mt-3`}>
             <p className="text-muted-foreground text-xs mb-2">Justify Content</p>
             <Tabs
               onValueChange={(e) =>

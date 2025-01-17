@@ -42,7 +42,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               </TabsContent>
               <TabsContent value="Components">
                 <Tabs defaultValue="Components">
-                  <TabsList className="w-full rounded-none justify-between gap-2">
+                  <TabsList className="w-full rounded-none justify-between gap-2 border-b border-main-az">
                     <TabsTrigger
                       value="Components"
                       className="w-full"

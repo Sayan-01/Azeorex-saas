@@ -179,8 +179,6 @@ const Container = ({ element }: Props) => {
         }
         break;
       default:
-        console.log("sayan das");
-
         if (componentType === null) return;
         // else setComponent(state.editor.elements, JSON.parse(componentType));
         else {

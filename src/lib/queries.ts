@@ -500,6 +500,17 @@ export const findWarframe = async () => {
 
 //==============================================================================
 
+export const deleteWarframe = async (warframeId: string) => {
+  const response = await db.warframeObj.delete({
+    where: {
+      id: warframeId,
+    },
+  });
+  return response;
+};
+
+//==============================================================================
+
 export const getFunnelPageDetails = async (funnelPageId: string) => {
   const response = await db.funnelPage.findUnique({
     where: {
