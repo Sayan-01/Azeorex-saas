@@ -60,33 +60,52 @@ const SettingsTab = () => {
     });
   };
 
-  // const handleChangeCustomValues = (e: any) => {
-  //   const settingProperty = e.target.id;
-  //   let value = e.target.value;
-  //   const styleObject = {
-  //     [settingProperty]: value,
-  //   };
+  const handleChangeCustomValues = (e: any) => {
+    const settingProperty = e.target.id;
+    let value = e.target.value;
+    const styleObject = {
+      [settingProperty]: value,
+    };
 
-  //   dispatch({
-  //     type: "UPDATE_ELEMENT",
-  //     payload: {
-  //       elementDetails: {
-  //         ...state.editor.selectedElement,
-  //         content: {
-  //           ...state.editor.selectedElement.content,
-  //           ...styleObject,
-  //         },
-  //       },
-  //     },
-  //   });
-  // };
+    dispatch({
+      type: "UPDATE_ELEMENT",
+      payload: {
+        elementDetails: {
+          ...state.editor.selectedElement,
+          content: {
+            ...state.editor.selectedElement.content,
+            ...styleObject,
+          },
+        },
+      },
+    });
+  };
 
   return (
     <Accordion
       type="multiple"
       className="w-[240px] select-none bg-[#151515] pb-10"
-      defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox"]}
+      defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox", "Special element"]}
     >
+      <AccordionItem
+        value="Special element"
+        className="px-3 py-0  "
+      >
+        <AccordionTrigger className="!no-underline font-semibold">Special element</AccordionTrigger>
+        <AccordionContent className="pb-0">
+          {state.editor.selectedElement.type === "link" && !Array.isArray(state.editor.selectedElement.content) && (
+            <div className="flex flex-col pb-4">
+              <p className="text-muted-foreground text-xs">Link Path</p>
+              <Input
+                id="href"
+                placeholder="https:domain.example.com/pathname"
+                onChange={handleChangeCustomValues}
+                value={state.editor.selectedElement.content.href}
+              />
+            </div>
+          )}
+        </AccordionContent>
+      </AccordionItem>
       <AccordionItem
         value="Dimensions"
         className="px-3 py-0  "

@@ -12,38 +12,38 @@ type Props = {
 const TextComponent = (props: Props) => {
   const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
-  const handleOnDrop = (e: React.DragEvent, id: string) => {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log("first", id);
+  // const handleOnDrop = (e: React.DragEvent, id: string) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   console.log("first", id);
 
-    if (activeContainer) {
-      if (id !== activeContainer) {
-        moveObject(state.editor.elements, activeContainer, id);
-        setActiveContainer(null);
-      }
-    }
-  };
+  //   if (activeContainer) {
+  //     if (id !== activeContainer) {
+  //       moveObject(state.editor.elements, activeContainer, id);
+  //       setActiveContainer(null);
+  //     }
+  //   }
+  // };
 
-  const handleDragEnter = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const target = e.currentTarget as HTMLElement;
-    target.style.outline = "1px solid #fcbd0f"; // Add outline
-    // target.style.outlineOffset = "-1px"
-  };
+  // const handleDragEnter = (e: React.DragEvent) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   const target = e.currentTarget as HTMLElement;
+  //   target.style.outline = "1px solid #fcbd0f"; // Add outline
+  //   // target.style.outlineOffset = "-1px"
+  // };
 
-  const handleDragLeave = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const target = e.currentTarget as HTMLElement;
-    target.style.outline = "none"; // Remove outline
-  };
+  // const handleDragLeave = (e: React.DragEvent) => {
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   const target = e.currentTarget as HTMLElement;
+  //   target.style.outline = "none"; // Remove outline
+  // };
 
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault(); // Allow drop
-    e.stopPropagation();
-  };
+  // const handleDragOver = (e: React.DragEvent) => {
+  //   e.preventDefault(); // Allow drop
+  //   e.stopPropagation();
+  // };
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
@@ -55,7 +55,6 @@ const TextComponent = (props: Props) => {
     if (target.id) {
       const targetId = target.id;
       setActiveContainer(targetId);
-      console.log(targetId);
     }
   };
 
@@ -71,6 +70,7 @@ const TextComponent = (props: Props) => {
       payload: { elementDetails: props.element },
     });
   };
+
   const styles = props.element.styles;
 
   const handleOnClickBody = (e: React.MouseEvent) => {
@@ -110,10 +110,10 @@ const TextComponent = (props: Props) => {
       id={props.element.id}
       draggable
       className={clsx("w-max relative text-[14px] transition-all ")}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDragOver={handleDragOver}
-      onDrop={(e) => handleOnDrop(e, props.element.id)}
+      // onDragEnter={handleDragEnter}
+      // onDragLeave={handleDragLeave}
+      // onDragOver={handleDragOver}
+      // onDrop={(e) => handleOnDrop(e, props.element.id)}
       onClick={handleOnClickBody}
       onDragStart={(e) => handleDragStart(e, "element")}
       onDragEnd={handleDragEnd}
@@ -139,7 +139,6 @@ const TextComponent = (props: Props) => {
       >
         {!Array.isArray(props.element.content) && props.element.content.innerText}
       </p>
-      {/* </div> */}
       <div
         className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
           hidden: state.editor.liveMode,
