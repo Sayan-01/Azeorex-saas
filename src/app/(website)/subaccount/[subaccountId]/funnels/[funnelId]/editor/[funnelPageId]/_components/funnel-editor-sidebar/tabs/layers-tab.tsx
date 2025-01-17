@@ -2,7 +2,7 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import { BoxSelect, Contact2, CreditCardIcon, ImageIcon, Link2Icon, TypeIcon, Youtube } from "lucide-react";
+import { BoxSelect, Columns2, Contact2, CreditCardIcon, ImageIcon, Link2Icon, TextSelect, TypeIcon, Youtube } from "lucide-react";
 import React from "react";
 
 type RecursiveAccordianItemProps = {
@@ -27,10 +27,11 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
         value={props.element.id}
         className={clsx("transition-all border-b-0 border-r-0 border-l-none border-main-black select-none hover:pb-0", { " pl-4 ": props.element.type !== "__body" })}
         onClick={(e) => handleSelectElement(e, props.element)}
+        onMouseOver={(e) => handleSelectElement(e, props.element)}
       >
         <AccordionTrigger
           className={clsx("!no-underline p-2 pl-0 text-sm border-b-[1px]", {
-            "bg-muted-foreground/30": state.editor.selectedElement.id === props.element.id,
+            "bg-muted-foreground/30 rounded-l-lg": state.editor.selectedElement.id === props.element.id,
           })}
         >
           <div className="flex items-center gap-2 pl-4  text-xs">
@@ -55,14 +56,14 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
                 className="text-muted-foreground"
               />
             ) : props.element.type === "2Col" ? (
-              <BoxSelect
+              <Columns2
                 size={16}
                 className="text-muted-foreground"
               />
             ) : props.element.type === "section" ? (
-              <BoxSelect
+              <TextSelect
                 size={16}
-                className="text-muted-foreground"
+                className="text-muted-foreground peer"
               />
             ) : props.element.type === "paymentForm" ? (
               <CreditCardIcon
@@ -100,8 +101,12 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
       </AccordionItem>
     ) : (
       <div
-        className={clsx("flex items-center gap-2 pl-8  py-2 cursor-pointer text-xs", { "!pl-4": props.element.type === "__body" })}
+        className={clsx("flex items-center gap-2 pl-4 ml-4  py-2 cursor-pointer text-xs border-b-[1px]", {
+          "!ml-0": props.element.type === "__body",
+          "bg-muted-foreground/30 rounded-l-lg": state.editor.selectedElement.id === props.element.id,
+        })}
         onClick={(e) => handleSelectElement(e, props.element)}
+        onMouseOver={(e) => handleSelectElement(e, props.element)}
       >
         {props.element.type === "container" ? (
           <BoxSelect
@@ -124,7 +129,12 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
             className="text-muted-foreground"
           />
         ) : props.element.type === "2Col" ? (
-          <BoxSelect
+          <Columns2
+            size={16}
+            className="text-muted-foreground"
+          />
+        ) : props.element.type === "section" ? (
+          <TextSelect
             size={16}
             className="text-muted-foreground"
           />
@@ -154,8 +164,11 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
     )
   ) : (
     <div
-      className="flex items-center gap-2 pl-4 py-2 cursor-pointer text-xs"
+      className={clsx("!no-underline p-2 pl-0 text-sm border-b-[1px]", {
+        "bg-muted-foreground/30 rounded-l-lg": state.editor.selectedElement.id === props.element.id,
+      })}
       onClick={(e) => handleSelectElement(e, props.element)}
+      onMouseOver={(e) => handleSelectElement(e, props.element)}
     >
       {props.element.type === "container" ? (
         <BoxSelect
@@ -178,7 +191,12 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
           className="text-muted-foreground"
         />
       ) : props.element.type === "2Col" ? (
-        <BoxSelect
+        <Columns2
+          size={16}
+          className="text-muted-foreground"
+        />
+      ) : props.element.type === "section" ? (
+        <TextSelect
           size={16}
           className="text-muted-foreground"
         />
