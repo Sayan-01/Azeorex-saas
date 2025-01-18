@@ -72,7 +72,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
               />
             ) : props.element.type === "text" ? (
               <TypeIcon
-                size={16}
+                // size={16}
                 className="text-muted-foreground"
               />
             ) : props.element.type === "link" ? (
@@ -145,7 +145,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
           />
         ) : props.element.type === "text" ? (
           <TypeIcon
-            size={16}
+            // size={16}
             className="text-muted-foreground"
           />
         ) : props.element.type === "link" ? (
@@ -164,7 +164,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
     )
   ) : (
     <div
-      className={clsx("!no-underline p-2 pl-0 text-sm border-b-[1px]", {
+      className={clsx("!no-underline flex items-center gap-2 pl-4 ml-4  py-2 cursor-pointer text-xs border-b-[1px]", {
         "bg-muted-foreground/30 rounded-l-lg": state.editor.selectedElement.id === props.element.id,
       })}
       onClick={(e) => handleSelectElement(e, props.element)}

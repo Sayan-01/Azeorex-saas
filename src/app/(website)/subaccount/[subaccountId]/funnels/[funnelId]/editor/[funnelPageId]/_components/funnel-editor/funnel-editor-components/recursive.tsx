@@ -7,6 +7,7 @@ import ContactFormComponent from "./contact-form-component";
 import Checkout from "./checkout";
 import { EditorElement } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import Section from "./section";
+import ImageComponent from "./image";
 
 type Props = {
   element: EditorElement;
@@ -22,6 +23,8 @@ const Recursive = ({ element }: Props) => {
       return <Section element={element} />;
     case "video":
       return <VideoComponent element={element} />;
+    case "image":
+      return <ImageComponent element={element} />;
     case "contactForm":
       return <ContactFormComponent element={element} />;
     case "paymentForm":

@@ -12,41 +12,8 @@ type Props = {
 const TextComponent = (props: Props) => {
   const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
 
-  // const handleOnDrop = (e: React.DragEvent, id: string) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   console.log("first", id);
-
-  //   if (activeContainer) {
-  //     if (id !== activeContainer) {
-  //       moveObject(state.editor.elements, activeContainer, id);
-  //       setActiveContainer(null);
-  //     }
-  //   }
-  // };
-
-  // const handleDragEnter = (e: React.DragEvent) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   const target = e.currentTarget as HTMLElement;
-  //   target.style.outline = "1px solid #fcbd0f"; // Add outline
-  //   // target.style.outlineOffset = "-1px"
-  // };
-
-  // const handleDragLeave = (e: React.DragEvent) => {
-  //   e.preventDefault();
-  //   e.stopPropagation();
-  //   const target = e.currentTarget as HTMLElement;
-  //   target.style.outline = "none"; // Remove outline
-  // };
-
-  // const handleDragOver = (e: React.DragEvent) => {
-  //   e.preventDefault(); // Allow drop
-  //   e.stopPropagation();
-  // };
-
   const handleDragStart = (e: React.DragEvent, type: string) => {
-    if (type === "__body") return;
+    if (type === null) return;
     e.dataTransfer.setData("componentType", type); //=> 14:18
     // target.style.opacity = "0.3";
     const target = e.target as HTMLElement;
@@ -109,18 +76,28 @@ const TextComponent = (props: Props) => {
     <div
       id={props.element.id}
       draggable
-      className={clsx("w-max relative text-[14px] transition-all ")}
-      // onDragEnter={handleDragEnter}
-      // onDragLeave={handleDragLeave}
-      // onDragOver={handleDragOver}
-      // onDrop={(e) => handleOnDrop(e, props.element.id)}
+      className={clsx("w-max h-max relative text-[14px] transition-all z-[1004] inset-0")}
       onClick={handleOnClickBody}
       onDragStart={(e) => handleDragStart(e, "element")}
       onDragEnd={handleDragEnd}
+      style={{
+        width: styles?.width,
+        height: styles?.height,
+        position: styles?.position || "relative",
+        top: styles?.top || 0,
+        bottom: styles?.bottom || 0,
+        left: styles?.left || 0,
+        right: styles?.right || 0,
+        zIndex: styles?.zIndex || 0,
+        marginTop: styles?.marginTop,
+        marginBottom: styles?.marginBottom,
+        marginLeft: styles?.marginLeft,
+        marginRight: styles?.marginRight,
+      }}
     >
       <p
         style={styles}
-        className={clsx("text-white border-none outline-none ", { abc: !state.editor.liveMode })}
+        className={clsx("text-white border-none outline-none !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] !m-0 group", { abc: !state.editor.liveMode })}
         contentEditable={!state.editor.liveMode && state.editor.selectedElement.id === props.element.id}
         onBlur={(e) => {
           const spanElement = e.target as HTMLSpanElement;

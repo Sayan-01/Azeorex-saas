@@ -112,7 +112,7 @@ const SettingsTab = () => {
       >
         <AccordionTrigger className="!no-underline font-semibold">Dimensions</AccordionTrigger>
         <AccordionContent>
-          {/* 1st width nad height */}
+          {/* width nad height */}
           <div className="flex gap-2 mb-3">
             <div className="flex flex-col">
               <p className="text-muted-foreground text-xs">Width</p>
@@ -133,7 +133,7 @@ const SettingsTab = () => {
               />
             </div>
           </div>
-          {/** max W and H */}
+          {/* max W and H */}
           <div className="flex gap-2 mb-3">
             <div className="flex flex-col">
               <p className="text-muted-foreground text-xs">Max-width</p>
@@ -154,9 +154,9 @@ const SettingsTab = () => {
               />
             </div>
           </div>
-          {/* 2nd Angle and rotation*/}
+          {/* Angle and rotation */}
           <div className="flex gap-2 mb-3">
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
               <p className="text-muted-foreground text-xs">Angle</p>
               <Input
                 id="rotate"
@@ -165,15 +165,7 @@ const SettingsTab = () => {
                 value={state.editor.selectedElement.styles.rotate || ""}
               />
             </div>
-            <div className="flex flex-col">
-              <p className="text-muted-foreground text-xs">Rotation 🌟</p>
-              <Input
-                placeholder="px"
-                id="transform"
-                onChange={handleOnChanges}
-                value={state.editor.selectedElement.styles.transform || ""}
-              />
-            </div>
+            
           </div>
           {/* 3rd radius and opacity*/}
           <div className="flex gap-2 mb-4">
@@ -244,7 +236,7 @@ const SettingsTab = () => {
               />
             </div>
           </div>
-          {/* 4rt overflow */}
+          {/* overflow */}
           <div className="flex flex-col">
             <p className="text-muted-foreground text-xs mb-2">Overflow</p>
             <Tabs

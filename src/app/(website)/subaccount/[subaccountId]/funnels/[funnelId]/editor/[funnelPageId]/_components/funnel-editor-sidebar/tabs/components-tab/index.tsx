@@ -11,6 +11,7 @@ import CheckoutPlaceholder from "./checkout-placeholder";
 import SectionPlaceholder from "./section-placeholder";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../../providers/editor/editor-provider";
 import { Button } from "@/components/ui/button";
+import ImagePlaceholder from "./image-placeholder";
 
 const ComponentsTab = () => {
   const { state } = useEditor();
@@ -46,6 +47,12 @@ const ComponentsTab = () => {
       label: "Section",
       id: "section",
       group: "layout",
+    },
+    {
+      Component: <ImagePlaceholder />,
+      label: "Image",
+      id: "image",
+      group: "elements",
     },
     // {
     //   Component: <VideoPlaceholder />,

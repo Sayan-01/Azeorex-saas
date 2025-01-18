@@ -217,6 +217,7 @@ const Section = (props: Props) => {
         marginBottom: styles?.marginBottom,
         marginLeft: styles?.marginLeft,
         marginRight: styles?.marginRight,
+        rotate: styles.rotate
       }}
       className={clsx("relative transition-all z-[1004] group box inset-0", {
         "h-fit": type === "section",
@@ -235,8 +236,8 @@ const Section = (props: Props) => {
     >
       <div
         id={id}
-        style={props.element.styles}
-        className={clsx("px-4 !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full peer-hover:bg-white !m-0", {
+        style={{ ...props.element.styles, rotate: "0" }}
+        className={clsx("px-4 !relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] min-h-full !w-full !m-0", {
           "!p-9 empty-outline ": Array.isArray(content) && !content.length && !state.editor.liveMode && type !== "__body",
           abc: !state.editor.liveMode && type !== "__body",
         })}

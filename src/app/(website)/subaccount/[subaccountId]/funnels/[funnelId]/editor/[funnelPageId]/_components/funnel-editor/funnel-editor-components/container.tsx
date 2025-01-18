@@ -78,6 +78,23 @@ const Container = ({ element }: Props) => {
           },
         });
         break;
+      case "image":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: {
+                src: "/sayan.png",
+              },
+              id: v4(),
+              name: "Image",
+              styles: {width: "100%"},
+              type: "image",
+            },
+          },
+        });
+        break;
       case "container":
         dispatch({
           type: "ADD_ELEMENT",
@@ -287,14 +304,6 @@ const Container = ({ element }: Props) => {
     };
   }, [handleDeleteElement, id, state.editor.selectedElement.id, type]);
 
-  // useEffect((e) => {
-  //   const targetElement = e.target as HTMLElement; // Ensure the target is an HTML element
-
-  //   const boundingRect = targetElement.getBoundingClientRect();
-  //   setPosition(boundingRect);
-
-  // }, [element])
-
   return (
     <div
       id={id}
@@ -313,6 +322,7 @@ const Container = ({ element }: Props) => {
         marginRight: styles?.marginRight,
         maxWidth: styles?.maxWidth,
         maxHeight: styles?.maxHeight,
+        rotate: styles.rotate,
       }}
       className={clsx("relative z-[1004] box inset-0", {
         "h-fit mx-auto w-full": type === "container" || type === "2Col",
@@ -335,10 +345,11 @@ const Container = ({ element }: Props) => {
       <div
         style={{
           ...styles,
+          rotate: "0",
         }}
-        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 box-1 z-[1002] h-full w-full !m-0 group", {
+        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] h-full w-full !m-0 group", {
           "px-4": type !== "__body",
-          "pt-0 min-h-screen": type === "__body",
+          "pt-4 min-h-screen": type === "__body",
           "empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
           "!p-9": Array.isArray(element.content) && !element.content.length,
           abc: !state.editor.liveMode,
