@@ -108,7 +108,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
       <nav className={clsx("border-b border-main-az flex items-center justify-between px-3 py-1 gap-2 transition-all bg-editor-bcgc ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
         <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
           <DropdownMenu>
-            <DropdownMenuTrigger className="px-1.5 flex gap-1 items-center bg-main-az rounded-md h-7 w-max">
+            <DropdownMenuTrigger className="px-1.5 flex gap-1 items-center bg-zinc-700 rounded-md h-7 w-max">
               {/* <Image
                 src={"/az.svg"}
                 alt="logo"

@@ -10,6 +10,7 @@ import ComponentsTab from "./tabs/components-tab";
 import { useEditor } from "../../../../../../../../../../../providers/editor/editor-provider";
 import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
+import LayoutTab from "./tabs/Layout";
 
 type Props = {
   subaccountId: string;
@@ -28,7 +29,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           className="w-full h-full"
           defaultValue="Components"
         >
-          <TabList className={clsx({"  -top-[44.8px]": state.editor.previewMode })} />
+          <TabList className={clsx({ "-top-[44.8px]": state.editor.previewMode })} />
           <SheetContent
             showX={false}
             side="left"
@@ -42,20 +43,22 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               </TabsContent>
               <TabsContent value="Components">
                 <Tabs defaultValue="Components">
-                  <TabsList className="w-full rounded-none justify-between gap-2 border-b border-main-az">
-                    <TabsTrigger
-                      value="Components"
-                      className="w-full"
-                    >
-                      Components
-                    </TabsTrigger>
-                    <TabsTrigger
-                      value="Warframe"
-                      className="w-full"
-                    >
-                      Warframe
-                    </TabsTrigger>
-                  </TabsList>
+                  <div className="flex items-center p-3 border-b  border-main-az">
+                    <TabsList className="w-full justify-between gap-2 p-[1px] h-[31px] rounded-lg bg-[#242424] text-sm">
+                      <TabsTrigger
+                        value="Components"
+                        className="w-full h-7 data-[state=active]:bg-zinc-700"
+                      >
+                        Components
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="Warframe"
+                        className="w-full h-7 data-[state=active]:bg-zinc-700"
+                      >
+                        Warframe
+                      </TabsTrigger>
+                    </TabsList>
+                  </div>
                   <TabsContent value="Components">
                     <SheetHeader className="text-left p-3 ">
                       <SheetTitle>Components</SheetTitle>
@@ -74,6 +77,9 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               </TabsContent>
               <TabsContent value="Layers">
                 <LayersTab />
+              </TabsContent>
+              <TabsContent value="Layout">
+                <LayoutTab />
               </TabsContent>
             </div>
           </SheetContent>

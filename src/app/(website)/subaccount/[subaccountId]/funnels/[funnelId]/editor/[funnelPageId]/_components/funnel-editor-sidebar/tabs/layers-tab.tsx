@@ -31,7 +31,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
       >
         <AccordionTrigger
           className={clsx("!no-underline p-2 pl-0 text-sm border-b-[1px]", {
-            "bg-muted-foreground/30 rounded-l-lg": state.editor.selectedElement.id === props.element.id,
+            "bg-muted-foreground/20 rounded-lg": state.editor.selectedElement.id === props.element.id,
           })}
         >
           <div className="flex items-center gap-2 pl-4  text-xs">
@@ -103,7 +103,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
       <div
         className={clsx("flex items-center gap-2 pl-4 ml-4  py-2 cursor-pointer text-xs border-b-[1px]", {
           "!ml-0": props.element.type === "__body",
-          "bg-muted-foreground/30 rounded-l-lg": state.editor.selectedElement.id === props.element.id,
+          "bg-muted-foreground/20 rounded-lg": state.editor.selectedElement.id === props.element.id,
         })}
         onClick={(e) => handleSelectElement(e, props.element)}
         onMouseOver={(e) => handleSelectElement(e, props.element)}
@@ -165,7 +165,7 @@ const RecursiveAccordianItem = (props: RecursiveAccordianItemProps) => {
   ) : (
     <div
       className={clsx("!no-underline flex items-center gap-2 pl-4 ml-4  py-2 cursor-pointer text-xs border-b-[1px]", {
-        "bg-muted-foreground/30 rounded-l-lg": state.editor.selectedElement.id === props.element.id,
+        "bg-muted-foreground/20 rounded-lg": state.editor.selectedElement.id === props.element.id,
       })}
       onClick={(e) => handleSelectElement(e, props.element)}
       onMouseOver={(e) => handleSelectElement(e, props.element)}
@@ -230,7 +230,10 @@ const LayersTab = () => {
   const { state } = useEditor();
 
   return (
-    <div>
+    <div className="p-3">
+      <h3 className="text-lg font-semibold mb-3">
+        Navigator
+      </h3>
       <Accordion
         type="multiple"
         className="w-full"

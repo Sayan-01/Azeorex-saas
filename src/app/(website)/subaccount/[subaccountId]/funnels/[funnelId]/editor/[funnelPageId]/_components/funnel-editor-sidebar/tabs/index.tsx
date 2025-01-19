@@ -20,32 +20,32 @@ const TabList = (props: Props) => {
     <TabsList className={clsx("flex rounded-none border-main-az items-center  bg-transparent px-2 py-2.5 h-fit gap-3 absolute top-[0px] left-[55px] transition-all", props.className)}>
       <TabsTrigger
         value="Components"
-        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
       >
         <Plus2 /> Insert
       </TabsTrigger>
 
       <TabsTrigger
         value="Layers"
-        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
       >
         <Stack /> Layers
       </TabsTrigger>
       <TabsTrigger
-        value="Component"
-        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+        value="Media"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
       >
         <File /> Storage
       </TabsTrigger>
       <TabsTrigger
-        value="xyz"
-        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+        value="Layout"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
       >
         <Layout /> Layout
       </TabsTrigger>
       <TabsTrigger
-        value="abc"
-        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+        value="CMS"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-zinc-700 data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
       >
         <Ai /> CMS
       </TabsTrigger>
