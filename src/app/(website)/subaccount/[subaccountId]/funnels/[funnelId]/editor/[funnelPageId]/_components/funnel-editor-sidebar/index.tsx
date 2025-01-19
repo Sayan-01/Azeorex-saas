@@ -25,18 +25,18 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
         modal={false}
       >
         <Tabs
-          className="w-full h-[80%]"
+          className="w-full h-full"
           defaultValue="Components"
         >
-          <TabList className={clsx({ hidden: state.editor.previewMode })} />
+          <TabList className={clsx({"  -top-[44.8px]": state.editor.previewMode })} />
           <SheetContent
             showX={false}
             side="left"
-            className={clsx("mt-[81.8px] h-full border-b border-main-az ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all overflow-x-hidden border-none  rounded-none", {
+            className={clsx("mt-[48.8px] h-full border-b border-main-az ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all overflow-x-hidden border-none  rounded-none", {
               hidden: state.editor.previewMode,
             })}
           >
-            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box bg-[#151515] border-r border-main-az">
+            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box bg-editor-bcgc border-r border-main-az">
               <TabsContent value="Media">
                 <MediaBucketTab subaccountId={subaccountId} />
               </TabsContent>
@@ -90,7 +90,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <SheetContent
             showX={false}
             side="right"
-            className={clsx("mt-[40.8px] mr-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", {
+            className={clsx("mt-[48.8px] mr-[1px] w-[240px] z-[40] shadow-none p-0  bg-background h-full transition-all overflow-hidden border-none  rounded-none", {
               hidden: state.editor.previewMode,
             })}
           >

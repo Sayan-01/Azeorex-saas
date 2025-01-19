@@ -9,12 +9,13 @@ import { useToast } from "@/hooks/use-toast";
 import { saveActivityLogsNotification, upsertFunnelPage } from "@/lib/queries";
 import { FunnelPage } from "@prisma/client";
 import clsx from "clsx";
-import { DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
+import { ChevronDown, DownloadIcon, EyeIcon, Monitor, Redo2, Smartphone, Tablet, Undo2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FocusEventHandler, useEffect, useState } from "react";
 import { DeviceTypes, useEditor } from "../../../../../../../../../../providers/editor/editor-provider";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 type Props = {
   funnelId: string;
@@ -104,25 +105,38 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
 
   return (
     <TooltipProvider>
-      <nav className={clsx("border-b border-main-az flex items-center justify-between px-3 py-0 gap-2 transition-all bg-[#151515] ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
-        <aside className="flex items-center gap-4 max-w-[260px] w-[300px]">
-          <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>
-            <Image
-              src={"/azeorex.png"}
-              alt="logo"
-              width={26}
-              height={26}
-              className="rounded"
-            />
-          </Link>
-          <div className="flex  w-full ">
-            <Input
-              defaultValue={funnelPageDetails.name}
-              className="h-7 -ml-2 mt-0 text-lg bg-transparent border-none opacity-60"
-              onBlur={handleOnBlurTitleChange}
-            />
-            {/* <span className="text-sm text-muted-foreground">Path: /{funnelPageDetails.pathName}</span> */}
-          </div>
+      <nav className={clsx("border-b border-main-az flex items-center justify-between px-3 py-1 gap-2 transition-all bg-editor-bcgc ", { "!h-0 !p-0 !overflow-hidden": state.editor.previewMode })}>
+        <aside className="flex items-center gap-4 max-w-[260px] w-[300px] py-1.5">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-1.5 flex gap-1 items-center bg-main-az rounded-md h-7 w-max">
+              {/* <Image
+                src={"/az.svg"}
+                alt="logo"
+                width={24}
+                height={24}
+              /> */}
+              <ChevronDown
+                size={20}
+                strokeWidth={1.1}
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Azeorex</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>Azeorex</Link>
+                  <div className="flex  w-full ">
+                    <Input
+                      defaultValue={funnelPageDetails.name}
+                      className="h-7 -ml-2 mt-0 text-lg bg-transparent border-none opacity-60"
+                      onBlur={handleOnBlurTitleChange}
+                    />
+                  </div>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </aside>
         <aside>
           <Tabs

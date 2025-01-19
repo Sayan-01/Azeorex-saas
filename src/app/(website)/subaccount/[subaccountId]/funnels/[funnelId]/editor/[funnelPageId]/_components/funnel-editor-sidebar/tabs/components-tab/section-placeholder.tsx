@@ -1,4 +1,5 @@
 import { EditorBtns } from "@/types/types";
+import { TextSelect } from "lucide-react";
 import React from "react";
 
 
@@ -13,8 +14,11 @@ const SectionPlaceholder = () => {
       onDragStart={(e) => handleDragStart(e, "section")}
       className=" h-14 w-14 bg-muted/70 rounded-lg p-2 flex flex-col gap-[4px]"
     >
-      <div className="border-dotted border-[2px] h-full rounded-sm border-muted-foreground/50 bg-muted-foreground/20 w-full" />
-      <div className="border-dotted border-[2px] h-full rounded-sm border-muted-foreground/50 bg-muted-foreground/20 w-full" />
+      <TextSelect
+        size={40}
+        strokeWidth={1.1}
+        className=" opacity-60"
+      />
     </div>
   );
 };

@@ -84,7 +84,7 @@ const SettingsTab = () => {
   return (
     <Accordion
       type="multiple"
-      className="w-[240px] select-none bg-[#151515] pb-10"
+      className="w-[240px] select-none bg-editor-bcgc pb-10"
       defaultValue={["Dimensions", "Typography", "Spacing", "Position", "Background", "Decorations", "Flexbox", "Special element"]}
     >
       <AccordionItem

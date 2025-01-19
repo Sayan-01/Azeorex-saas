@@ -16,9 +16,6 @@ module.exports = withUt({
         "2xl": "1400px",
       },
     },
-    // backgroundImage: {
-    //   "radial-gradient": "radial-gradient(circle at 50% 40%, white, black)",
-    // },
     extend: {
       colors: {
         themeBlack: "#09090B",
@@ -64,6 +61,9 @@ module.exports = withUt({
           black: "#272727",
           az: "#363636"
         },
+        editor: {
+          bcgc: "#111111"
+        }
       },
       borderRadius: {
         lg: "var(--radius)",

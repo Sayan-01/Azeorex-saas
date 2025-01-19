@@ -1,8 +1,14 @@
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Settings } from "@/icons";
+import { Ai } from "@/icons/ai";
+import { Command } from "@/icons/command";
+import { File } from "@/icons/file";
 import { Funnel } from "@/icons/funnel";
 import { Layers } from "@/icons/layers";
+import { Layout } from "@/icons/layout";
 import { Plus } from "@/icons/plus";
+import { Plus2 } from "@/icons/plus2";
+import { Stack } from "@/icons/stack";
 import clsx from "clsx";
 
 type Props = {
@@ -11,29 +17,39 @@ type Props = {
 
 const TabList = (props: Props) => {
   return (
-      <TabsList
-        className={clsx("flex rounded-none border-r-[1px] border-b-[1px] border-main-az items-center justify-between w-[240px] bg-[#151515] px-2 py-2 h-fit gap-4 absolute top-[41px] left-[0px]", props.className)}
+    <TabsList className={clsx("flex rounded-none border-main-az items-center  bg-transparent px-2 py-2.5 h-fit gap-3 absolute top-[0px] left-[55px] transition-all", props.className)}>
+      <TabsTrigger
+        value="Components"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
       >
-        <TabsTrigger
-          value="Components"
-          className=" h-6 px-2 data-[state=active]:bg-main-black   data-[state=active] data-[state=active]:rounded"
-        >
-          Element
-        </TabsTrigger>
+        <Plus2 /> Insert
+      </TabsTrigger>
 
-        <TabsTrigger
-          value="Layers"
-          className="h-6 px-2 data-[state=active]:bg-main-black   data-[state=active] data-[state=active]:rounded"
-        >
-          Layers
-        </TabsTrigger>
-        <TabsTrigger
-          value="Media"
-          className="h-6 px-2 data-[state=active]:bg-main-black   data-[state=active] data-[state=active]:rounded"
-        >
-          Storage
-        </TabsTrigger>
-      </TabsList>
+      <TabsTrigger
+        value="Layers"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+      >
+        <Stack /> Layers
+      </TabsTrigger>
+      <TabsTrigger
+        value="Component"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+      >
+        <File /> Storage
+      </TabsTrigger>
+      <TabsTrigger
+        value="xyz"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+      >
+        <Layout /> Layout
+      </TabsTrigger>
+      <TabsTrigger
+        value="abc"
+        className="h-7 pl-[6px] pr-1.5 text-sm data-[state=active]:bg-main-az data-[state=active]:opacity-90 data-[state=active]:mx-1 opacity-40 text-white gap-1 data-[state=active]:rounded-md"
+      >
+        <Ai /> CMS
+      </TabsTrigger>
+    </TabsList>
   );
 };
 

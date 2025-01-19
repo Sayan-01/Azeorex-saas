@@ -1,6 +1,6 @@
 import { EditorBtns } from "@/types/types";
+import { BoxSelect } from "lucide-react";
 import React from "react";
-
 
 const ContainerPlaceholder = () => {
   const handleDragStart = (e: React.DragEvent, type: EditorBtns) => {
@@ -13,7 +13,11 @@ const ContainerPlaceholder = () => {
       onDragStart={(e) => handleDragStart(e, "container")}
       className=" h-14 w-14 bg-muted/70 rounded-lg p-2 flex flex-row gap-[4px]"
     >
-      <div className="border-dotted border-[2px] h-full rounded-sm border-muted-foreground/50 bg-muted-foreground/20 w-full" />
+      <BoxSelect
+        size={40}
+        strokeWidth={1.1}
+        className=" opacity-60"
+      />
     </div>
   );
 };

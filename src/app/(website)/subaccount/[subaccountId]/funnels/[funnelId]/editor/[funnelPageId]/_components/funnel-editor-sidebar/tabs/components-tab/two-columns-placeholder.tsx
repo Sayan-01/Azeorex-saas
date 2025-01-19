@@ -1,4 +1,5 @@
 import { EditorBtns } from "@/types/types";
+import { Columns2 } from "lucide-react";
 import React from "react";
 
 const TwoColumnsPlaceholder = () => {
@@ -12,8 +13,11 @@ const TwoColumnsPlaceholder = () => {
       onDragStart={(e) => handleDragStart(e, "2Col")}
       className=" h-14 w-14 bg-muted/70 rounded-lg p-2 flex flex-row gap-[4px]"
     >
-      <div className="border-dotted border-[2px] h-full rounded-sm border-muted-foreground/50 bg-muted-foreground/20 w-full" />
-      <div className="border-dotted border-[2px] h-full rounded-sm border-muted-foreground/50 bg-muted-foreground/20 w-full" />
+      <Columns2
+        size={40}
+        strokeWidth={1.1}
+        className=" opacity-60"
+      />
     </div>
   );
 };
