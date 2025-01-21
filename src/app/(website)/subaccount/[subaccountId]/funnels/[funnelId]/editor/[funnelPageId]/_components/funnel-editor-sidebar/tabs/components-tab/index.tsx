@@ -83,12 +83,12 @@ const ComponentsTab = () => {
   return (
     <Accordion
       type="multiple"
-      className="w-full select-none "
+      className="w-full"
       defaultValue={["Layout", "Elements", "Components"]}
     >
       <AccordionItem
         value="Layout"
-        className="px-3 py-0 border-y-[1px] border-main-az"
+        className=" py-0 border-y-[1px] border-main-az"
       >
         <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
         <AccordionContent className="grid grid-cols-3 ">
@@ -100,14 +100,14 @@ const ComponentsTab = () => {
                 className="flex-col items-center justify-center flex cursor-grab"
               >
                 {element.Component}
-                <span className="text-muted-foreground text-xs mb-4 mt-1">{element.label}</span>
+                <span className="text-muted-foreground text-xs mb-3 mt-1">{element.label}</span>
               </div>
             ))}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem
         value="Elements"
-        className="px-3 py-0 border-main-az"
+        className=" py-0 border-main-az"
       >
         <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
         <AccordionContent className="grid grid-cols-3">
@@ -119,7 +119,7 @@ const ComponentsTab = () => {
                 className="flex-col items-center justify-center flex"
               >
                 {element.Component}
-                <span className="text-muted-foreground text-xs mb-4 mt-1">{element.label}</span>
+                <span className="text-muted-foreground text-xs mb-3 mt-1">{element.label}</span>
               </div>
             ))}
         </AccordionContent>
@@ -127,10 +127,10 @@ const ComponentsTab = () => {
 
       <AccordionItem
         value="Components"
-        className="px-3 py-0 border-main-az"
+        className=" py-0 border-main-az"
       >
         <AccordionTrigger className="!no-underline">Your components</AccordionTrigger>
-        <AccordionContent className="pb-0">
+        <AccordionContent className="pb-0 px-3">
           {components.map((item: EditorElement) => {
             return (
               <div

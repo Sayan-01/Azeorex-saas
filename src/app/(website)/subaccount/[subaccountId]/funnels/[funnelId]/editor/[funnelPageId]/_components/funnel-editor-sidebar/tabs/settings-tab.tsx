@@ -105,6 +105,19 @@ const SettingsTab = () => {
             </div>
           )}
         </AccordionContent>
+        <AccordionContent className="pb-0">
+          {state.editor.selectedElement.type === "image" && !Array.isArray(state.editor.selectedElement.content) && (
+            <div className="flex flex-col pb-4">
+              <p className="text-muted-foreground text-xs">Link Path</p>
+              <Input
+                id="src"
+                placeholder="https:domain.example.com/pathname"
+                onChange={handleChangeCustomValues}
+                value={state.editor.selectedElement.content.src}
+              />
+            </div>
+          )}
+        </AccordionContent>
       </AccordionItem>
       <AccordionItem
         value="Dimensions"
@@ -165,7 +178,6 @@ const SettingsTab = () => {
                 value={state.editor.selectedElement.styles.rotate || ""}
               />
             </div>
-            
           </div>
           {/* 3rd radius and opacity*/}
           <div className="flex gap-2 mb-4">

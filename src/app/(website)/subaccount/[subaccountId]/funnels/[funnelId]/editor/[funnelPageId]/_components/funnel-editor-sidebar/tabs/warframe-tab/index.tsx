@@ -8,7 +8,6 @@ import { v4 } from "uuid";
 import { Loader } from "@/components/global/Loader";
 import { Copy, Settings2, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { db } from "@/lib/db";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,8 +29,11 @@ const WarframeTab = () => {
 
   const [warframeName, setWarframeName] = useState("");
   const [warframeImage, setWarframeImage] = useState("");
+  const [selectedTab, setSelectedTab] = useState(0);
 
   const handleCreateWarframe = async () => {
+    console.log(warframeName, "ssssss");
+
     await createWarframe({
       id: v4(),
       warframe_name: warframeName,
@@ -65,7 +67,7 @@ const WarframeTab = () => {
             key={item.id}
             id={item.id}
             onDragStart={(e) => {
-              e.dataTransfer.setData("componentType", item.warframe); //item.warframe 1 ta string
+              e.dataTransfer.setData("componentType", item.warframe);
             }}
             draggable
             className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
@@ -90,9 +92,6 @@ const WarframeTab = () => {
                 <Trash2 size={15.5} />
               </button>
             </div>
-            <button className="absolute top-2 left-2 hidden opacity-60 ">
-              <Settings2 size={15} />
-            </button>
           </div>
         );
       })}
@@ -111,7 +110,7 @@ const WarframeTab = () => {
               <AlertDialogDescription>Please enter the details for the new Warframe.</AlertDialogDescription>
             </AlertDialogHeader>
             <div className="space-y-4">
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700">Warframe Name</label>
                 <Input
                   className="h-10"
@@ -119,7 +118,7 @@ const WarframeTab = () => {
                   onChange={(e) => setWarframeName(e.target.value)}
                   placeholder="Enter warframe name"
                 />
-              </div>
+              </div> */}
               <div>
                 <label className="block text-sm font-medium text-gray-700">Warframe Image URL</label>
                 <Input
@@ -129,12 +128,51 @@ const WarframeTab = () => {
                   placeholder="Enter image URL"
                 />
               </div>
+              <div>
+                <div className="flex justify-center items-center">
+                  <div className="relative flex bg-white shadow-md p-3 rounded-full w-[400px] px-4 justify-between">
+                    {/* Tab Buttons */}
+                    <span
+                      className="absolute h-[30px] w-[92px] bg-gray-200 rounded-full transition-transform duration-300"
+                      style={{ transform: `translateX(${selectedTab * 100}%)` }}
+                    />
+                    {["navigation", "footer", "menus", "sections", "warframe"].map((tab, index) => (
+                      <div
+                        key={index}
+                        className="relative"
+                      >
+                        <input
+                          id={tab}
+                          type="radio"
+                          name="warframe_name"
+                          value={tab}
+                          checked={warframeName === tab}
+                          onChange={(e) => {
+                            setWarframeName(e.target.value);
+                            setSelectedTab(index);
+                          }}
+                          className="sr-only"
+                        />
+
+                        <label
+                          htmlFor={tab}
+                          onClick={() => setSelectedTab(index)}
+                          className={`relative flex items-center justify-center cursor-pointer text-sm font-medium h-[30px] w-[92px] rounded-full transition-colors duration-150 ${
+                            selectedTab === index ? "text-blue-600" : "text-black"
+                          }`}
+                        >
+                          {tab}
+                        </label>
+                      </div>
+                    ))}
+                    {/* Glider */}
+                  </div>
+                </div>
+              </div>
             </div>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              {/* <AlertDialogAction> */}
-                <button onClick={handleCreateWarframe}>Create</button>
-              {/* </AlertDialogAction> */}
+              <button onClick={handleCreateWarframe}>Create</button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

@@ -269,3 +269,8 @@ html {
   opacity: 100;
 }
 
+.editor_text {
+  font-weight: 600;
+  font-size: 12px /* 12px */;
+  line-height: 1rem /* 16px */;
+}

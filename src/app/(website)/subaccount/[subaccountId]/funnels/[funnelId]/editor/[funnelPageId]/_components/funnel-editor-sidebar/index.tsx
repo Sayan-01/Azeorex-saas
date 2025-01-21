@@ -33,7 +33,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <SheetContent
             showX={false}
             side="left"
-            className={clsx("mt-[48.8px] h-full border-b border-main-az ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all overflow-x-hidden border-none  rounded-none", {
+            className={clsx("mt-[48.8px] h-full border-b border-main-az ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  rounded-none select-none ", {
               hidden: state.editor.previewMode,
             })}
           >
@@ -41,9 +41,9 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               <TabsContent value="Media">
                 <MediaBucketTab subaccountId={subaccountId} />
               </TabsContent>
-              <TabsContent value="Components">
+              <TabsContent value="Components" className="p-3">
                 <Tabs defaultValue="Components">
-                  <div className="flex items-center p-3 border-b  border-main-az">
+                  <div className="flex items-center pb-3 border-b  border-main-az">
                     <TabsList className="w-full justify-between gap-2 p-[1px] h-[31px] rounded-lg bg-[#242424] text-sm">
                       <TabsTrigger
                         value="Components"
@@ -60,14 +60,14 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
                     </TabsList>
                   </div>
                   <TabsContent value="Components">
-                    <SheetHeader className="text-left p-3 ">
+                    <SheetHeader className="text-left py-3 ">
                       <SheetTitle>Components</SheetTitle>
                       <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
                     </SheetHeader>
                     <ComponentsTab />
                   </TabsContent>
                   <TabsContent value="Warframe">
-                    <SheetHeader className="text-left p-3 ">
+                    <SheetHeader className="text-left py-3 ">
                       <SheetTitle>Warframe</SheetTitle>
                       <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
                     </SheetHeader>
