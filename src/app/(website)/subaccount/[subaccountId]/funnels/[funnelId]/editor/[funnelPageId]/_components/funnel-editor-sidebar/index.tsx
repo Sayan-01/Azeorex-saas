@@ -11,6 +11,7 @@ import { useEditor } from "../../../../../../../../../../../providers/editor/edi
 import LayersTab from "./tabs/layers-tab";
 import WarframeTab from "./tabs/warframe-tab";
 import LayoutTab from "./tabs/Layout";
+import AiTab from "./tabs/AI-tab";
 
 type Props = {
   subaccountId: string;
@@ -33,34 +34,34 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
           <SheetContent
             showX={false}
             side="left"
-            className={clsx("mt-[48.8px] h-full border-b border-main-az ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  rounded-none select-none ", {
+            className={clsx("mt-[48.8px] h-full border-b border-main-black ml-[1px] w-[240px] z-[40] shadow-none p-0  bg-background transition-all  border-none  rounded-none select-none ", {
               hidden: state.editor.previewMode,
             })}
           >
-            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box bg-editor-bcgc border-r border-main-az">
-              <TabsContent value="Media">
-                <MediaBucketTab subaccountId={subaccountId} />
-              </TabsContent>
-              <TabsContent value="Components" className="p-3">
+            <div className="grid gap-4 h-full w-[240px] pb-12 overflow-auto overflow-x-hidden box bg-editor-bcgc border-r border-main-black">
+              <TabsContent
+                value="Components"
+                className="p-4"
+              >
                 <Tabs defaultValue="Components">
-                  <div className="flex items-center pb-3 border-b  border-main-az">
-                    <TabsList className="w-full justify-between gap-2 p-[1px] h-[31px] rounded-lg bg-[#242424] text-sm">
+                  <div className="flex items-center pb-4 border-b  border-main-black">
+                    <TabsList className="w-full justify-between gap-2 p-[1px] h-[31px] rounded-lg bg-[#242424] ">
                       <TabsTrigger
                         value="Components"
-                        className="w-full h-7 data-[state=active]:bg-zinc-700"
+                        className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
                       >
                         Components
                       </TabsTrigger>
                       <TabsTrigger
                         value="Warframe"
-                        className="w-full h-7 data-[state=active]:bg-zinc-700"
+                        className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"
                       >
                         Warframe
                       </TabsTrigger>
                     </TabsList>
                   </div>
                   <TabsContent value="Components">
-                    <SheetHeader className="text-left py-3 ">
+                    <SheetHeader className="text-left pt-3  border-none">
                       <SheetTitle>Components</SheetTitle>
                       <SheetDescription>You can drag and drop components on the canvas</SheetDescription>
                     </SheetHeader>
@@ -78,8 +79,17 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               <TabsContent value="Layers">
                 <LayersTab />
               </TabsContent>
+              <TabsContent value="Media">
+                <MediaBucketTab subaccountId={subaccountId} />
+              </TabsContent>
               <TabsContent value="Layout">
                 <LayoutTab />
+              </TabsContent>
+              <TabsContent value="CMS">
+                <LayoutTab />
+              </TabsContent>
+              <TabsContent value="AiPoward">
+                <AiTab/>
               </TabsContent>
             </div>
           </SheetContent>
@@ -100,7 +110,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               hidden: state.editor.previewMode,
             })}
           >
-            <div className="grid gap-4 h-full w-[240px] pb-4 overflow-auto overflow-x-hidden box border-l border-main-az">
+            <div className="grid gap-4 h-full w-[240px] pb-4 overflow-auto overflow-x-hidden box border-l border-main-black">
               <TabsContent value="Settings">
                 <SettingsTab />
               </TabsContent>

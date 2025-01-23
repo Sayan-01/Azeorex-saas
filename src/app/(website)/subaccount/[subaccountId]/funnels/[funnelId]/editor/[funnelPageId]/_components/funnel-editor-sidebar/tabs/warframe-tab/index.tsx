@@ -60,41 +60,43 @@ const WarframeTab = () => {
   }, []);
 
   return (
-    <div className="p-2">
-      {components.map((item: Warframe) => {
-        return (
-          <div
-            key={item.id}
-            id={item.id}
-            onDragStart={(e) => {
-              e.dataTransfer.setData("componentType", item.warframe);
-            }}
-            draggable
-            className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
-          >
-            <p>{item?.warframe_name}</p>
-            <div className="absolute top-2 right-2 opacity-60 flex gap-1">
-              <div
-                className="flex gap-2"
-                onClick={() => {
-                  navigator.clipboard.writeText(item.warframe);
-                  toast({ title: "Copied Successfully" });
-                }}
-              >
-                <Copy size={15} />
+    <div className="">
+      <div className="px-2 pt-2">
+        {components.map((item: Warframe) => {
+          return (
+            <div
+              key={item.id}
+              id={item.id}
+              onDragStart={(e) => {
+                e.dataTransfer.setData("componentType", item.warframe);
+              }}
+              draggable
+              className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
+            >
+              <p>{item?.warframe_name}</p>
+              <div className="absolute top-2 right-2 opacity-60 flex gap-1">
+                <div
+                  className="flex gap-2"
+                  onClick={() => {
+                    navigator.clipboard.writeText(item.warframe);
+                    toast({ title: "Copied Successfully" });
+                  }}
+                >
+                  <Copy size={15} />
+                </div>
+                <button
+                  onClick={async () => {
+                    await deleteWarframe(item.id);
+                    toast({ title: "Warframe deleted" });
+                  }}
+                >
+                  <Trash2 size={15.5} />
+                </button>
               </div>
-              <button
-                onClick={async () => {
-                  await deleteWarframe(item.id);
-                  toast({ title: "Warframe deleted" });
-                }}
-              >
-                <Trash2 size={15.5} />
-              </button>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       <Loader
         loading={loading}
         className="mb-3"
@@ -102,7 +104,12 @@ const WarframeTab = () => {
       <div>
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <Button className="w-full h-8 my-4">Create warframe</Button>
+            <Button
+              size="sm"
+              className="bg-[#22dd6626] hover:bg-[#22dd6626] my-4 text-[#21DB66] w-full editor_text"
+            >
+              Create warframe
+            </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>

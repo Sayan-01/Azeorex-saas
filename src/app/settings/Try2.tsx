@@ -57,7 +57,7 @@ import { Layers } from "@/icons/layers";
 import HamLogo from "@/icons/ham-logo";
 import { Funnel } from "@/icons/funnel";
 import { Plus2 } from "@/icons/plus2";
-import { File } from "@/icons/file";
+import { File } from "@/icons/database";
 import { Stack } from "@/icons/stack";
 import { Command } from "@/icons/command";
 import { Layout } from "@/icons/layout";
@@ -69,7 +69,6 @@ const Try2 = async () => {
     return (
       <div>
         {JSON.stringify(session.user)}
-
         <p>
           1. About: <About />
         </p>
@@ -233,17 +232,17 @@ const Try2 = async () => {
           54. Zap DuoTone Black: <ZapDouToneBlack />
         </p>
         plus
-        <Plus2/>
+        <Plus2 />
         file
-        <File/>
+        <File />
         stack
-        <Stack/>
+        <Stack />
         command
-        <Command/>
+        <Command />
         layout
-        <Layout/>
+        <Layout />
         ai
-        <Ai/>
+        <Ai />
       </div>
     );
   }

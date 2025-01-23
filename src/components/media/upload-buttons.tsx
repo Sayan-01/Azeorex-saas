@@ -14,6 +14,8 @@ const MediaUploadButton = ({ subaccountId }: Props) => {
 
   return (
     <Button
+      size="sm"
+      className="bg-[#0099ff26] hover:bg-[#0099ff26]  text-[#0ABBFF] w-full editor_text rounded-lg"
       onClick={() => {
         setOpen(
           <CustomModal
@@ -22,12 +24,12 @@ const MediaUploadButton = ({ subaccountId }: Props) => {
           >
             <UploadMediaForm subaccountId={subaccountId}></UploadMediaForm>
           </CustomModal>
-        )
+        );
       }}
     >
       Upload
     </Button>
-  )
+  );
 }
 
 export default MediaUploadButton

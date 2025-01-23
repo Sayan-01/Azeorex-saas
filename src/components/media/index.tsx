@@ -21,16 +21,16 @@ type Props = {
 const MediaComponent = ({ data, subaccountId }: Props) => {
   return (
     <div className="flex flex-col gap-4 h-full w-full">
-      <div className="flex justify-between items-center">
-        <h1 className="text-4xl">Media Bucket</h1>
+      <div className="">
+        <h3 className="text-lg font-semibold mb-4">Media Bucket</h3>
         <MediaUploadButton subaccountId={subaccountId} />
       </div>
       <Command className="bg-transparent">
-        <CommandInput placeholder="Search for file name..." />
-        <CommandList className="pb-40 max-h-full ">
+        <CommandInput placeholder="Search for file name..." className='h-8'/>
+        <CommandList className="pb-40 max-h-full mt-2">
           <CommandEmpty>No Media Files</CommandEmpty>
           <CommandGroup heading="Media Files">
-            <div className="flex flex-wrap gap-4 pt-4">
+            <div className="flex flex-wrap gap-4 pt-3">
               {data?.Media.map((file) => (
                 <CommandItem
                   key={file.id}

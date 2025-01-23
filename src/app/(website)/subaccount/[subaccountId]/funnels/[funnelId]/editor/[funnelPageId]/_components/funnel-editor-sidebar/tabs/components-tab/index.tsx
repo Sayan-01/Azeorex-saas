@@ -88,7 +88,7 @@ const ComponentsTab = () => {
     >
       <AccordionItem
         value="Layout"
-        className=" py-0 border-y-[1px] border-main-az"
+        className=" py-0 border-b-[1px] border-main-black"
       >
         <AccordionTrigger className="!no-underline">Layout</AccordionTrigger>
         <AccordionContent className="grid grid-cols-3 ">
@@ -130,7 +130,7 @@ const ComponentsTab = () => {
         className=" py-0 border-main-az"
       >
         <AccordionTrigger className="!no-underline">Your components</AccordionTrigger>
-        <AccordionContent className="pb-0 px-3">
+        <AccordionContent className="pb-0 ">
           {components.map((item: EditorElement) => {
             return (
               <div
@@ -147,7 +147,7 @@ const ComponentsTab = () => {
           })}
           {state.editor.selectedElement.type !== null && state.editor.selectedElement.type !== "__body" ? (
             <Button
-              className="w-full h-8 mb-4"
+              className="w-full h-8 mb-4 "
               onClick={() => {
                 setComponents([...components, state.editor.selectedElement])
                 console.log(components);

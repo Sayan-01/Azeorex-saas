@@ -74,7 +74,7 @@ const ImageComponent = (props: Props) => {
       draggable
       onDragStart={(e) => handleDragStart(e, "image")}
       onClick={handleOnClick}
-      className={clsx("w-full relative text-[16px] transition-all flex items-center justify-center z-[1004] inset-0", {})}
+      className={clsx("w-full h-max relative text-[16px] transition-all flex items-center justify-center z-[1004] inset-0", {})}
       style={{
         width: styles?.width,
         height: styles?.height,
@@ -92,7 +92,8 @@ const ImageComponent = (props: Props) => {
     >
       {!Array.isArray(props.element.content) && (
         <Image
-          fill
+        width={1000}
+        height={1000}
           src={props.element.content.src || "/sayan.png "}
           alt="azeorex"
           style={styles}

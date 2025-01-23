@@ -21,8 +21,6 @@ const Container = ({ element }: Props) => {
     const componentType = e.dataTransfer.getData("componentType") as EditorBtns;
     switch (componentType) {
       case "text":
-        console.log("text");
-
         dispatch({
           type: "ADD_ELEMENT",
           payload: {
@@ -89,7 +87,7 @@ const Container = ({ element }: Props) => {
               },
               id: v4(),
               name: "Image",
-              styles: {width: "100%"},
+              styles: { width: "100%" },
               type: "image",
             },
           },
@@ -104,7 +102,7 @@ const Container = ({ element }: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...styles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
+              styles: { ...defaultStyles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
               type: "container",
             },
           },
@@ -260,6 +258,7 @@ const Container = ({ element }: Props) => {
   const handleDragEnd = (e: React.DragEvent) => {
     const target = e.target as HTMLElement;
     target.style.opacity = "1"; // Reset the opacity
+    e.stopPropagation();
     setActiveContainer(null);
   };
 

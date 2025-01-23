@@ -230,7 +230,7 @@ const LayersTab = () => {
   const { state } = useEditor();
 
   return (
-    <div className="p-3">
+    <div className="p-4">
       <h3 className="text-lg font-semibold mb-3">
         Navigator
       </h3>

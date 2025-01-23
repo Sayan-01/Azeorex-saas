@@ -11,12 +11,12 @@ import "./../../../../../../../../../../../(landing)/_components/animated-button
 
 const LayoutTab = () => {
   return (
-    <div className=" p-3">
-      <div className="border-b border-main-az pb-3">
+    <div className=" p-4">
+      <div className="border-b border-main-black pb-3">
         <h3 className="text-lg font-semibold mb-3">Starter</h3>
-        <p className="text-sm text-muted-foreground ">You can drag and drop components on the canvas</p>
+        <p className="text-sm text-muted-foreground mb-1">You can drag and drop components on the canvas</p>
       </div>
-      <div className="border-b border-main-az pb-3">
+      <div className="border-b border-main-black pb-3">
         <p className="editor_text ml-2 my-4">Basics</p>
         <Tabs
           defaultValue=""

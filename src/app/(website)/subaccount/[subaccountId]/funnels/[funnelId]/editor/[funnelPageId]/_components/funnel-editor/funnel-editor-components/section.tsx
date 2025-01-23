@@ -50,7 +50,7 @@ const Section = (props: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...styles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
+              styles: { ...defaultStyles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
               type: "container",
             },
           },
@@ -77,11 +77,47 @@ const Section = (props: Props) => {
           payload: {
             containerId: id,
             elementDetails: {
-              content: [],
+              content: [
+                {
+                  content: [],
+                  id: v4(),
+                  name: "Container",
+                  styles: { ...defaultStyles, width: "100%" },
+                  type: "container",
+                },
+                {
+                  content: [],
+                  id: v4(),
+                  name: "Container",
+                  styles: { ...defaultStyles, width: "100%" },
+                  type: "container",
+                },
+              ],
               id: v4(),
               name: "Two Columns",
-              styles: { ...defaultStyles },
+              styles: { ...defaultStyles, display: "flex" },
               type: "2Col",
+            },
+          },
+        });
+        break;
+      case "link":
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              content: {
+                innerText: "Link Element",
+                href: "#",
+              },
+              id: v4(),
+              name: "Link",
+              styles: {
+                color: "#ffffff",
+                ...defaultStyles,
+              },
+              type: "link",
             },
           },
         });
@@ -96,7 +132,6 @@ const Section = (props: Props) => {
         break;
       default:
         if (componentType === null) return;
-        // else setComponent(state.editor.elements, JSON.parse(componentType));
         else {
           const oldData = JSON.parse(componentType) as EditorElement;
           const newData = updateId(oldData);
@@ -217,7 +252,7 @@ const Section = (props: Props) => {
         marginBottom: styles?.marginBottom,
         marginLeft: styles?.marginLeft,
         marginRight: styles?.marginRight,
-        rotate: styles.rotate
+        rotate: styles.rotate,
       }}
       className={clsx("relative transition-all z-[1004] group box inset-0", {
         "h-fit": type === "section",
