@@ -57,11 +57,11 @@ import { Layers } from "@/icons/layers";
 import HamLogo from "@/icons/ham-logo";
 import { Funnel } from "@/icons/funnel";
 import { Plus2 } from "@/icons/plus2";
-import { File } from "@/icons/database";
 import { Stack } from "@/icons/stack";
 import { Command } from "@/icons/command";
 import { Layout } from "@/icons/layout";
 import { Ai } from "@/icons/ai";
+import { Database } from "@/icons/database";
 
 const Try2 = async () => {
   const session = await auth();
@@ -233,8 +233,8 @@ const Try2 = async () => {
         </p>
         plus
         <Plus2 />
-        file
-        <File />
+        database
+        <Database />
         stack
         <Stack />
         command
