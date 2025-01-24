@@ -58,7 +58,7 @@ const AiTab = () => {
           }}
         />
         <Button
-          disabled={userInput?.length == 0 || loading || result.length > 0 || !userInput.startsWith("Generate the Website template forc")}
+          disabled={userInput?.length == 0 || loading || result.length > 0 || !userInput.startsWith("Generate the Website template for")}
           size="sm"
           className="bg-[#22dd6626] hover:bg-[#22dd6626]  text-[#21DB66] w-full editor_text"
           onClick={OnGenerate}
