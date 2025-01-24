@@ -58,7 +58,7 @@ const AiTab = () => {
           }}
         />
         <Button
-          disabled={userInput?.length == 0 || loading || result.length > 0 || !userInput.startsWith("Generate the Website template for")}
+          disabled={userInput?.length == 0 || loading}
           size="sm"
           className="bg-[#22dd6626] hover:bg-[#22dd6626]  text-[#21DB66] w-full editor_text"
           onClick={OnGenerate}
@@ -82,6 +82,8 @@ const AiTab = () => {
           <p>Ai generated template</p>
           <div className="absolute top-2 right-2 opacity-60 flex gap-1"></div>
         </div>
+        <div onClick={()=>{console.log(result);
+        }}>ggg</div>
       </div>
     </div>
   );

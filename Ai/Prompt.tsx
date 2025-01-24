@@ -10,7 +10,7 @@ const AiPrompt = {
 - Use appropriate type when needed, Do not Exactly copy schema as it is. Make changes depends on Website template topic
 - Write Meaning full text content with Emoji icons if needed
 - For image src placeholder add '/sayan.png
-- Give response in JSON format only (Return schema only)
+- Give response in JSON object format only (Return schema only)
 - In JSON format ensure that no two keys in the same object are identical.`,
 };
 
