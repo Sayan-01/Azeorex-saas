@@ -13,7 +13,7 @@ const AiTab = () => {
   const [result, setResult] = useState("");
 
   const OnGenerate = async () => {
-    const prompt = AiPrompt.TEMPLATE_PROMPT + "/n-" + userInput;
+    const prompt = AiPrompt.TEMPLATE_PROMPT + "/n- " + userInput;
     setLoading(true);
     try {
       const res = await fetch("/api/ai-template-generate", {
@@ -58,7 +58,7 @@ const AiTab = () => {
           }}
         />
         <Button
-          disabled={userInput?.length == 0 || loading || result.length > 0}
+          disabled={userInput?.length == 0 || loading || result.length > 0 || !userInput.startsWith("Generate the Website template forc")}
           size="sm"
           className="bg-[#22dd6626] hover:bg-[#22dd6626]  text-[#21DB66] w-full editor_text"
           onClick={OnGenerate}

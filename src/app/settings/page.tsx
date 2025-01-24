@@ -4,7 +4,7 @@ import Try2 from "./Try2";
 import { Input } from "@/components/ui/custom-input";
 
 const page = () => {
-  return <div
+  return <div/>
 };
 
 export default page;
