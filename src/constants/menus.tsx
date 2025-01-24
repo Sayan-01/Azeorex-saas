@@ -50,13 +50,7 @@ export const LANDING_PAGE_MENU: MenuProps[] = [
     icon: <Explore />,
     path: "/explore",
   },
-  {
-    id: 3,
-    label: "Home",
-    icon: <Home />,
-    path: "#",
-    section: true,
-  },
+  
   {
     id: 4,
     label: "About",

@@ -45,7 +45,7 @@ const FunnelEditorSidebar = ({ subaccountId }: Props) => {
               >
                 <Tabs defaultValue="Components">
                   <div className="flex items-center pb-4 border-b  border-main-black">
-                    <TabsList className="w-full justify-between gap-2 p-[1px] h-[31px] rounded-lg bg-[#242424] ">
+                    <TabsList className="w-full justify-between gap-2 p-[2px] h-[31px] rounded-lg bg-[#242424] ">
                       <TabsTrigger
                         value="Components"
                         className="w-full h-7 data-[state=active]:bg-zinc-700 editor_text"

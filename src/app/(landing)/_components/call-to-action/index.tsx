@@ -31,7 +31,7 @@ const CallToAction = async () => {
       </p>
       <div className="flex md:flex-row flex-col text-lg md:justify-center gap-5 md:mt-6 w-full">
         <Link
-          href={session?.user ? "/demo" : "agency/sign-in"}
+          href={"/demo"}
           className="w-full md:w-fit"
         >
           <Button

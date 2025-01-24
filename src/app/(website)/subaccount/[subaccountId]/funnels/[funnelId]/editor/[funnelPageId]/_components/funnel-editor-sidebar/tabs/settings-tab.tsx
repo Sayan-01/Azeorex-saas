@@ -178,10 +178,7 @@ const SettingsTab = () => {
                 value={state.editor.selectedElement.styles.rotate || ""}
               />
             </div>
-          </div>
-          {/* 3rd radius and opacity*/}
-          <div className="flex gap-2 mb-4">
-            {/* <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full">
               <p className="text-muted-foreground text-xs">Border Radius</p>
               <Input
                 id="borderRadius"
@@ -189,7 +186,10 @@ const SettingsTab = () => {
                 onChange={handleOnChanges}
                 value={state.editor.selectedElement.styles.borderRadius || ""}
               />
-            </div> */}
+            </div>
+          </div>
+          {/* 3rd radius and opacity*/}
+          {/* <div className="flex gap-2 mb-3">
             <div className="w-full">
               <p className="text-muted-foreground text-xs w-full">B Radius</p>
               <div className="flex items-center justify-end">
@@ -218,36 +218,7 @@ const SettingsTab = () => {
                 step={1}
               />
             </div>
-
-            <div className="w-full">
-              <p className="text-muted-foreground text-xs">Opacity</p>
-              <div className="flex items-center justify-end">
-                <small className="pb-[16px] pt-[9px] -mt-[26px] text-xs">
-                  {typeof state.editor.selectedElement.styles?.opacity === "number"
-                    ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 0}
-                  %
-                </small>
-              </div>
-              <Slider
-                onValueChange={(e) => {
-                  handleOnChanges({
-                    target: {
-                      id: "opacity",
-                      value: `${e[0]}%`,
-                    },
-                  });
-                }}
-                value={[
-                  typeof state.editor.selectedElement.styles?.opacity === "number"
-                    ? state.editor.selectedElement.styles?.opacity
-                    : parseFloat((state.editor.selectedElement.styles?.opacity || "100").replace("%", "")) || 0,
-                ]}
-                max={100}
-                step={1}
-              />
-            </div>
-          </div>
+          </div> */}
           {/* overflow */}
           <div className="flex flex-col">
             <p className="text-muted-foreground text-xs mb-2">Overflow</p>

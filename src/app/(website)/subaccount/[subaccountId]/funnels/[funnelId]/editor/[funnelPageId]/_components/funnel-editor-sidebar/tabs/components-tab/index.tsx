@@ -107,7 +107,7 @@ const ComponentsTab = () => {
       </AccordionItem>
       <AccordionItem
         value="Elements"
-        className=" py-0 border-main-az"
+        className=" py-0 border-main-black"
       >
         <AccordionTrigger className="!no-underline">Elements</AccordionTrigger>
         <AccordionContent className="grid grid-cols-3">
@@ -127,7 +127,7 @@ const ComponentsTab = () => {
 
       <AccordionItem
         value="Components"
-        className=" py-0 border-main-az"
+        className=" py-0 border-main-black"
       >
         <AccordionTrigger className="!no-underline">Your components</AccordionTrigger>
         <AccordionContent className="pb-0 ">
@@ -147,11 +147,11 @@ const ComponentsTab = () => {
           })}
           {state.editor.selectedElement.type !== null && state.editor.selectedElement.type !== "__body" ? (
             <Button
-              className="w-full h-8 mb-4 "
+              size="sm"
+              className="bg-[#22dd6626] hover:bg-[#22dd6626] mb-4 text-[#21DB66] w-full editor_text"
               onClick={() => {
-                setComponents([...components, state.editor.selectedElement])
+                setComponents([...components, state.editor.selectedElement]);
                 console.log(components);
-                ;
               }}
             >
               Create components
