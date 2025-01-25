@@ -197,9 +197,10 @@ const Container = ({ element }: Props) => {
         if (componentType === null) return;
         // else setComponent(state.editor.elements, JSON.parse(componentType));
         else {
+          //asa json string k object a rupantor kora holo parse er maddhome
           const oldData = JSON.parse(componentType) as EditorElement;
+          console.log(oldData);
           const newData = updateId(oldData);
-          console.log(newData);
 
           dispatch({
             type: "ADD_ELEMENT",

@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import { Trash } from "lucide-react";
 import Link from "next/link";
 
 import React, { useEffect } from "react";
@@ -78,7 +77,7 @@ const LinkComponent = (props: Props) => {
       draggable
       className={clsx("h-max w-max relative text-[14px] transition-all z-[1004] inset-0")}
       onClick={handleOnClickBody}
-      onDragStart={(e) => handleDragStart(e, "link")}
+      onDragStart={(e) => handleDragStart(e, "element")}
       onDragEnd={handleDragEnd}
       style={{
         width: styles?.width,
@@ -95,7 +94,7 @@ const LinkComponent = (props: Props) => {
         marginRight: styles?.marginRight,
       }}
     >
-      {!Array.isArray(props.element.content) && (state.editor.previewMode || state.editor.liveMode) && <Link href={props.element.content.href || "#"}>{props.element.content.innerText}</Link>}
+      {!Array.isArray(props.element.content) && (state.editor.previewMode || state.editor.liveMode) && <Link style={styles} href={props.element.content.href || "#"}>{props.element.content.innerText}</Link>}
       {!state.editor.previewMode && !state.editor.liveMode && (
         <p
           style={styles}

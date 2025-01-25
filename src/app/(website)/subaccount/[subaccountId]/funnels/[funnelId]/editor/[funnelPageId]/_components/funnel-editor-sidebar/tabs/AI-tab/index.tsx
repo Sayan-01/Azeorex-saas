@@ -10,8 +10,7 @@ import AiPrompt from "../../../../../../../../../../../../../Ai/Prompt";
 const AiTab = () => {
   const [userInput, setUserInput] = useState("Generate the Website template for ");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState("");
-
+  const [result, setResult] = useState<any>();
   const OnGenerate = async () => {
     const prompt = AiPrompt.TEMPLATE_PROMPT + "/n- " + userInput;
     setLoading(true);
@@ -33,7 +32,7 @@ const AiTab = () => {
       const data = await res.json();
       if (data) {
         setResult(data);
-        console.log(data);
+        console.log("sayan", data);
       }
 
       setLoading(false);
@@ -72,18 +71,23 @@ const AiTab = () => {
         </Button>
       </div>
       <div>
-        <div
-          onDragStart={(e) => {
-            e.dataTransfer.setData("componentType", result);
-          }}
-          draggable
-          className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
-        >
-          <p>Ai generated template</p>
-          <div className="absolute top-2 right-2 opacity-60 flex gap-1"></div>
-        </div>
-        <div onClick={()=>{console.log(result);
-        }}>ggg</div>
+        {result ? (
+          
+            <div
+              onDragStart={(e) => {
+                //json string pathabo
+                e.dataTransfer.setData("componentType", JSON.stringify(JSON.parse(result)[0]));
+                console.log(JSON.parse(result)[0]);
+              }}
+              draggable
+              className="mb-2 rounded-md bg-zinc-800 text-xs p-2 px-3 h-20 flex items-center justify-center relative border-2 border-zinc-700 border-dashed"
+            >
+              <p>Ai generated template</p>
+              <div className="absolute top-2 right-2 opacity-60 flex gap-1"></div>
+            </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

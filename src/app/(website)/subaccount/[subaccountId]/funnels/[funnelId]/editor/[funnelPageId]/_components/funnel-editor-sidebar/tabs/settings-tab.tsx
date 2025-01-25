@@ -265,7 +265,7 @@ const SettingsTab = () => {
       </AccordionItem>
       <AccordionItem
         value="Typography"
-        className="px-3 py-0"
+        className={`px-3 py-0 ${state.editor.selectedElement.type !== "text" && "hidden"}`}
       >
         <AccordionTrigger className="!no-underline font-semibold">Typography</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-3 ">

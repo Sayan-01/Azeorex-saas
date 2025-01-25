@@ -3,7 +3,6 @@ import { Badge } from "@/components/ui/badge";
 import clsx from "clsx";
 import React, { useEffect } from "react";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
-import { moveObject } from "@/lib/moveElement";
 
 type Props = {
   element: EditorElement;
