@@ -347,7 +347,7 @@ const Container = ({ element }: Props) => {
           ...styles,
           rotate: "0",
         }}
-        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] h-full w-full !m-0 group", {
+        className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group", {
           "px-4": type !== "__body",
           "pt-4 min-h-screen": type === "__body",
           "empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",

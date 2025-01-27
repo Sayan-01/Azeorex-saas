@@ -1,27 +1,56 @@
-import React from "react";
+"use client";
 
-const Try1 = () => {
-  return (
-    // <div className="p-6 bg-pink-300 ">
-    //   <div className="p-6 bg-pink-400 ">
-    //     <div className="p-6 bg-pink-300">
-    //       <div className="p-6 bg-pink-400 abc relative rounded-full">
-    //         <div className="p-6 bg-pink-300 abc relative rounded-full">
-    //           <div className="p-6 bg-pink-400 abc relative rounded-full">
-    //             <div className="p-6 bg-pink-300 abc relative rounded-full">
-    //               <div className="p-6 bg-pink-400 h-40 abc relative rounded-full"></div>
-    //             </div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-    <div>
-      <div className="peer p-2">fffff</div>
-      <div className="peer-hover:bg-red-500 p-2">ggggg</div>
-    </div>
-  );
+import React, { useState, useEffect } from "react";
+
+const useElementDimensions = (id) => {
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const element = document.getElementById(id);
+      if (element) {
+        const { width, height } = element.getBoundingClientRect();
+        setDimensions({
+          width: Math.round(width),
+          height: Math.round(height),
+        });
+      }
+    };
+
+    // Update dimensions initially
+    updateDimensions();
+
+    // Add a resize event listener
+    window.addEventListener("resize", updateDimensions);
+
+    // Clean up the event listener
+    return () => {
+      window.removeEventListener("resize", updateDimensions);
+    };
+  }, [id]);
+
+  return dimensions;
 };
 
-export default Try1;
+export default function Try1() {
+  const dimensions = useElementDimensions("sayan");
+
+  return (
+    <div style={{ height: "100vh", width: "100vw" }}>
+      <div
+        id="sayan"
+        style={{
+          margin: "50px",
+          width: "70%",
+          height: "70%",
+          border: "1px solid white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Dimensions: {dimensions.width}w x {dimensions.height}h
+      </div>
+    </div>
+  );
+}

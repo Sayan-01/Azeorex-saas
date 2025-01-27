@@ -120,16 +120,14 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                 strokeWidth={1.1}
               />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Azeorex</DropdownMenuLabel>
-              <DropdownMenuSeparator />
+            <DropdownMenuContent className="ml-4">
               <DropdownMenuGroup>
-                <DropdownMenuItem>
+                <DropdownMenuItem className="flex gap-4 ">
                   <Link href={`/subaccount/${subaccountId}/funnels/${funnelId}`}>Azeorex</Link>
                   <div className="flex  w-full ">
                     <Input
                       defaultValue={funnelPageDetails.name}
-                      className="h-7 -ml-2 mt-0 text-lg bg-transparent border-none opacity-60"
+                      className="h-7 -ml-2 mt-0 text-base bg-transparent opacity-60"
                       onBlur={handleOnBlurTitleChange}
                     />
                   </div>
@@ -249,7 +247,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
             </div>
             {/* <span className="text-muted-foreground text-sm">Last updated {funnelPageDetails.updatedAt.toLocaleDateString()}</span> */}
           </div>
-          {pathName === "/demo" ? (
+          {/* {pathName === "/demo" ? (
             <button
               className="text-sm border-l-2 border-main-black pl-3"
               onClick={() => {
@@ -266,7 +264,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                 <DownloadIcon size={16} />
               )}
             </button>
-          ) : (
+          ) : ( */}
             <button
               className="text-sm border-l-2 border-main-black pl-3"
               onClick={handleOnSave}
@@ -279,7 +277,7 @@ const FunnelEditorNavigation = ({ funnelId, funnelPageDetails, subaccountId }: P
                 <DownloadIcon size={16} />
               )}
             </button>
-          )}
+          {/* )} */}
         </aside>
       </nav>
     </TooltipProvider>

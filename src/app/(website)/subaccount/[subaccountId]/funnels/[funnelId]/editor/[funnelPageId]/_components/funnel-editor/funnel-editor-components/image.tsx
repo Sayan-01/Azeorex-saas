@@ -97,7 +97,7 @@ const ImageComponent = (props: Props) => {
           src={props.element.content.src || "/sayan.png "}
           alt="azeorex"
           style={styles}
-          className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] h-full w-full !m-0 group", { abc: !state.editor.liveMode })}
+          className={clsx("!relative !top-0 !bottom-0 !left-0 !right-0 !rotate-[0px] box-1 z-[1002] !h-full !w-full !m-0 group", { abc: !state.editor.liveMode })}
         />
       )}
 
