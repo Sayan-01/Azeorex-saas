@@ -21,7 +21,7 @@ export type Editor = {
   liveMode: boolean;
   elements: EditorElement[];
   selectedElement: EditorElement;
-
+  hoverElement: EditorElement;
   device: DeviceTypes;
   previewMode: boolean;
   funnelPageId: string;
@@ -51,6 +51,13 @@ const initialEditorState: EditorState["editor"] = {
     },
   ],
   selectedElement: {
+    id: "",
+    content: [],
+    name: "",
+    styles: {},
+    type: null,
+  },
+  hoverElement: {
     id: "",
     content: [],
     name: "",

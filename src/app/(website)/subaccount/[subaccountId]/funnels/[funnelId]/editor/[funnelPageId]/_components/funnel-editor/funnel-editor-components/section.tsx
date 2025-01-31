@@ -125,7 +125,7 @@ const Section = (props: Props) => {
       case "element":
         if (activeContainer) {
           if (id !== activeContainer) {
-            moveObject(state.editor.elements, activeContainer, id);
+            moveObject(state.editor.elements, activeContainer, id, state);
             setActiveContainer(null);
           }
         }

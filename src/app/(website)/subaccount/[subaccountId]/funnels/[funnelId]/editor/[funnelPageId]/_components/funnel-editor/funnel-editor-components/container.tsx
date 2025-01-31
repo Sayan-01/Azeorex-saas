@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { EditorElement, useEditor } from "../../../../../../../../../../../../providers/editor/editor-provider";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { ReactEventHandler, ReactNode, useCallback, useEffect, useState } from "react";
 import { v4 } from "uuid";
 import Recursive from "./recursive";
 import { moveObject, updateId } from "@/lib/moveElement";
@@ -12,7 +12,88 @@ type Props = { element: EditorElement };
 
 const Container = ({ element }: Props) => {
   const { id, content, styles, type } = element;
-  const { dispatch, state, activeContainer, setActiveContainer, position, setPosition } = useEditor();
+  const { dispatch, state, activeContainer, setActiveContainer } = useEditor();
+
+  const [dimensions, setDimensions] = useState({
+    width: 100,
+    height: 100,
+  });
+
+  console.log("width", styles);
+
+  const [position, setPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+
+  const handleResize = (e: any, direction: string) => {
+    e.preventDefault();
+
+    const startWidth = dimensions.width;
+    const startHeight = dimensions.height;
+    const startX = e.clientX;
+    const startY = e.clientY;
+    let newWidth = startWidth;
+    let newHeight = startHeight;
+
+    const onMouseMove = (event: any) => {
+      requestAnimationFrame(() => {
+        if (direction.includes("right")) {
+          newWidth = Math.max(10, startWidth + (event.clientX - startX));
+        }
+        if (direction.includes("bottom")) {
+          newHeight = Math.max(10, startHeight + (event.clientY - startY));
+        }
+        if (direction.includes("left")) {
+          newWidth = Math.max(10, startWidth - (event.clientX - startX));
+          setPosition((prev) => ({ ...prev, x: position.x + (event.clientX - startX) }));
+        }
+        if (direction.includes("top")) {
+          newHeight = Math.max(10, startHeight - (event.clientY - startY));
+          setPosition((prev) => ({ ...prev, y: position.y + (event.clientY - startY) }));
+        }
+
+        setDimensions({ width: newWidth, height: newHeight });
+
+        // dispatch({
+        //   type: "UPDATE_ELEMENT",
+        //   payload: {
+        //     elementDetails: {
+        //       ...state.editor.selectedElement,
+        //       styles: {
+        //         ...state.editor.selectedElement.styles,
+        //         ...styleObject,
+        //       },
+        //     },
+        //   },
+        // });
+      });
+    };
+
+    const onMouseUp = () => {
+      const styleObject = {
+        width: `${newWidth}px`,
+        height: `${newHeight}px`,
+      };
+      dispatch({
+        type: "UPDATE_ELEMENT",
+        payload: {
+          elementDetails: {
+            ...state.editor.selectedElement,
+            styles: {
+              ...state.editor.selectedElement.styles,
+              ...styleObject,
+            },
+          },
+        },
+      });
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  };
 
   const handleOnDrop = (e: React.DragEvent, id: string) => {
     e.stopPropagation();
@@ -102,7 +183,7 @@ const Container = ({ element }: Props) => {
               content: [],
               id: v4(),
               name: "Container",
-              styles: { ...defaultStyles, maxWidth: "940px", opacity: 1, borderRadius: "0px" },
+              styles: { ...defaultStyles, maxWidth: "100%", backgroundColor: "#d9d9d9", opacity: 1, borderRadius: "0px" },
               type: "container",
             },
           },
@@ -182,89 +263,76 @@ const Container = ({ element }: Props) => {
             },
           },
         });
-
+        break;
       case "element":
         if (activeContainer) {
           if (id !== activeContainer) {
-            console.log(componentType, "ddd");
-
-            moveObject(state.editor.elements, activeContainer, id);
+            moveObject(state.editor.elements, activeContainer, id, state);
             setActiveContainer(null);
           }
         }
         break;
       default:
         if (componentType === null) return;
-        // else setComponent(state.editor.elements, JSON.parse(componentType));
-        else {
-          //asa json string k object a rupantor kora holo parse er maddhome
-          const oldData = JSON.parse(componentType) as EditorElement;
-          console.log(oldData);
-          const newData = updateId(oldData);
+        const oldData = JSON.parse(componentType) as EditorElement;
+        const newData = updateId(oldData);
 
-          dispatch({
-            type: "ADD_ELEMENT",
-            payload: {
-              containerId: id,
-              elementDetails: {
-                id: newData.id,
-                name: newData.name,
-                styles: newData.styles,
-                type: newData.type,
-                content: newData.content,
-              },
+        dispatch({
+          type: "ADD_ELEMENT",
+          payload: {
+            containerId: id,
+            elementDetails: {
+              id: newData.id,
+              name: newData.name,
+              styles: newData.styles,
+              type: newData.type,
+              content: newData.content,
             },
-          });
-        }
+          },
+        });
     }
     const target = e.currentTarget as HTMLElement;
-    target.style.outline = "none"; // Remove outline
+    target.style.outline = "none";
   };
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const target = e.currentTarget as HTMLElement;
-    target.style.outline = "1px solid #fcbd0f"; // Add outline
-    // target.style.outlineOffset = "-1px"
+    target.style.outline = "1px solid #fcbd0f";
   };
 
   const handleDragLeave = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
     const target = e.currentTarget as HTMLElement;
-    target.style.outline = "none"; // Remove outline
+    target.style.outline = "none";
   };
 
   const handleDragStart = (e: React.DragEvent, type: string) => {
     if (type === "__body") return;
-    e.dataTransfer.setData("componentType", type); //=> 14:18
+    e.dataTransfer.setData("componentType", type);
     const target = e.target as HTMLElement;
     target.style.opacity = "0.3";
-    target.style.cursor = "grbbing";
+    target.style.cursor = "grabbing";
 
-    // Check if the target has an id property
     if (target.id) {
       const targetId = target.id;
       setActiveContainer(targetId);
-      console.log(targetId);
     }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault(); // Allow drop
+    e.preventDefault();
     e.stopPropagation();
   };
 
   const handleDragEnd = (e: React.DragEvent) => {
     const target = e.target as HTMLElement;
-    target.style.opacity = "1"; // Reset the opacity
+    target.style.opacity = "1";
     e.stopPropagation();
     setActiveContainer(null);
   };
-
-  //more events are dragenter, dragleave, drop
-  //for moveble container dragstart, dragend
 
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -276,14 +344,14 @@ const Container = ({ element }: Props) => {
     });
   };
 
-  const handleDeleteElement = () => {
+  const handleDeleteElement = useCallback(() => {
     dispatch({
       type: "DELETE_ELEMENT",
       payload: {
         elementDetails: element,
       },
     });
-  };
+  }, [dispatch, element]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -292,7 +360,7 @@ const Container = ({ element }: Props) => {
 
       if (e.key === "Backspace" && !isEditable) {
         if (state.editor.selectedElement.id === id && type !== "__body") {
-          e.preventDefault(); // Prevent default browser behavior
+          e.preventDefault();
           handleDeleteElement();
         }
       }
@@ -308,11 +376,11 @@ const Container = ({ element }: Props) => {
     <div
       id={id}
       style={{
-        width: styles?.width,
-        height: styles?.height,
+        width: type !== "__body" ? `${dimensions.width}px` : styles.width,
+        height: type !== "__body" ? `${dimensions.height}px` : styles.width,
         position: styles?.position || "relative",
-        top: styles?.top || 0,
-        bottom: styles?.bottom || 0,
+        top: styles?.top || position.y || 0,
+        bottom: styles?.bottom || position.y || 0,
         left: styles?.left || 0,
         right: styles?.right || 0,
         zIndex: styles?.zIndex || 0,
@@ -324,14 +392,11 @@ const Container = ({ element }: Props) => {
         maxHeight: styles?.maxHeight,
         rotate: styles.rotate,
       }}
-      className={clsx("relative z-[1004] box inset-0", {
-        "h-fit mx-auto w-full": type === "container" || type === "2Col",
-        "!relative": type === "__body",
-        // "overflow-scroll  overflow-x-hidden ": type === "__body",
+      className={clsx("relative z-[1004] box !inset-0", {
+        "h-fit   w-full": type === "container" || type === "2Col",
+        "!relative w-full": type === "__body",
         "flex flex-col md:!flex-row": type === "2Col",
         "shadow-inner-border-blue-500 ": state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type === "__body",
-        "cursor-grab": state.editor.selectedElement.id === id && !state.editor.liveMode,
-        // "hover:outline hover:outline-[1px] hover:outline-offset-[-1px] hover:outline-blue-400": !state.editor.liveMode && type !== "__body",
       })}
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
@@ -351,7 +416,7 @@ const Container = ({ element }: Props) => {
           "px-4": type !== "__body",
           "pt-4 min-h-screen": type === "__body",
           "empty-outline ": Array.isArray(element.content) && !element.content.length && !state.editor.liveMode && type !== "__body",
-          "!p-9": Array.isArray(element.content) && !element.content.length,
+          // "!p-9": Array.isArray(element.content) && !element.content.length,
           abc: !state.editor.liveMode,
         })}
       >
@@ -364,12 +429,35 @@ const Container = ({ element }: Props) => {
           ))}
       </div>
       <div
-        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 ", {
+        className={clsx("absolute overflow-visible pointer-events-none z-[1002] inset-0 opacity-100 filter-none", {
           hidden: state.editor.liveMode,
           "!shadow-inner-border-blue-500": state.editor.selectedElement.id === element.id,
         })}
       ></div>
-      {/* <DropArea/> */}
+
+      {["top-left", "top", "top-right", "right", "bottom-right", "bottom", "bottom-left", "left"].map((position) => (
+        <div
+          key={position}
+          onMouseDown={(e) => handleResize(e, position)}
+          className={`absolute border-main border w-2 h-2 z-[1002] ${
+            position === "top-left"
+              ? "top-0 left-0 cursor-nwse-resize"
+              : position === "top"
+              ? "top-0 left-1/2 -translate-x-1/2 cursor-ns-resize"
+              : position === "top-right"
+              ? "top-0 right-0 cursor-nesw-resize"
+              : position === "right"
+              ? "top-1/2 right-0 -translate-y-1/2 cursor-ew-resize"
+              : position === "bottom-right"
+              ? "bottom-0 right-0 cursor-nwse-resize"
+              : position === "bottom"
+              ? "bottom-0 left-1/2 -translate-x-1/2 cursor-ns-resize"
+              : position === "bottom-left"
+              ? "bottom-0 left-0 cursor-nesw-resize"
+              : "top-1/2 left-0 -translate-y-1/2 cursor-ew-resize"
+          } ${state.editor.selectedElement.id === id && !state.editor.liveMode && state.editor.selectedElement.type !== "__body" ? "block" : "hidden"}`}
+        />
+      ))}
       <Badge
         className={clsx("absolute bg-main z-[1006] -top-[16px] h-4 text-xs items-center  left-0 rounded-none rounded-t-md hidden", {
           flex: state.editor.selectedElement.id === element.id && !state.editor.liveMode,

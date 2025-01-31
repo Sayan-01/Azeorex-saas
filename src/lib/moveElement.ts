@@ -1,9 +1,9 @@
 "use client";
 
-import { EditorElement } from "../../providers/editor/editor-provider";
+import { EditorElement, EditorState, useEditor } from "../../providers/editor/editor-provider";
 import { v4 } from "uuid";
 
-const findAndRemoveObjectById = (objArray: EditorElement[], targetId: string): EditorElement | null => {
+const findAndRemoveObjectById = (objArray: EditorElement[], targetId: string): EditorElement | null | undefined => {
   for (let i = 0; i < objArray.length; i++) {
     const obj = objArray[i];
     if (obj.id === targetId) {
@@ -15,7 +15,6 @@ const findAndRemoveObjectById = (objArray: EditorElement[], targetId: string): E
       if (result) return result;
     }
   }
-  return null;
 };
 
 // Recursive function to search for the object with the given ID and add a new object to its content array
@@ -34,14 +33,38 @@ const findAndAddObjectById = (objArray: EditorElement[], targetId: string, newOb
   return false;
 };
 
-export const moveObject = (data: EditorElement[], draggableId: string, perentId: string) => {
-  console.log("hhhh");
-
+export const moveObject = (data: EditorElement[], draggableId: string, perentId: string, state:EditorState) => {
   const objToMove = findAndRemoveObjectById(data, draggableId);
   if (objToMove) {
     findAndAddObjectById(data, perentId, objToMove);
   }
+
+  // const updatedEditorState = {
+  //   ...state.editor,
+  //   elements: objToMove,
+  // };
+
+  // console.log("lllll",updatedEditorState);
+  
+
+  // const updatedHistory = [
+  //   ...state.history.history.slice(0, state.history.currentIndex + 1),
+  //   { ...updatedEditorState }, // Save a copy of the updated state
+  // ];
+
+  // const newEditorState = {
+  //   ...state,
+  //   editor: updatedEditorState,
+  //   history: {
+  //     ...state.history,
+  //     history: updatedHistory,
+  //     currentIndex: updatedHistory.length - 1,
+  //   },
+  // };
+  return null;
 };
+
+//for components and warframe
 
 export function updateId(data: EditorElement) {
   // Create a deep copy of the data to avoid mutating the original object
