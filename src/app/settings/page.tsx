@@ -79,13 +79,13 @@
 // export default Page;
 import React from "react";
 import Try1 from "./Try1";
-import ResizableDiv from "./Try3";
+// import ResizableDiv from "./Try3";
 // import ResizableDivDs from "./Ds";
 
 const page = () => {
   return (
     <div>
-      <ResizableDiv />
+      {/* <ResizableDiv /> */}
       {/* <ResizableDivDs/> */}
     </div>
   );

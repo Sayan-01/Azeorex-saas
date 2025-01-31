@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-const useElementDimensions = (id) => {
+const useElementDimensions = (id:any) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
